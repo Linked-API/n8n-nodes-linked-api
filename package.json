@@ -1,0 +1,69 @@
+{
+  "name": "n8n-nodes-linked-api",
+  "version": "0.0.1",
+  "description": "n8n nodes for Linked API - LinkedIn automation and data retrieval",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n-nodes",
+    "n8n",
+    "linkedin",
+    "automation",
+    "linked-api",
+    "linkedin-api",
+    "sales-automation",
+    "linkedin-data",
+    "linkedin-automation",
+    "linkedin-messaging",
+    "social-selling",
+    "lead-generation"
+  ],
+  "bugs": {
+    "url": "https://github.com/Linked-API/n8n-nodes-linked-api/issues"
+  },
+  "license": "MIT",
+  "homepage": "https://linkedapi.io",
+  "author": {
+    "name": "Linked API",
+    "email": "support@linkedapi.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Linked-API/n8n-nodes-linked-api.git"
+  },
+  "engines": {
+    "node": ">=18.0"
+  },
+  "scripts": {
+    "sync:linkedapi": "node scripts/sync-linkedapi.js",
+    "build": "npx rimraf dist && tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/LinkedApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/LinkedApi/LinkedApi.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.11",
+    "@typescript-eslint/parser": "~8.32.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
