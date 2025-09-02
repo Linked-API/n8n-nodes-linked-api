@@ -30,7 +30,7 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Search companies',
 		},
 	],
-	default: 'fetchPerson',
+	default: 'searchCompanies',
 };
 
 export const availableSalesNavigatorOperations: INodeProperties = {
@@ -46,10 +46,10 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 	options: [
 		{
 			name: 'Search Companies in Sales Navigator',
-			value: 'salesNavigatorSearchCompanies',
+			value: 'nvSearchCompanies',
 			description: 'Search for companies in Sales Navigator',
 			action: 'Search companies in sales navigator',
 		},
 	],
-	default: 'salesNavigatorSearchCompanies',
+	default: 'nvSearchCompanies',
 };

@@ -1,76 +1,37 @@
-import type { IDataObject, IExecuteFunctions, INodeProperties } from 'n8n-workflow';
-import LinkedApi, { TFetchCompanyParams } from '../linkedapi-node';
-import IOperation from '../utils/IOperation';
-
-export class FetchCompanyOperation extends IOperation<TFetchCompanyParams> {
-	override async buildParams(
-		functions: IExecuteFunctions,
-		itemIndex: number,
-	): Promise<TFetchCompanyParams> {
-		const companyUrl = functions.getNodeParameter('companyUrl', itemIndex) as string;
-		const retrieveEmployees = functions.getNodeParameter('retrieveEmployees', itemIndex) as
-			| boolean
-			| undefined;
-		const retrieveDMs = functions.getNodeParameter('retrieveDMs', itemIndex) as boolean | undefined;
-		const retrievePosts = functions.getNodeParameter('retrievePosts', itemIndex) as
-			| boolean
-			| undefined;
-
-		const fetchCompanyParams: TFetchCompanyParams = {
-			companyUrl,
-		};
-
-		if (retrieveEmployees) {
-			const employeesLimit = functions.getNodeParameter('employeesLimit', itemIndex) as
-				| number
-				| undefined;
-			fetchCompanyParams.retrieveEmployees = true;
-			const employeesConfig: any = {};
-			if (employeesLimit) {
-				employeesConfig.limit = employeesLimit;
-			}
-			if (employeesLimit) {
-				fetchCompanyParams.employeesRetrievalConfig = employeesConfig;
-			}
-		}
-		if (retrieveDMs) {
-			const dmsLimit = functions.getNodeParameter('dmsLimit', itemIndex) as number | undefined;
-			fetchCompanyParams.retrieveDMs = true;
-			const dmsConfig: any = {};
-			if (dmsLimit) {
-				dmsConfig.limit = dmsLimit;
-			}
-			if (dmsLimit) {
-				fetchCompanyParams.dmsRetrievalConfig = dmsConfig;
-			}
-		}
-		if (retrievePosts) {
-			const postsLimit = functions.getNodeParameter('postsLimit', itemIndex) as number | undefined;
-			const postsSince = functions.getNodeParameter('postsSince', itemIndex) as string | undefined;
-			fetchCompanyParams.retrievePosts = true;
-			const postsConfig: any = {};
-			if (postsLimit) {
-				postsConfig.limit = postsLimit;
-			}
-			if (postsSince) {
-				postsConfig.since = new Date(postsSince).toISOString();
-			}
-			if (postsLimit || postsSince) {
-				fetchCompanyParams.postsRetrievalConfig = postsConfig;
-			}
-		}
-
-		return fetchCompanyParams;
-	}
-
-	override async execute(linkedapi: LinkedApi, params: TFetchCompanyParams): Promise<IDataObject> {
-		const companyWorkflow = await linkedapi.fetchCompany(params);
-		const result = await companyWorkflow.result();
-		return { result };
-	}
-}
+import type { INodeProperties } from 'n8n-workflow';
 
 export const fetchCompanyFields: INodeProperties[] = [
+	// Operation-level routing configuration (triggers the request)
+	{
+		displayName: '',
+		name: 'fetchCompanyOperation',
+		type: 'hidden',
+		displayOptions: {
+			show: {
+				resource: ['standard'],
+				operation: ['fetchCompany'],
+			},
+		},
+		default: '',
+		routing: {
+			request: {
+				body: {
+					operationName: 'fetchCompany',
+					webhookUrl: '={{$parameter["webhookUrl"]}}',
+					data: {
+						companyUrl: '={{$parameter["companyUrl"]}}',
+						retrieveEmployees: '={{$parameter["retrieveEmployees"] || false}}',
+						retrieveDMs: '={{$parameter["retrieveDMs"] || false}}',
+						retrievePosts: '={{$parameter["retrievePosts"] || false}}',
+						employeesRetrievalConfig: '={{$parameter["retrieveEmployees"] ? {limit: $parameter["employeeLimit"]} : undefined}}',
+						dmsRetrievalConfig: '={{$parameter["retrieveDMs"] ? {limit: $parameter["dmsLimit"]} : undefined}}',
+						postsRetrievalConfig: '={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
+					},
+				},
+			},
+		},
+	},
+	// Parameter fields (no routing, just UI)
 	{
 		displayName: 'Company URL',
 		name: 'companyUrl',
@@ -86,6 +47,7 @@ export const fetchCompanyFields: INodeProperties[] = [
 		placeholder: 'https://www.linkedin.com/company/microsoft',
 		description: 'The LinkedIn company page URL to fetch',
 	},
+	// Employees
 	{
 		displayName: 'Retrieve Employees',
 		name: 'retrieveEmployees',
@@ -98,16 +60,13 @@ export const fetchCompanyFields: INodeProperties[] = [
 				operation: ['fetchCompany'],
 			},
 		},
-	},
+	},	
 	{
 		displayName: 'Employees Limit',
-		name: 'employeesLimit',
+		name: 'employeeLimit',
 		type: 'number',
-		default: 25,
-		typeOptions: {
-			minValue: 1,
-			maxValue: 500,
-		},
+		default: 500,
+		description: 'The number of employees to retrieve',
 		displayOptions: {
 			show: {
 				resource: ['standard'],
@@ -115,14 +74,14 @@ export const fetchCompanyFields: INodeProperties[] = [
 				retrieveEmployees: [true],
 			},
 		},
-		description: 'Number of employees to retrieve (max 500)',
 	},
+	// Decision Makers
 	{
 		displayName: 'Retrieve Decision Makers',
 		name: 'retrieveDMs',
 		type: 'boolean',
 		default: false,
-		description: 'Whether to retrieve company DMs',
+		description: 'Whether to retrieve company decision makers',
 		displayOptions: {
 			show: {
 				resource: ['standard'],
@@ -134,10 +93,8 @@ export const fetchCompanyFields: INodeProperties[] = [
 		displayName: 'Decision Makers Limit',
 		name: 'dmsLimit',
 		type: 'number',
-		default: 10,
-		typeOptions: {
-			minValue: 1,
-		},
+		default: 20,
+		description: 'The number of decision makers to retrieve',
 		displayOptions: {
 			show: {
 				resource: ['standard'],
@@ -145,8 +102,8 @@ export const fetchCompanyFields: INodeProperties[] = [
 				retrieveDMs: [true],
 			},
 		},
-		description: 'Number of decision makers to retrieve (max 20)',
 	},
+	// Posts
 	{
 		displayName: 'Retrieve Posts',
 		name: 'retrievePosts',
@@ -164,11 +121,8 @@ export const fetchCompanyFields: INodeProperties[] = [
 		displayName: 'Posts Limit',
 		name: 'postsLimit',
 		type: 'number',
-		default: 10,
-		typeOptions: {
-			minValue: 1,
-			maxValue: 20,
-		},
+		default: 20,
+		description: 'The number of posts to retrieve',
 		displayOptions: {
 			show: {
 				resource: ['standard'],
@@ -176,13 +130,13 @@ export const fetchCompanyFields: INodeProperties[] = [
 				retrievePosts: [true],
 			},
 		},
-		description: 'Number of posts to retrieve (max 20)',
 	},
 	{
 		displayName: 'Posts Since',
 		name: 'postsSince',
 		type: 'dateTime',
 		default: '',
+		description: 'The date since the posts were created',
 		displayOptions: {
 			show: {
 				resource: ['standard'],
@@ -190,6 +144,5 @@ export const fetchCompanyFields: INodeProperties[] = [
 				retrievePosts: [true],
 			},
 		},
-		description: 'Filter posts published after this date',
 	},
 ];

@@ -34,7 +34,6 @@
     "node": ">=18.0"
   },
   "scripts": {
-    "sync:linkedapi": "node scripts/sync-linkedapi.js",
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
