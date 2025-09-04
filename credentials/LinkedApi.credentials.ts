@@ -1,4 +1,9 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class LinkedApi implements ICredentialType {
 	name = 'linkedApi';
@@ -31,4 +36,22 @@ export class LinkedApi implements ICredentialType {
 				'Unique token specific to each managed LinkedIn account. You can obtain this from the Linked API Platform.',
 		},
 	];
+
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
+		properties: {
+			headers: {
+				'linked-api-token': '={{$credentials.linkedApiToken}}',
+				'identification-token': '={{$credentials.identificationToken}}',
+			},
+		},
+	};
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://api.linkedapi.io/automation',
+			url: '/validate',
+			method: 'POST',
+		},
+	};
 }

@@ -37,6 +37,7 @@ import {
 export class LinkedApi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Linked API',
+
 		name: 'linkedApi',
 		icon: {
 			light: 'file:linked-api-light.svg',
@@ -65,8 +66,6 @@ export class LinkedApi implements INodeType {
 			headers: {
 				client: 'n8n',
 				'Content-Type': 'application/json',
-				'linked-api-token': '={{$credentials.linkedApiToken}}',
-				'identification-token': '={{$credentials.identificationToken}}',
 			},
 		},
 		properties: [
