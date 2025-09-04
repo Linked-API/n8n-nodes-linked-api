@@ -27,44 +27,47 @@ npm install n8n-nodes-linked-api
 
 ## Available Operations
 
+### Standard LinkedIn Operations
+
 | Operation | Description | Key Parameters |
 |-----------|-------------|----------------|
-| **Fetch Person** | Extract LinkedIn profile data | `personUrl`, optional: experience, education, skills, posts |
-| **Fetch Company** | Get company information | `companyUrl`, optional: employees, posts |
-| **Search Companies** | Search for companies | `keywords`, filters: location, industry, size |
+| **Check Connection Status** | Check connection status with another person | `personUrl` |
+| **Comment on Post** | Leave a comment on a LinkedIn post | `postUrl`, `text` |
+| **Fetch Company** | Get detailed company information | `companyUrl`, optional: employees, posts, decision makers |
+| **Fetch Person** | Extract comprehensive LinkedIn profile data | `personUrl`, optional: experience, education, skills, posts, comments, reactions |
+| **Fetch Post** | Retrieve detailed information about a LinkedIn post | `postUrl` |
+| **React to Post** | React to a LinkedIn post | `postUrl`, `type` (like, celebrate, support, love, insightful, funny) |
+| **Remove Connection** | Remove a person from your connections | `personUrl` |
+| **Retrieve Connections** | Get your connections with filtering options | Optional filters: companies, industries, locations, position |
+| **Retrieve Pending Requests** | Get pending connection requests you've sent | No parameters required |
+| **Retrieve Performance** | Get LinkedIn dashboard analytics | No parameters required |
+| **Retrieve SSI** | Get your Social Selling Index score | No parameters required |
+| **Search Companies** | Search for companies on LinkedIn | Optional: `keywords`, filters for location, industry, size |
+| **Search People** | Search for people on LinkedIn | Optional: `keywords`, filters for companies, industries, locations, schools |
+| **Send Connection Request** | Send a connection request | `personUrl`, optional: `note`, `email` |
+| **Send Message** | Send a message to a LinkedIn person | `personUrl`, `text` |
+| **Sync Conversation** | Start polling a conversation for new messages | `personUrl` |
+| **Withdraw Connection Request** | Withdraw a sent connection request | `personUrl`, optional: `unfollow` |
+
+### Sales Navigator Operations
+
+| Operation | Description | Key Parameters |
+|-----------|-------------|----------------|
+| **Fetch Company (Sales Navigator)** | Get company info in Sales Navigator | `companyHashedUrl`, optional: employees, decision makers |
+| **Fetch Person (Sales Navigator)** | Get person info in Sales Navigator | `personHashedUrl` |
+| **Search Companies (Sales Navigator)** | Advanced company search in Sales Navigator | Optional: `keywords`, filters for revenue, location, industry, size |
+| **Search People (Sales Navigator)** | Advanced people search in Sales Navigator | Optional: `keywords`, filters for companies, experience, locations |
+| **Send Message (Sales Navigator)** | Send message via Sales Navigator | `personUrl`, `text`, `subject` |
+| **Sync Conversation (Sales Navigator)** | Start polling Sales Navigator conversation | `personUrl` |
+
+### Other Operations
+
+| Operation | Description | Key Parameters |
+|-----------|-------------|----------------|
+| **Custom Workflow** | Execute multi-step custom workflows | `definition` (workflow JSON) |
+| **Get Workflow Result** | Get results from workflow execution | `workflowId`, `operationName` |
 
 > **📖 Full Documentation**: [linkedapi.io/docs](https://linkedapi.io/docs/)
-
-## Quick Examples
-
-### Basic Profile Fetch
-```javascript
-// Node parameters
-{
-  "operation": "fetchPerson",
-  "personUrl": "https://linkedin.com/in/john-doe",
-  "retrieveExperience": true
-}
-```
-
-### Company Search
-```javascript
-// Node parameters  
-{
-  "operation": "searchCompanies",
-  "keywords": "artificial intelligence",
-  "location": "San Francisco",
-  "limit": 10
-}
-```
-
-## Development
-
-```bash
-git clone https://github.com/Linked-API/n8n-nodes-linked-api.git
-npm install
-npm run build
-```
 
 ## License & Support
 

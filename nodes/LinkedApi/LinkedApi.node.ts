@@ -1,24 +1,38 @@
-import type {
-	IDataObject,
-	IExecuteFunctions,
-	INodeExecutionData,
-	INodeType,
-	INodeTypeDescription,
-	JsonObject,
-} from 'n8n-workflow';
-import { NodeApiError, NodeConnectionType, NodeOperationError } from 'n8n-workflow';
-import LinkedApiSdk, { LinkedApiError } from './linkedapi-node';
-import { OperationRouter } from './utils/OperationRouter';
-import { LinkedApiHttpClient } from './utils/LinkedApiHttpClient';
-import { fetchPersonFields } from './operations/FetchPerson';
+import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { NodeConnectionType } from 'n8n-workflow';
 import {
+	availableOtherOperations,
 	availableSalesNavigatorOperations,
 	availableStandardOperations,
-} from './descriptions/AvailableOperations';
-import { availableModes } from './descriptions/AvailableModes';
-import { searchCompaniesFields } from './operations/SearchCompanies';
-import { fetchCompanyFields } from './operations/FetchCompany';
-import { salesNavigatorSearchCompaniesFields } from './operations/SalesNavigatorSearchCompanies';
+} from './shared/AvailableOperations';
+import { availableModes } from './shared/AvailableModes';
+import {
+	checkConnectionStatusFields,
+	commentOnPostFields,
+	customWorkflowFields,
+	fetchPersonFields,
+	fetchCompanyFields,
+	fetchPostFields,
+	getWorkflowResultFields,
+	reactToPostFields,
+	removeConnectionFields,
+	retrieveConnectionsFields,
+	retrievePendingRequestsFields,
+	retrievePerformanceFields,
+	retrieveSSIFields,
+	searchCompaniesFields,
+	searchPeopleFields,
+	sendConnectionRequestFields,
+	sendMessageFields,
+	syncConversationFields,
+	withdrawConnectionRequestFields,
+	nvSearchCompaniesFields,
+	nvSearchPeopleFields,
+	nvSendMessageFields,
+	nvSyncConversationFields,
+	nvFetchPersonFields,
+	nvFetchCompanyFields,
+} from './operations';
 
 export class LinkedApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -44,99 +58,65 @@ export class LinkedApi implements INodeType {
 				required: true,
 			},
 		],
+		requestDefaults: {
+			baseURL: 'https://api.linkedapi.io/automation',
+			url: '/execute',
+			method: 'POST',
+			headers: {
+				client: 'n8n',
+				'Content-Type': 'application/json',
+				'linked-api-token': '={{$credentials.linkedApiToken}}',
+				'identification-token': '={{$credentials.identificationToken}}',
+			},
+		},
 		properties: [
 			availableModes,
 			availableStandardOperations,
 			availableSalesNavigatorOperations,
+			availableOtherOperations,
+			// Webhook URL field (common to all operations)
+			{
+				displayName: 'Webhook URL',
+				name: 'webhookUrl',
+				type: 'string',
+				required: true,
+				default: '',
+				displayOptions: {
+					hide: {
+						operation: ['getWorkflowResult'],
+					},
+				},
+				placeholder: 'https://n8n.your-domain.com/webhook-test/your-webhook-ID',
+				description: 'URL where the response will be sent via webhook',
+			},
 			// Standard operations
+			...checkConnectionStatusFields,
+			...commentOnPostFields,
 			...fetchPersonFields,
 			...fetchCompanyFields,
+			...fetchPostFields,
+			...reactToPostFields,
+			...removeConnectionFields,
+			...retrieveConnectionsFields,
+			...retrievePendingRequestsFields,
+			...retrievePerformanceFields,
+			...retrieveSSIFields,
 			...searchCompaniesFields,
+			...searchPeopleFields,
+			...sendConnectionRequestFields,
+			...sendMessageFields,
+			...syncConversationFields,
+			...withdrawConnectionRequestFields,
 			// Sales Navigator operations
-			...salesNavigatorSearchCompaniesFields,
+			...nvSearchCompaniesFields,
+			...nvSearchPeopleFields,
+			...nvSendMessageFields,
+			...nvSyncConversationFields,
+			...nvFetchPersonFields,
+			...nvFetchCompanyFields,
+			// Other operations
+			...customWorkflowFields,
+			...getWorkflowResultFields,
 		],
 	};
-
-	public async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const items = this.getInputData();
-		const returnData: INodeExecutionData[] = [];
-
-		const credentials = await this.getCredentials('linkedApi');
-		const linkedApiToken = credentials.linkedApiToken as string;
-		const identificationToken = credentials.identificationToken as string;
-		const linkedapi = new LinkedApiSdk(
-			new LinkedApiHttpClient(this, {
-				linkedApiToken,
-				identificationToken,
-			}),
-		);
-
-		const operationRouter = new OperationRouter(linkedapi);
-
-		for (let i = 0; i < items.length; i++) {
-			try {
-				const operation = this.getNodeParameter('operation', i) as string;
-
-				const result = await operationRouter.executeOperation(this, operation, i);
-
-				returnData.push(result);
-			} catch (error) {
-				if (error instanceof LinkedApiError) {
-					this.logger.error(`Item ${i}: Linked API Error:`, {
-						message: error.message,
-						details: error.details,
-						type: error.type,
-						operation: this.getNodeParameter('operation', i) as string,
-						itemIndex: i,
-						nodeId: this.getNode().id,
-					});
-				} else {
-					this.logger.error(`Item ${i}: Error details:`, {
-						message: (error as Error).message,
-						name: (error as Error).name,
-						operation: this.getNodeParameter('operation', i) as string,
-						itemIndex: i,
-						nodeId: this.getNode().id,
-						nodeName: this.getNode().name,
-					});
-				}
-
-				if (this.continueOnFail()) {
-					if (error instanceof LinkedApiError) {
-						returnData.push({
-							json: {
-								error: error.message,
-								type: error.type,
-								details: error.details as IDataObject,
-							},
-							pairedItem: { item: i },
-						});
-					} else {
-						returnData.push({
-							json: { error: (error as Error).message },
-							pairedItem: { item: i },
-						});
-					}
-				} else {
-					if (error instanceof LinkedApiError) {
-						throw new NodeApiError(
-							this.getNode(),
-							{
-								message: error.message,
-								type: error.type,
-								details: error.details as JsonObject,
-							},
-							{ itemIndex: i },
-						);
-					}
-					if (error instanceof NodeOperationError || error instanceof NodeApiError) {
-						throw error;
-					}
-					throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
-				}
-			}
-		}
-
-		return [returnData];
-	}
 }
