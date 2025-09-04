@@ -1,6 +1,6 @@
 {
-  "name": "n8n-nodes-linkedapi",
-  "version": "0.0.1",
+  "name": "n8n-nodes-linked-api",
+  "version": "0.0.4",
   "description": "n8n nodes for Linked API - LinkedIn automation and data retrieval",
   "keywords": [
     "n8n-community-node-package",
@@ -18,7 +18,7 @@
     "lead-generation"
   ],
   "bugs": {
-    "url": "https://github.com/Linked-API/n8n-nodes-linkedapi/issues"
+    "url": "https://github.com/Linked-API/n8n-nodes-linked-api/issues"
   },
   "license": "MIT",
   "homepage": "https://linkedapi.io",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Linked-API/n8n-nodes-linkedapi.git"
+    "url": "https://github.com/Linked-API/n8n-nodes-linked-api.git"
   },
   "engines": {
     "node": ">=18.0"

@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-linkedapi",
+	"node": "n8n-nodes-linked-api",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["Sales", "Marketing & Content", "Communication", "Analytics"],

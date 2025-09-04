@@ -1,4 +1,4 @@
-# n8n-nodes-linkedapi
+# n8n-nodes-linked-api
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Official n8n community node for [Linked API](https://linkedapi.io) - LinkedIn automation and data extraction in your n8n automations.
@@ -7,12 +7,12 @@ Official n8n community node for [Linked API](https://linkedapi.io) - LinkedIn au
 
 ### n8n Cloud / Self-hosted
 1. Go to **Settings** → **Community Nodes**
-2. Enter: `n8n-nodes-linkedapi`
+2. Enter: `n8n-nodes-linked-api`
 3. Click **Install**
 
 ### Manual
 ```bash
-npm install n8n-nodes-linkedapi
+npm install n8n-nodes-linked-api
 ```
 
 ## Credentials Setup
@@ -72,6 +72,6 @@ npm install n8n-nodes-linkedapi
 ## License & Support
 
 - **License**: MIT
-- **Issues**: [GitHub](https://github.com/Linked-API/n8n-nodes-linkedapi/issues)
+- **Issues**: [GitHub](https://github.com/Linked-API/n8n-nodes-linked-api/issues)
 - **Docs**: [linkedapi.io/docs](https://linkedapi.io/docs/)
 - **Email**: support@linkedapi.io
