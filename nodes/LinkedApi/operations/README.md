@@ -111,6 +111,7 @@ export const sendMessageFields: INodeProperties[] = [
 ## Operation Patterns by Parameter Count
 
 ### Pattern 1: Single Required Parameter
+
 ```typescript
 // Example: Fetch Person (1 required: personUrl)
 {
@@ -131,6 +132,7 @@ export const sendMessageFields: INodeProperties[] = [
 ```
 
 ### Pattern 2: Multiple Required Parameters
+
 ```typescript
 // Example: Send Message (2 required: personUrl, message)
 {
@@ -152,6 +154,7 @@ export const sendMessageFields: INodeProperties[] = [
 ```
 
 ### Pattern 3: No Required Parameters
+
 ```typescript
 // Example: Retrieve SSI (0 required parameters)
 {
@@ -171,6 +174,7 @@ export const sendMessageFields: INodeProperties[] = [
 ```
 
 ### Pattern 4: Conditional Configuration Objects
+
 When you have configuration objects that should only be included if a feature is enabled, use ternary operators:
 
 ```typescript
@@ -198,12 +202,14 @@ When you have configuration objects that should only be included if a feature is
 ```
 
 **Key Benefits:**
+
 - ✅ `retrievePosts: false` → `postsRetrievalConfig: undefined` (excluded from JSON)
 - ✅ `retrievePosts: true` → Includes `postsRetrievalConfig` with limit/since
 - ✅ Cleaner API requests without unnecessary empty objects
 - ✅ Simple ternary operator syntax (no complex multi-line JavaScript)
 
 ### Pattern 5: Complex Filter Objects
+
 For operations like search that need complex filter objects with multiple optional fields:
 
 ```typescript
@@ -231,6 +237,7 @@ For operations like search that need complex filter objects with multiple option
 ```
 
 **Key Benefits:**
+
 - ✅ Each filter field is conditionally included
 - ✅ String parsing (semicolon-separated) handled inline
 - ✅ `undefined` values are excluded from the final JSON

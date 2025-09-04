@@ -1,52 +1,38 @@
 import type { INodeProperties } from 'n8n-workflow';
+import {
+	createParameterWithDisplayOptions,
+	createRequestOperation,
+	companyUrlParameter,
+	employeeLimitParameter,
+	dmsLimitParameter,
+	postsLimitParameter,
+	postsSinceParameter,
+} from '../shared/SharedParameters';
 
 export const fetchCompanyFields: INodeProperties[] = [
-	// Operation-level routing configuration (triggers the request)
-	{
-		displayName: '',
-		name: 'fetchCompanyOperation',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-			},
+	createRequestOperation(
+		'fetchCompany',
+		{
+			companyUrl: '={{$parameter["companyUrl"]}}',
+			retrieveEmployees: '={{$parameter["retrieveEmployees"] || false}}',
+			retrieveDMs: '={{$parameter["retrieveDMs"] || false}}',
+			retrievePosts: '={{$parameter["retrievePosts"] || false}}',
+			employeesRetrievalConfig:
+				'={{$parameter["retrieveEmployees"] ? {limit: $parameter["employeeLimit"]} : undefined}}',
+			dmsRetrievalConfig:
+				'={{$parameter["retrieveDMs"] ? {limit: $parameter["dmsLimit"]} : undefined}}',
+			postsRetrievalConfig:
+				'={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
 		},
-		default: '',
-		routing: {
-			request: {
-				body: {
-					operationName: 'fetchCompany',
-					webhookUrl: '={{$parameter["webhookUrl"]}}',
-					data: {
-						companyUrl: '={{$parameter["companyUrl"]}}',
-						retrieveEmployees: '={{$parameter["retrieveEmployees"] || false}}',
-						retrieveDMs: '={{$parameter["retrieveDMs"] || false}}',
-						retrievePosts: '={{$parameter["retrievePosts"] || false}}',
-						employeesRetrievalConfig: '={{$parameter["retrieveEmployees"] ? {limit: $parameter["employeeLimit"]} : undefined}}',
-						dmsRetrievalConfig: '={{$parameter["retrieveDMs"] ? {limit: $parameter["dmsLimit"]} : undefined}}',
-						postsRetrievalConfig: '={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
-					},
-				},
-			},
+		{
+			resource: ['standard'],
+			operation: ['fetchCompany'],
 		},
-	},
-	// Parameter fields (no routing, just UI)
-	{
-		displayName: 'Company URL',
-		name: 'companyUrl',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-			},
-		},
-		default: '',
-		placeholder: 'https://www.linkedin.com/company/microsoft',
-		description: 'The LinkedIn company page URL to fetch',
-	},
+	),
+	createParameterWithDisplayOptions(companyUrlParameter, {
+		resource: ['standard'],
+		operation: ['fetchCompany'],
+	}),
 	// Employees
 	{
 		displayName: 'Retrieve Employees',
@@ -60,21 +46,12 @@ export const fetchCompanyFields: INodeProperties[] = [
 				operation: ['fetchCompany'],
 			},
 		},
-	},	
-	{
-		displayName: 'Employees Limit',
-		name: 'employeeLimit',
-		type: 'number',
-		default: 500,
-		description: 'The number of employees to retrieve',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-				retrieveEmployees: [true],
-			},
-		},
 	},
+	createParameterWithDisplayOptions(employeeLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchCompany'],
+		retrieveEmployees: [true],
+	}),
 	// Decision Makers
 	{
 		displayName: 'Retrieve Decision Makers',
@@ -89,20 +66,11 @@ export const fetchCompanyFields: INodeProperties[] = [
 			},
 		},
 	},
-	{
-		displayName: 'Decision Makers Limit',
-		name: 'dmsLimit',
-		type: 'number',
-		default: 20,
-		description: 'The number of decision makers to retrieve',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-				retrieveDMs: [true],
-			},
-		},
-	},
+	createParameterWithDisplayOptions(dmsLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchCompany'],
+		retrieveDMs: [true],
+	}),
 	// Posts
 	{
 		displayName: 'Retrieve Posts',
@@ -117,32 +85,14 @@ export const fetchCompanyFields: INodeProperties[] = [
 			},
 		},
 	},
-	{
-		displayName: 'Posts Limit',
-		name: 'postsLimit',
-		type: 'number',
-		default: 20,
-		description: 'The number of posts to retrieve',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-				retrievePosts: [true],
-			},
-		},
-	},
-	{
-		displayName: 'Posts Since',
-		name: 'postsSince',
-		type: 'dateTime',
-		default: '',
-		description: 'The date since the posts were created',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-				retrievePosts: [true],
-			},
-		},
-	},
+	createParameterWithDisplayOptions(postsLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchCompany'],
+		retrievePosts: [true],
+	}),
+	createParameterWithDisplayOptions(postsSinceParameter, {
+		resource: ['standard'],
+		operation: ['fetchCompany'],
+		retrievePosts: [true],
+	}),
 ];

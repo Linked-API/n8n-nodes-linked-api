@@ -1,67 +1,38 @@
 import type { INodeProperties } from 'n8n-workflow';
+import {
+	createParameterWithDisplayOptions,
+	createRequestOperation,
+	searchTermParameter,
+	limitParameter,
+} from '../shared/SharedParameters';
 
 export const searchCompaniesFields: INodeProperties[] = [
-	// Operation-level routing configuration (triggers the request)
-	{
-		displayName: '',
-		name: 'searchCompaniesOperation',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['searchCompanies'],
+	createRequestOperation(
+		'searchCompanies',
+		{
+			term: '={{$parameter["searchTerm"] || undefined}}',
+			limit: '={{$parameter["limit"]}}',
+			filter: {
+				locations:
+					'={{$parameter["additionalSearchFields"]?.locations ? $parameter["additionalSearchFields"].locations.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
+				industries:
+					'={{$parameter["additionalSearchFields"]?.industries ? $parameter["additionalSearchFields"].industries.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
+				sizes: '={{$parameter["additionalSearchFields"]?.sizes || undefined}}',
 			},
 		},
-		default: '',
-		routing: {
-			request: {
-				body: {
-					operationName: 'searchCompanies',
-					webhookUrl: '={{$parameter["webhookUrl"]}}',
-					data: {
-						term: '={{$parameter["searchTerm"] || undefined}}',
-						limit: '={{$parameter["limit"]}}',
-						filter: {
-							locations: '={{$parameter["additionalSearchFields"]?.locations ? $parameter["additionalSearchFields"].locations.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
-							industries: '={{$parameter["additionalSearchFields"]?.industries ? $parameter["additionalSearchFields"].industries.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
-							sizes: '={{$parameter["additionalSearchFields"]?.sizes || undefined}}',
-						},
-					},
-				},
-			},
+		{
+			resource: ['standard'],
+			operation: ['searchCompanies'],
 		},
-	},
-	// Parameter fields (no routing, just UI)
-	{
-		displayName: 'Search Term',
-		name: 'searchTerm',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['searchCompanies'],
-			},
-		},
-		default: '',
-		placeholder: 'software development',
-		description: 'Search term/keywords for company name or description',
-	},
-	{
-		displayName: 'Limit',
-		name: 'limit',
-		type: 'number',
-		typeOptions: {
-			minValue: 1,
-		},
-		default: 10,
-		description: 'Max number of results to return',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['searchCompanies'],
-			},
-		},
-	},
+	),
+	createParameterWithDisplayOptions(searchTermParameter, {
+		resource: ['standard'],
+		operation: ['searchCompanies'],
+	}),
+	createParameterWithDisplayOptions(limitParameter, {
+		resource: ['standard'],
+		operation: ['searchCompanies'],
+	}),
 	{
 		displayName: 'Additional Fields',
 		name: 'additionalSearchFields',

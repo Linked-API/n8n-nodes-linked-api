@@ -1,70 +1,43 @@
 /* eslint-disable n8n-nodes-base/node-param-options-type-unsorted-items */
 /* eslint-disable n8n-nodes-base/node-param-multi-options-type-unsorted-items */
 import type { INodeProperties } from 'n8n-workflow';
+import {
+	createParameterWithDisplayOptions,
+	createRequestOperation,
+	searchTermParameter,
+	limitParameter,
+} from '../shared/SharedParameters';
 
 export const nvSearchCompaniesFields: INodeProperties[] = [
-	// Operation-level routing configuration (triggers the request)
-	{
-		displayName: '',
-		name: 'nvSearchCompaniesOperation',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvSearchCompanies'],
+	createRequestOperation(
+		'nvSearchCompanies',
+		{
+			term: '={{$parameter["searchTerm"]}}',
+			limit: '={{$parameter["limit"]}}',
+			filter: {
+				locations:
+					'={{$parameter["additionalSalesNavFields"]?.locations ? $parameter["additionalSalesNavFields"].locations.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
+				industries:
+					'={{$parameter["additionalSalesNavFields"]?.industries ? $parameter["additionalSalesNavFields"].industries.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
+				sizes: '={{$parameter["additionalSalesNavFields"]?.sizes || undefined}}',
+				annualRevenue:
+					'={{$parameter["additionalSalesNavFields"]?.annualRevenueMin && $parameter["additionalSalesNavFields"]?.annualRevenueMax ? {min: $parameter["additionalSalesNavFields"].annualRevenueMin, max: $parameter["additionalSalesNavFields"].annualRevenueMax} : undefined}}',
 			},
 		},
-		default: '',
-		routing: {
-			request: {
-				body: {
-					operationName: 'nvSearchCompanies',
-					webhookUrl: '={{$parameter["webhookUrl"]}}',
-					data: {
-						term: '={{$parameter["searchTermSalesNav"]}}',
-						limit: '={{$parameter["limitSalesNav"]}}',
-						filter: {
-							locations: '={{$parameter["additionalSalesNavFields"]?.locations ? $parameter["additionalSalesNavFields"].locations.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
-							industries: '={{$parameter["additionalSalesNavFields"]?.industries ? $parameter["additionalSalesNavFields"].industries.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
-							sizes: '={{$parameter["additionalSalesNavFields"]?.sizes || undefined}}',
-							annualRevenue: '={{$parameter["additionalSalesNavFields"]?.annualRevenueMin && $parameter["additionalSalesNavFields"]?.annualRevenueMax ? {min: $parameter["additionalSalesNavFields"].annualRevenueMin, max: $parameter["additionalSalesNavFields"].annualRevenueMax} : undefined}}',
-						},
-					},
-				},
-			},
+		{
+			resource: ['salesNavigator'],
+			operation: ['nvSearchCompanies'],
 		},
-	},
+	),
 	// Parameter fields (no routing, just UI)
-	{
-		displayName: 'Search Term',
-		name: 'searchTermSalesNav',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvSearchCompanies'],
-			},
-		},
-		default: '',
-		placeholder: 'software development',
-		description: 'Search term/keywords for company name or description',
-	},
-	{
-		displayName: 'Limit',
-		name: 'limitSalesNav',
-		type: 'number',
-		typeOptions: {
-			minValue: 1,
-		},
-		default: 10,
-		description: 'Max number of results to return',
-		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvSearchCompanies'],
-			},
-		},
-	},
+	createParameterWithDisplayOptions(searchTermParameter, {
+		resource: ['salesNavigator'],
+		operation: ['nvSearchCompanies'],
+	}),
+	createParameterWithDisplayOptions(limitParameter, {
+		resource: ['salesNavigator'],
+		operation: ['nvSearchCompanies'],
+	}),
 	{
 		displayName: 'Additional Fields',
 		name: 'additionalSalesNavFields',

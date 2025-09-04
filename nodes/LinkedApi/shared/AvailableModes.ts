@@ -14,6 +14,10 @@ export const availableModes: INodeProperties = {
 			name: 'Sales Navigator',
 			value: 'salesNavigator',
 		},
+		{
+			name: 'Other',
+			value: 'other',
+		},
 	],
 	default: 'standard',
 };

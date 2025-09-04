@@ -1,18 +1,37 @@
-import type {
-	INodeType,
-	INodeTypeDescription,
-} from 'n8n-workflow';
+import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { NodeConnectionType } from 'n8n-workflow';
 import {
+	availableOtherOperations,
 	availableSalesNavigatorOperations,
 	availableStandardOperations,
-} from './descriptions/AvailableOperations';
-import { availableModes } from './descriptions/AvailableModes';
+} from './shared/AvailableOperations';
+import { availableModes } from './shared/AvailableModes';
 import {
+	checkConnectionStatusFields,
+	commentOnPostFields,
+	customWorkflowFields,
 	fetchPersonFields,
 	fetchCompanyFields,
+	fetchPostFields,
+	getWorkflowResultFields,
+	reactToPostFields,
+	removeConnectionFields,
+	retrieveConnectionsFields,
+	retrievePendingRequestsFields,
+	retrievePerformanceFields,
+	retrieveSSIFields,
 	searchCompaniesFields,
+	searchPeopleFields,
+	sendConnectionRequestFields,
+	sendMessageFields,
+	syncConversationFields,
+	withdrawConnectionRequestFields,
 	nvSearchCompaniesFields,
+	nvSearchPeopleFields,
+	nvSendMessageFields,
+	nvSyncConversationFields,
+	nvFetchPersonFields,
+	nvFetchCompanyFields,
 } from './operations';
 
 export class LinkedApi implements INodeType {
@@ -40,11 +59,11 @@ export class LinkedApi implements INodeType {
 			},
 		],
 		requestDefaults: {
-			baseURL: 'http://localhost:3004',
-			url: '/automation/execute',
+			baseURL: 'https://api.linkedapi.io/automation',
+			url: '/execute',
 			method: 'POST',
 			headers: {
-				'client': 'n8n',
+				client: 'n8n',
 				'Content-Type': 'application/json',
 				'linked-api-token': '={{$credentials.linkedApiToken}}',
 				'identification-token': '={{$credentials.identificationToken}}',
@@ -54,6 +73,7 @@ export class LinkedApi implements INodeType {
 			availableModes,
 			availableStandardOperations,
 			availableSalesNavigatorOperations,
+			availableOtherOperations,
 			// Webhook URL field (common to all operations)
 			{
 				displayName: 'Webhook URL',
@@ -61,14 +81,42 @@ export class LinkedApi implements INodeType {
 				type: 'string',
 				required: true,
 				default: '',
+				displayOptions: {
+					hide: {
+						operation: ['getWorkflowResult'],
+					},
+				},
 				placeholder: 'https://n8n.your-domain.com/webhook-test/your-webhook-ID',
 				description: 'URL where the response will be sent via webhook',
 			},
-			// Import operation fields from separate files
+			// Standard operations
+			...checkConnectionStatusFields,
+			...commentOnPostFields,
 			...fetchPersonFields,
 			...fetchCompanyFields,
+			...fetchPostFields,
+			...reactToPostFields,
+			...removeConnectionFields,
+			...retrieveConnectionsFields,
+			...retrievePendingRequestsFields,
+			...retrievePerformanceFields,
+			...retrieveSSIFields,
 			...searchCompaniesFields,
+			...searchPeopleFields,
+			...sendConnectionRequestFields,
+			...sendMessageFields,
+			...syncConversationFields,
+			...withdrawConnectionRequestFields,
+			// Sales Navigator operations
 			...nvSearchCompaniesFields,
+			...nvSearchPeopleFields,
+			...nvSendMessageFields,
+			...nvSyncConversationFields,
+			...nvFetchPersonFields,
+			...nvFetchCompanyFields,
+			// Other operations
+			...customWorkflowFields,
+			...getWorkflowResultFields,
 		],
 	};
 }

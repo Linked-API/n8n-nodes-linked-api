@@ -1,56 +1,44 @@
 import type { INodeProperties } from 'n8n-workflow';
+import {
+	createParameterWithDisplayOptions,
+	createRequestOperation,
+	personUrlParameter,
+	postsLimitParameter,
+	postsSinceParameter,
+	commentsLimitParameter,
+	commentsSinceParameter,
+	reactionsLimitParameter,
+	reactionsSinceParameter,
+} from '../shared/SharedParameters';
 
 export const fetchPersonFields: INodeProperties[] = [
-	// Operation-level routing configuration (triggers the request)
-	{
-		displayName: '',
-		name: 'fetchPersonOperation',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+	createRequestOperation(
+		'fetchPerson',
+		{
+			personUrl: '={{$parameter["personUrl"]}}',
+			retrieveExperience: '={{$parameter["retrieveExperience"] || false}}',
+			retrieveEducation: '={{$parameter["retrieveEducation"] || false}}',
+			retrieveSkills: '={{$parameter["retrieveSkills"] || false}}',
+			retrieveLanguages: '={{$parameter["retrieveLanguages"] || false}}',
+			retrievePosts: '={{$parameter["retrievePosts"] || false}}',
+			retrieveComments: '={{$parameter["retrieveComments"] || false}}',
+			retrieveReactions: '={{$parameter["retrieveReactions"] || false}}',
+			postsRetrievalConfig:
+				'={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
+			commentsRetrievalConfig:
+				'={{$parameter["retrieveComments"] ? {limit: $parameter["commentsLimit"], since: $parameter["commentsSince"] || undefined} : undefined}}',
+			reactionsRetrievalConfig:
+				'={{$parameter["retrieveReactions"] ? {limit: $parameter["reactionsLimit"], since: $parameter["reactionsSince"] || undefined} : undefined}}',
 		},
-		default: '',
-		routing: {
-			request: {
-				body: {
-					operationName: 'fetchPerson',
-					webhookUrl: '={{$parameter["webhookUrl"]}}',
-					data: {
-						personUrl: '={{$parameter["personUrl"]}}',
-						retrieveExperience: '={{$parameter["retrieveExperience"] || false}}',
-						retrieveEducation: '={{$parameter["retrieveEducation"] || false}}',
-						retrieveSkills: '={{$parameter["retrieveSkills"] || false}}',
-						retrieveLanguages: '={{$parameter["retrieveLanguages"] || false}}',
-						retrievePosts: '={{$parameter["retrievePosts"] || false}}',
-						retrieveComments: '={{$parameter["retrieveComments"] || false}}',
-						retrieveReactions: '={{$parameter["retrieveReactions"] || false}}',
-						postsRetrievalConfig: '={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
-						commentsRetrievalConfig: '={{$parameter["retrieveComments"] ? {limit: $parameter["commentsLimit"], since: $parameter["commentsSince"] || undefined} : undefined}}',
-						reactionsRetrievalConfig: '={{$parameter["retrieveReactions"] ? {limit: $parameter["reactionsLimit"], since: $parameter["reactionsSince"] || undefined} : undefined}}',
-					},
-				},
-			},
+		{
+			resource: ['standard'],
+			operation: ['fetchPerson'],
 		},
-	},
-	// Parameter fields (no routing, just UI)
-	{
-		displayName: 'Person URL',
-		name: 'personUrl',
-		type: 'string',
-		required: true,
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
-		},
-		default: '',
-		placeholder: 'https://www.linkedin.com/in/john-doe',
-		description: 'The LinkedIn profile URL of the person to fetch',
-	},
+	),
+	createParameterWithDisplayOptions(personUrlParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+	}),
 	{
 		displayName: 'Retrieve Experience',
 		name: 'retrieveExperience',
@@ -117,34 +105,16 @@ export const fetchPersonFields: INodeProperties[] = [
 		},
 		description: "Whether to retrieve the person's posts information",
 	},
-	{
-		displayName: 'Posts Since',
-		name: 'postsSince',
-		type: 'dateTime',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrievePosts: [true],
-			},
-		},
-		description: "The date since the posts were created",
-	},
-	{
-		displayName: 'Posts Limit',
-		name: 'postsLimit',
-		type: 'number',
-		default: 10,
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrievePosts: [true],
-			},
-		},
-		description: "The number of posts to retrieve",
-	},
+	createParameterWithDisplayOptions(postsSinceParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrievePosts: [true],
+	}),
+	createParameterWithDisplayOptions(postsLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrievePosts: [true],
+	}),
 	// Comments
 	{
 		displayName: 'Retrieve Comments',
@@ -159,34 +129,16 @@ export const fetchPersonFields: INodeProperties[] = [
 		},
 		description: "Whether to retrieve the person's comments information",
 	},
-	{
-		displayName: 'Comments Since',
-		name: 'commentsSince',
-		type: 'dateTime',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrieveComments: [true],
-			},
-		},
-		description: "The date since the comments were created",
-	},
-	{
-		displayName: 'Comments Limit',
-		name: 'commentsLimit',
-		type: 'number',
-		default: 10,
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrieveComments: [true],
-			},
-		},
-		description: "The number of comments to retrieve",
-	},
+	createParameterWithDisplayOptions(commentsSinceParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrieveComments: [true],
+	}),
+	createParameterWithDisplayOptions(commentsLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrieveComments: [true],
+	}),
 	// Reations
 	{
 		displayName: 'Retrieve Reactions',
@@ -201,32 +153,14 @@ export const fetchPersonFields: INodeProperties[] = [
 		},
 		description: "Whether to retrieve the person's reactions information",
 	},
-	{
-		displayName: 'Reactions Since',
-		name: 'reactionsSince',
-		type: 'dateTime',
-		default: '',
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrieveReactions: [true],
-			},
-		},
-		description: "The date since the reactions were created",
-	},
-	{
-		displayName: 'Reactions Limit',
-		name: 'reactionsLimit',
-		type: 'number',
-		default: 10,
-		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-				retrieveReactions: [true],
-			},
-		},
-		description: "The number of reactions to retrieve",
-	},
+	createParameterWithDisplayOptions(reactionsSinceParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrieveReactions: [true],
+	}),
+	createParameterWithDisplayOptions(reactionsLimitParameter, {
+		resource: ['standard'],
+		operation: ['fetchPerson'],
+		retrieveReactions: [true],
+	}),
 ];
