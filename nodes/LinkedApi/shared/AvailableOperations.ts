@@ -176,6 +176,11 @@ export const availableOtherOperations: INodeProperties = {
 	type: 'options',
 	noDataExpression: true,
 	default: 'customWorkflow',
+	displayOptions: {
+		show: {
+			resource: ['other'],
+		},
+	},
 	options: [
 		{
 			name: 'Custom Workflow',
