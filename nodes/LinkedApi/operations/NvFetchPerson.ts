@@ -5,19 +5,18 @@ import {
 	personHashedUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvFetchPerson'],
+};
+
 export const nvFetchPersonFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvFetchPerson',
 		{
 			personHashedUrl: '={{$parameter["personHashedUrl"]}}',
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvFetchPerson'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(personHashedUrlParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvFetchPerson'],
-	}),
+	createParameterWithDisplayOptions(personHashedUrlParameter, show),
 ];

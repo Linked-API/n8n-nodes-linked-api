@@ -5,19 +5,18 @@ import {
 	personUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['removeConnection'],
+};
+
 export const removeConnectionFields: INodeProperties[] = [
 	createRequestOperation(
 		'removeConnection',
 		{
 			personUrl: '={{$parameter["personUrl"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['removeConnection'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['removeConnection'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
 ];

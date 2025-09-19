@@ -6,6 +6,11 @@ import {
 	reactionTypeParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['reactToPost'],
+};
+
 export const reactToPostFields: INodeProperties[] = [
 	createRequestOperation(
 		'reactToPost',
@@ -13,17 +18,8 @@ export const reactToPostFields: INodeProperties[] = [
 			postUrl: '={{$parameter["postUrl"]}}',
 			type: '={{$parameter["reactionType"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['reactToPost'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(postUrlParameter, {
-		resource: ['standard'],
-		operation: ['reactToPost'],
-	}),
-	createParameterWithDisplayOptions(reactionTypeParameter, {
-		resource: ['standard'],
-		operation: ['reactToPost'],
-	}),
+	createParameterWithDisplayOptions(postUrlParameter, show),
+	createParameterWithDisplayOptions(reactionTypeParameter, show),
 ];

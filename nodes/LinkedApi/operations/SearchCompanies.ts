@@ -6,6 +6,11 @@ import {
 	limitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['searchCompanies'],
+};
+
 export const searchCompaniesFields: INodeProperties[] = [
 	createRequestOperation(
 		'searchCompanies',
@@ -20,19 +25,10 @@ export const searchCompaniesFields: INodeProperties[] = [
 				sizes: '={{$parameter["additionalSearchFields"]?.sizes || undefined}}',
 			},
 		},
-		{
-			resource: ['standard'],
-			operation: ['searchCompanies'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(searchTermParameter, {
-		resource: ['standard'],
-		operation: ['searchCompanies'],
-	}),
-	createParameterWithDisplayOptions(limitParameter, {
-		resource: ['standard'],
-		operation: ['searchCompanies'],
-	}),
+	createParameterWithDisplayOptions(searchTermParameter, show),
+	createParameterWithDisplayOptions(limitParameter, show),
 	{
 		displayName: 'Additional Fields',
 		name: 'additionalSearchFields',
@@ -40,10 +36,7 @@ export const searchCompaniesFields: INodeProperties[] = [
 		default: {},
 		placeholder: 'Add Field',
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['searchCompanies'],
-			},
+			show,
 		},
 		options: [
 			{

@@ -8,6 +8,11 @@ import {
 	limitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['searchPeople'],
+};
+
 export const searchPeopleFields: INodeProperties[] = [
 	createRequestOperation(
 		'searchPeople',
@@ -30,20 +35,11 @@ export const searchPeopleFields: INodeProperties[] = [
 					'={{$parameter["additionalSearchFields"]?.schools ? $parameter["additionalSearchFields"].schools.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
 			},
 		},
-		{
-			resource: ['standard'],
-			operation: ['searchPeople'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(searchTermParameter, {
-		resource: ['standard'],
-		operation: ['searchPeople'],
-	}),
-	createParameterWithDisplayOptions(limitParameter, {
-		resource: ['standard'],
-		operation: ['searchPeople'],
-	}),
+	createParameterWithDisplayOptions(searchTermParameter, show),
+	createParameterWithDisplayOptions(limitParameter, show),
 	// Additional search fields
 	{
 		displayName: 'Additional Search Fields',
@@ -52,10 +48,7 @@ export const searchPeopleFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		default: {},
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['searchPeople'],
-			},
+			show,
 		},
 		options: [
 			{

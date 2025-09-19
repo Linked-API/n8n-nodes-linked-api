@@ -4,15 +4,18 @@ import {
 	workflowDefinitionParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['other'],
+	operation: ['customWorkflow'],
+};
+
 export const customWorkflowFields: INodeProperties[] = [
 	{
 		displayName: '',
 		name: `customWorkflowOperation`,
 		type: 'hidden',
 		displayOptions: {
-			show: {
-				operation: ['customWorkflow'],
-			},
+			show,
 		},
 		default: '',
 		routing: {
@@ -25,7 +28,5 @@ export const customWorkflowFields: INodeProperties[] = [
 			},
 		},
 	},
-	createParameterWithDisplayOptions(workflowDefinitionParameter, {
-		operation: ['customWorkflow'],
-	}),
+	createParameterWithDisplayOptions(workflowDefinitionParameter, show),
 ];

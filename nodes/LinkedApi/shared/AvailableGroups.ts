@@ -1,13 +1,13 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const availableModes: INodeProperties = {
-	displayName: 'Mode',
+export const availableGroups: INodeProperties = {
+	displayName: 'Group',
 	name: 'resource',
 	type: 'options',
 	noDataExpression: true,
 	options: [
 		{
-			name: 'Standard',
+			name: 'Standard Interface',
 			value: 'standard',
 		},
 		{

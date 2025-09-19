@@ -11,6 +11,11 @@ import {
 	reactionsSinceParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['fetchPerson'],
+};
+
 export const fetchPersonFields: INodeProperties[] = [
 	createRequestOperation(
 		'fetchPerson',
@@ -30,25 +35,16 @@ export const fetchPersonFields: INodeProperties[] = [
 			reactionsRetrievalConfig:
 				'={{$parameter["retrieveReactions"] ? {limit: $parameter["reactionsLimit"], since: $parameter["reactionsSince"] || undefined} : undefined}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['fetchPerson'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
 	{
 		displayName: 'Retrieve Experience',
 		name: 'retrieveExperience',
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's experience information",
 	},
@@ -58,10 +54,7 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's education information",
 	},
@@ -71,10 +64,7 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's skills information",
 	},
@@ -84,11 +74,8 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
-		},
+			show,
+		},	
 		description: "Whether to retrieve the person's languages information",
 	},
 	// Posts
@@ -98,21 +85,16 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's posts information",
 	},
 	createParameterWithDisplayOptions(postsSinceParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrievePosts: [true],
 	}),
 	createParameterWithDisplayOptions(postsLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrievePosts: [true],
 	}),
 	// Comments
@@ -122,21 +104,16 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's comments information",
 	},
 	createParameterWithDisplayOptions(commentsSinceParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrieveComments: [true],
 	}),
 	createParameterWithDisplayOptions(commentsLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrieveComments: [true],
 	}),
 	// Reations
@@ -146,21 +123,16 @@ export const fetchPersonFields: INodeProperties[] = [
 		type: 'boolean',
 		default: false,
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchPerson'],
-			},
+			show,
 		},
 		description: "Whether to retrieve the person's reactions information",
 	},
 	createParameterWithDisplayOptions(reactionsSinceParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrieveReactions: [true],
 	}),
 	createParameterWithDisplayOptions(reactionsLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchPerson'],
+		...show,
 		retrieveReactions: [true],
 	}),
 ];

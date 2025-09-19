@@ -5,20 +5,19 @@ import {
 	personUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvSyncConversation'],
+};
+
 export const nvSyncConversationFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvSyncConversation',
 		{
 			personUrl: '={{$parameter["personUrl"]}}',
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvSyncConversation'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSyncConversation'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
 ];

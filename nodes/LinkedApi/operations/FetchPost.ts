@@ -5,20 +5,19 @@ import {
 	postUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['fetchPost'],
+};
+
 export const fetchPostFields: INodeProperties[] = [
 	createRequestOperation(
 		'fetchPost',
 		{
 			postUrl: '={{$parameter["postUrl"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['fetchPost'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(postUrlParameter, {
-		resource: ['standard'],
-		operation: ['fetchPost'],
-	}),
+	createParameterWithDisplayOptions(postUrlParameter, show),
 ];

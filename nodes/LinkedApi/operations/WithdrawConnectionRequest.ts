@@ -6,6 +6,11 @@ import {
 	unfollowParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['withdrawConnectionRequest'],
+};
+
 export const withdrawConnectionRequestFields: INodeProperties[] = [
 	createRequestOperation(
 		'withdrawConnectionRequest',
@@ -13,18 +18,9 @@ export const withdrawConnectionRequestFields: INodeProperties[] = [
 			personUrl: '={{$parameter["personUrl"]}}',
 			unfollow: '={{$parameter["unfollow"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['withdrawConnectionRequest'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['withdrawConnectionRequest'],
-	}),
-	createParameterWithDisplayOptions(unfollowParameter, {
-		resource: ['standard'],
-		operation: ['withdrawConnectionRequest'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
+	createParameterWithDisplayOptions(unfollowParameter, show),
 ];

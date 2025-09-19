@@ -9,6 +9,11 @@ import {
 	postsSinceParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['fetchCompany'],
+};
+
 export const fetchCompanyFields: INodeProperties[] = [
 	createRequestOperation(
 		'fetchCompany',
@@ -24,15 +29,9 @@ export const fetchCompanyFields: INodeProperties[] = [
 			postsRetrievalConfig:
 				'={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['fetchCompany'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(companyUrlParameter, {
-		resource: ['standard'],
-		operation: ['fetchCompany'],
-	}),
+	createParameterWithDisplayOptions(companyUrlParameter, show),
 	// Employees
 	{
 		displayName: 'Retrieve Employees',
@@ -41,15 +40,11 @@ export const fetchCompanyFields: INodeProperties[] = [
 		default: false,
 		description: 'Whether to retrieve company employees',
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-			},
+			show,
 		},
 	},
 	createParameterWithDisplayOptions(employeeLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchCompany'],
+		...show,
 		retrieveEmployees: [true],
 	}),
 	// Decision Makers
@@ -60,15 +55,11 @@ export const fetchCompanyFields: INodeProperties[] = [
 		default: false,
 		description: 'Whether to retrieve company decision makers',
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-			},
+			show,
 		},
 	},
 	createParameterWithDisplayOptions(dmsLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchCompany'],
+		...show,
 		retrieveDMs: [true],
 	}),
 	// Posts
@@ -79,20 +70,15 @@ export const fetchCompanyFields: INodeProperties[] = [
 		default: false,
 		description: 'Whether to retrieve company posts',
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['fetchCompany'],
-			},
+			show,
 		},
 	},
 	createParameterWithDisplayOptions(postsLimitParameter, {
-		resource: ['standard'],
-		operation: ['fetchCompany'],
+		...show,
 		retrievePosts: [true],
 	}),
 	createParameterWithDisplayOptions(postsSinceParameter, {
-		resource: ['standard'],
-		operation: ['fetchCompany'],
+		...show,
 		retrievePosts: [true],
 	}),
 ];

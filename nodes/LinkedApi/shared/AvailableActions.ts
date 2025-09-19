@@ -1,8 +1,8 @@
 /* eslint-disable n8n-nodes-base/node-param-options-type-unsorted-items */
-import type { INodeProperties } from 'n8n-workflow';
+import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 
 export const availableStandardOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -120,7 +120,7 @@ export const availableStandardOperations: INodeProperties = {
 };
 
 export const availableSalesNavigatorOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -170,8 +170,16 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 	default: 'nvSearchCompanies',
 };
 
+export const customWorkflowOption: INodePropertyOptions =
+{
+	name: 'Custom Workflow',
+	value: 'customWorkflow',
+	description: 'Execute a custom multi-step workflow using raw workflow definition',
+	action: 'Execute custom workflow',
+};
+
 export const availableOtherOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -182,12 +190,7 @@ export const availableOtherOperations: INodeProperties = {
 		},
 	},
 	options: [
-		{
-			name: 'Custom Workflow',
-			value: 'customWorkflow',
-			description: 'Execute a custom multi-step workflow using raw workflow definition',
-			action: 'Execute custom workflow',
-		},
+		customWorkflowOption,
 		{
 			name: 'Get Workflow Result',
 			value: 'getWorkflowResult',

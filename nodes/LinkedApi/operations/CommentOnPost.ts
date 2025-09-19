@@ -6,6 +6,11 @@ import {
 	commentTextParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['commentOnPost'],
+};
+
 export const commentOnPostFields: INodeProperties[] = [
 	createRequestOperation(
 		'commentOnPost',
@@ -13,17 +18,8 @@ export const commentOnPostFields: INodeProperties[] = [
 			postUrl: '={{$parameter["postUrl"]}}',
 			text: '={{$parameter["commentText"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['commentOnPost'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(postUrlParameter, {
-		resource: ['standard'],
-		operation: ['commentOnPost'],
-	}),
-	createParameterWithDisplayOptions(commentTextParameter, {
-		resource: ['standard'],
-		operation: ['commentOnPost'],
-	}),
+	createParameterWithDisplayOptions(postUrlParameter, show),
+	createParameterWithDisplayOptions(commentTextParameter, show),
 ];

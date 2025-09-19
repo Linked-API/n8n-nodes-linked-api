@@ -7,6 +7,11 @@ import {
 	emailParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['sendConnectionRequest'],
+};
+
 export const sendConnectionRequestFields: INodeProperties[] = [
 	createRequestOperation(
 		'sendConnectionRequest',
@@ -15,22 +20,10 @@ export const sendConnectionRequestFields: INodeProperties[] = [
 			note: '={{$parameter["connectionNote"] || undefined}}',
 			email: '={{$parameter["email"] || undefined}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['sendConnectionRequest'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['sendConnectionRequest'],
-	}),
-	createParameterWithDisplayOptions(connectionNoteParameter, {
-		resource: ['standard'],
-		operation: ['sendConnectionRequest'],
-	}),
-	createParameterWithDisplayOptions(emailParameter, {
-		resource: ['standard'],
-		operation: ['sendConnectionRequest'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
+	createParameterWithDisplayOptions(connectionNoteParameter, show),
+	createParameterWithDisplayOptions(emailParameter, show),
 ];

@@ -9,6 +9,11 @@ import {
 	limitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvSearchPeople'],
+};
+
 export const nvSearchPeopleFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvSearchPeople',
@@ -33,20 +38,11 @@ export const nvSearchPeopleFields: INodeProperties[] = [
 					'={{$parameter["additionalSalesNavFields"]?.yearsOfExperiences || undefined}}',
 			},
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvSearchPeople'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(searchTermParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSearchPeople'],
-	}),
-	createParameterWithDisplayOptions(limitParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSearchPeople'],
-	}),
+	createParameterWithDisplayOptions(searchTermParameter, show),
+	createParameterWithDisplayOptions(limitParameter, show),
 	// Additional Sales Navigator search fields
 	{
 		displayName: 'Additional Search Fields',
@@ -55,10 +51,7 @@ export const nvSearchPeopleFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		default: {},
 		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvSearchPeople'],
-			},
+			show,
 		},
 		options: [
 			{

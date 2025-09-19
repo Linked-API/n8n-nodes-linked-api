@@ -8,6 +8,12 @@ import {
 	limitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvSearchCompanies'],
+};
+
+
 export const nvSearchCompaniesFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvSearchCompanies',
@@ -24,20 +30,11 @@ export const nvSearchCompaniesFields: INodeProperties[] = [
 					'={{$parameter["additionalSalesNavFields"]?.annualRevenueMin && $parameter["additionalSalesNavFields"]?.annualRevenueMax ? {min: $parameter["additionalSalesNavFields"].annualRevenueMin, max: $parameter["additionalSalesNavFields"].annualRevenueMax} : undefined}}',
 			},
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvSearchCompanies'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(searchTermParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSearchCompanies'],
-	}),
-	createParameterWithDisplayOptions(limitParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSearchCompanies'],
-	}),
+	createParameterWithDisplayOptions(searchTermParameter, show),
+	createParameterWithDisplayOptions(limitParameter, show),
 	{
 		displayName: 'Additional Fields',
 		name: 'additionalSalesNavFields',
@@ -45,10 +42,7 @@ export const nvSearchCompaniesFields: INodeProperties[] = [
 		default: {},
 		placeholder: 'Add Field',
 		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvSearchCompanies'],
-			},
+			show,
 		},
 		options: [
 			{

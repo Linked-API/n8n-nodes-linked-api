@@ -3,10 +3,11 @@ import type { IDisplayOptions, INodeProperties } from 'n8n-workflow';
 import {
 	availableSalesNavigatorOperations,
 	availableStandardOperations,
-} from './AvailableOperations';
+	customWorkflowOption,
+} from './AvailableActions';
 
 /**
- * Shared parameter definitions that can be reused across operations
+ * Shared parameter definitions that can be reused across actions
  * Each parameter can be customized by overriding specific properties like displayOptions
  */
 
@@ -271,7 +272,7 @@ export const workflowOperationParameter: INodeProperties = {
 	name: 'workflowOperation',
 	type: 'options',
 	default: '',
-	options: [...availableStandardOperations.options!, ...availableSalesNavigatorOperations.options!],
+	options: [customWorkflowOption, ...availableStandardOperations.options!, ...availableSalesNavigatorOperations.options!],
 	description: 'Worfklow operation used during the execution of the workflow',
 };
 

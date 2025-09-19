@@ -5,31 +5,30 @@ import {
 	workflowOperationParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['other'],
+	operation: ['getWorkflowResult'],
+};
+
 export const getWorkflowResultFields: INodeProperties[] = [
 	{
 		displayName: '',
 		name: 'getWorkflowResultOperation',
 		type: 'hidden',
 		displayOptions: {
-			show: {
-				operation: ['getWorkflowResult'],
-			},
+			show,
 		},
 		default: '',
 		routing: {
 			request: {
 				method: 'GET',
-				url: '=/status/{{$parameter["workflowId"]}}',
+				url: '=/workflows/{{$parameter["workflowId"]}}',
 				qs: {
 					operationName: '={{$parameter["workflowOperation"]}}',
 				},
 			},
 		},
 	},
-	createParameterWithDisplayOptions(workflowIdParameter, {
-		operation: ['getWorkflowResult'],
-	}),
-	createParameterWithDisplayOptions(workflowOperationParameter, {
-		operation: ['getWorkflowResult'],
-	}),
+	createParameterWithDisplayOptions(workflowIdParameter, show),
+	createParameterWithDisplayOptions(workflowOperationParameter, show),
 ];

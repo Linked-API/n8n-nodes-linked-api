@@ -5,20 +5,19 @@ import {
 	personUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['syncConversation'],
+};
+
 export const syncConversationFields: INodeProperties[] = [
 	createRequestOperation(
 		'syncConversation',
 		{
 			personUrl: '={{$parameter["personUrl"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['syncConversation'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['syncConversation'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
 ];

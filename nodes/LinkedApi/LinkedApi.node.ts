@@ -4,8 +4,8 @@ import {
 	availableOtherOperations,
 	availableSalesNavigatorOperations,
 	availableStandardOperations,
-} from './shared/AvailableOperations';
-import { availableModes } from './shared/AvailableModes';
+} from './shared/AvailableActions';
+import { availableGroups } from './shared/AvailableGroups';
 import {
 	checkConnectionStatusFields,
 	commentOnPostFields,
@@ -61,15 +61,16 @@ export class LinkedApi implements INodeType {
 		],
 		requestDefaults: {
 			baseURL: 'https://api.linkedapi.io/automation',
-			url: '/execute',
+			url: '/workflows',
 			method: 'POST',
 			headers: {
 				client: 'n8n',
+				'result-retrieval': 'webhook',
 				'Content-Type': 'application/json',
 			},
 		},
 		properties: [
-			availableModes,
+			availableGroups,
 			availableStandardOperations,
 			availableSalesNavigatorOperations,
 			availableOtherOperations,
@@ -88,7 +89,7 @@ export class LinkedApi implements INodeType {
 				placeholder: 'https://n8n.your-domain.com/webhook-test/your-webhook-ID',
 				description: 'URL where the response will be sent via webhook',
 			},
-			// Standard operations
+			// Standard actions
 			...checkConnectionStatusFields,
 			...commentOnPostFields,
 			...fetchPersonFields,
@@ -106,14 +107,14 @@ export class LinkedApi implements INodeType {
 			...sendMessageFields,
 			...syncConversationFields,
 			...withdrawConnectionRequestFields,
-			// Sales Navigator operations
+			// Sales Navigator actions
 			...nvSearchCompaniesFields,
 			...nvSearchPeopleFields,
 			...nvSendMessageFields,
 			...nvSyncConversationFields,
 			...nvFetchPersonFields,
 			...nvFetchCompanyFields,
-			// Other operations
+			// Other actions
 			...customWorkflowFields,
 			...getWorkflowResultFields,
 		],

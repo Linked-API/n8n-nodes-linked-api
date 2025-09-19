@@ -6,6 +6,11 @@ import {
 	messageTextParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['sendMessage'],
+};
+
 export const sendMessageFields: INodeProperties[] = [
 	createRequestOperation(
 		'sendMessage',
@@ -13,18 +18,9 @@ export const sendMessageFields: INodeProperties[] = [
 			personUrl: '={{$parameter["personUrl"]}}',
 			text: '={{$parameter["messageText"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['sendMessage'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['sendMessage'],
-	}),
-	createParameterWithDisplayOptions(messageTextParameter, {
-		resource: ['standard'],
-		operation: ['sendMessage'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
+	createParameterWithDisplayOptions(messageTextParameter, show),
 ];

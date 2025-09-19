@@ -7,6 +7,11 @@ import {
 	messageSubjectParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvSendMessage'],
+};
+
 export const nvSendMessageFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvSendMessage',
@@ -15,21 +20,9 @@ export const nvSendMessageFields: INodeProperties[] = [
 			text: '={{$parameter["messageText"]}}',
 			subject: '={{$parameter["messageSubject"]}}',
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvSendMessage'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSendMessage'],
-	}),
-	createParameterWithDisplayOptions(messageSubjectParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSendMessage'],
-	}),
-	createParameterWithDisplayOptions(messageTextParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvSendMessage'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
+	createParameterWithDisplayOptions(messageSubjectParameter, show),
+	createParameterWithDisplayOptions(messageTextParameter, show),
 ];

@@ -6,6 +6,11 @@ import {
 	limitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['retrieveConnections'],
+};
+
 export const retrieveConnectionsFields: INodeProperties[] = [
 	createRequestOperation(
 		'retrieveConnections',
@@ -27,16 +32,10 @@ export const retrieveConnectionsFields: INodeProperties[] = [
 					'={{$parameter["additionalConnectionFields"]?.schools ? $parameter["additionalConnectionFields"].schools.split(";").map(s => s.trim()).filter(s => s) : undefined}}',
 			},
 		},
-		{
-			resource: ['standard'],
-			operation: ['retrieveConnections'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(limitParameter, {
-		resource: ['standard'],
-		operation: ['retrieveConnections'],
-	}),
+	createParameterWithDisplayOptions(limitParameter, show),
 	// Additional connection filter fields
 	{
 		displayName: 'Additional Filter Fields',
@@ -45,10 +44,7 @@ export const retrieveConnectionsFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		default: {},
 		displayOptions: {
-			show: {
-				resource: ['standard'],
-				operation: ['retrieveConnections'],
-			},
+			show,
 		},
 		options: [
 			{

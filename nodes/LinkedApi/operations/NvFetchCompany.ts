@@ -9,6 +9,11 @@ import {
 	dmsLimitParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['salesNavigator'],
+	operation: ['nvFetchCompany'],
+};
+
 export const nvFetchCompanyFields: INodeProperties[] = [
 	createRequestOperation(
 		'nvFetchCompany',
@@ -21,15 +26,9 @@ export const nvFetchCompanyFields: INodeProperties[] = [
 			dmsRetrievalConfig:
 				'={{$parameter["retrieveDMs"] ? {limit: $parameter["dmsLimit"]} : undefined}}',
 		},
-		{
-			resource: ['salesNavigator'],
-			operation: ['nvFetchCompany'],
-		},
+		show,
 	),
-	createParameterWithDisplayOptions(companyHashedUrlParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvFetchCompany'],
-	}),
+	createParameterWithDisplayOptions(companyHashedUrlParameter, show),
 	// Employees
 	{
 		displayName: 'Retrieve Employees',
@@ -38,15 +37,11 @@ export const nvFetchCompanyFields: INodeProperties[] = [
 		default: false,
 		description: 'Whether to retrieve company employees',
 		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvFetchCompany'],
-			},
+			show,
 		},
 	},
 	createParameterWithDisplayOptions(employeeLimitParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvFetchCompany'],
+		...show,
 		retrieveEmployees: [true],
 	}),
 	{
@@ -57,8 +52,7 @@ export const nvFetchCompanyFields: INodeProperties[] = [
 		placeholder: 'Add Field',
 		displayOptions: {
 			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvFetchCompany'],
+				...show,
 				retrieveEmployees: [true],
 			},
 		},
@@ -133,15 +127,11 @@ export const nvFetchCompanyFields: INodeProperties[] = [
 		default: false,
 		description: 'Whether to retrieve company decision makers',
 		displayOptions: {
-			show: {
-				resource: ['salesNavigator'],
-				operation: ['nvFetchCompany'],
-			},
+			show,
 		},
 	},
 	createParameterWithDisplayOptions(dmsLimitParameter, {
-		resource: ['salesNavigator'],
-		operation: ['nvFetchCompany'],
+		...show,
 		retrieveDMs: [true],
 	}),
 ];

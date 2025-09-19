@@ -5,20 +5,19 @@ import {
 	personUrlParameter,
 } from '../shared/SharedParameters';
 
+const show = {
+	resource: ['standard'],
+	operation: ['checkConnectionStatus'],
+};
+
 export const checkConnectionStatusFields: INodeProperties[] = [
 	createRequestOperation(
 		'checkConnectionStatus',
 		{
 			personUrl: '={{$parameter["personUrl"]}}',
 		},
-		{
-			resource: ['standard'],
-			operation: ['checkConnectionStatus'],
-		},
+		show,
 	),
 	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, {
-		resource: ['standard'],
-		operation: ['checkConnectionStatus'],
-	}),
+	createParameterWithDisplayOptions(personUrlParameter, show),
 ];
