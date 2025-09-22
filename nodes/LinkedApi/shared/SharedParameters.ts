@@ -431,7 +431,8 @@ export const workflowIdParameter: INodeProperties = {
 	name: 'workflowId',
 	type: 'string',
 	default: '',
-	description: 'ID of the workflow to retrieve the result from',
+	placeholder: 'wf-fff00000-9999-4343-bbaa-1234567890ab',
+	description: 'ID of the workflow',
 };
 
 export const workflowOperationParameter: INodeProperties = {

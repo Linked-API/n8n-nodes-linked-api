@@ -12,7 +12,6 @@ import {
 } from './shared/AvailableActions';
 import { availableGroups } from './shared/AvailableGroups';
 import {
-	getWorkflowResultFields,
 	RetrieveSSI,
 	NvFetchCompany,
 	NvFetchPerson,
@@ -37,10 +36,14 @@ import {
 	SendMessage,
 	SyncConversation,
 	WithdrawConnectionRequest,
+	GetWorkflowResult,
+	CancelWorkflow,
+	PollConversations,
+	ApiUsageStatistics,
 } from './operations';
-import { LinkedApiWebhookOperation } from './shared/LinkedApiOperation';
+import { LinkedApiOperation } from './shared/LinkedApiOperation';
 
-const operations: Record<string, LinkedApiWebhookOperation> = {
+const operations: Record<string, LinkedApiOperation> = {
 	checkConnectionStatus: new CheckConnectionStatus(),
 	commentOnPost: new CommentOnPost(),
 	fetchPerson: new FetchPerson(),
@@ -65,6 +68,10 @@ const operations: Record<string, LinkedApiWebhookOperation> = {
 	nvSendMessage: new NvSendMessage(),
 	nvSyncConversation: new NvSyncConversation(),
 	customWorkflow: new CustomWorkflow(),
+	getWorkflowResult: new GetWorkflowResult(),
+	cancelWorkflow: new CancelWorkflow(),
+	pollConversations: new PollConversations(),
+	apiUsageStatistics: new ApiUsageStatistics(),
 };
 
 export class LinkedApi implements INodeType {
@@ -123,7 +130,10 @@ export class LinkedApi implements INodeType {
 			...operations.nvSyncConversation.operationFields,
 			// Other actions
 			...operations.customWorkflow.operationFields,
-			...getWorkflowResultFields,
+			...operations.getWorkflowResult.operationFields,
+			...operations.cancelWorkflow.operationFields,
+			...operations.pollConversations.operationFields,
+			...operations.apiUsageStatistics.operationFields,
 		],
 	};
 
@@ -135,35 +145,6 @@ export class LinkedApi implements INodeType {
 			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
 		}
 
-		if (operation === 'getWorkflowResult') {
-			const workflowId = this.getNodeParameter('workflowId', 0) as string;
-			const workflowOperation = this.getNodeParameter('workflowOperation', 0) as string;
-
-			try {
-				const responseData = await this.helpers.httpRequest({
-					method: 'GET',
-					baseURL: 'https://api.linkedapi.io/automation',
-					url: `/workflows/${workflowId}`,
-					qs: {
-						operationName: workflowOperation,
-					},
-					headers: {
-						'identification-token': credentials.identificationToken as string,
-						'linked-api-token': credentials.linkedApiToken as string,
-						'client': 'n8n',
-						'result-retrieval': 'webhook',
-					},
-					json: true,
-				});
-				const executionData = this.helpers.returnJsonArray(
-					Array.isArray(responseData) ? responseData : [responseData],
-				);
-				return this.prepareOutputData(executionData);
-			} catch (error) {
-				console.error('Error during "getWorkflowResult" httpRequest:', error);
-				throw error;
-			}
-		}
 		try {
 			const responseData = await operations[operation].execute(this);
 			return this.prepareOutputData(this.helpers.returnJsonArray(responseData));

@@ -6,9 +6,9 @@ import {
 	companyHashedUrlParameter,
 	employeeLimitParameter,
 	dmsLimitParameter,
-} from '../shared/SharedParameters';
-import { SalesNavigatorLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.nvFetchCompany;

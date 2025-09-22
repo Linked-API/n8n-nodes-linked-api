@@ -8,9 +8,9 @@ import {
 	commentsSinceParameter,
 	reactionsLimitParameter,
 	reactionsSinceParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class FetchPerson extends StandardLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.fetchPerson;

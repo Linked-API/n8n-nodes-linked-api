@@ -3,9 +3,9 @@ import {
 	createParameterWithDisplayOptions,
 	postUrlParameter,
 	reactionTypeParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class ReactToPost extends StandardLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.reactToPost;

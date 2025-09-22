@@ -28,7 +28,7 @@ export abstract class LinkedApiOperation {
       return await context.helpers.httpRequest({
         method: this.method,
         baseURL: 'https://api.linkedapi.io/automation',
-        url: this.url,
+        url: this.url(context),
         body: this.requestBody(context),
         qs: this.qs(context),
         headers: {
@@ -82,7 +82,7 @@ export abstract class LinkedApiOperation {
     return context.getNodeParameter(parameterName, 0) as number;
   }
 
-  protected abstract url: string;
+  protected abstract url(context: IExecuteFunctions): string;
   protected abstract method: IHttpRequestMethods;
   protected abstract requestBody(context: IExecuteFunctions): Record<string, any> | undefined;
   protected qs = (_: IExecuteFunctions): Record<string, any> | undefined => undefined;
@@ -92,7 +92,7 @@ export abstract class LinkedApiOperation {
 
 export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
   abstract body(context: IExecuteFunctions): Record<string, any>;
-  url = '/workflows';
+  url = (_: IExecuteFunctions): string => '/workflows';
   method = 'POST' as const;
   headers = {
     'result-retrieval': 'webhook',

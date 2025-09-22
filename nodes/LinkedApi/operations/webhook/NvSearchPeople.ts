@@ -1,3 +1,4 @@
+/* eslint-disable n8n-nodes-base/node-param-display-name-miscased */
 /* eslint-disable n8n-nodes-base/node-param-options-type-unsorted-items */
 /* eslint-disable n8n-nodes-base/node-param-multi-options-type-unsorted-items */
 import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
@@ -13,16 +14,18 @@ import {
 	currentCompaniesParameter,
 	previousCompaniesParameter,
 	schoolsParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+	yearsOfExperienceParameter,
+} from '../../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
-export class SearchPeople extends StandardLinkedApiOperation {
-	operationName = AVAILABLE_ACTION.searchPeople;
+export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.nvSearchPeople;
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
+		// Search filter fields
 		createParameterWithDisplayOptions(firstNameParameter, this.show),
 		createParameterWithDisplayOptions(lastNameParameter, this.show),
 		createParameterWithDisplayOptions(positionParameter, this.show),
@@ -31,7 +34,9 @@ export class SearchPeople extends StandardLinkedApiOperation {
 		createParameterWithDisplayOptions(currentCompaniesParameter, this.show),
 		createParameterWithDisplayOptions(previousCompaniesParameter, this.show),
 		createParameterWithDisplayOptions(schoolsParameter, this.show),
+		createParameterWithDisplayOptions(yearsOfExperienceParameter, this.show),
 	];
+
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
 		
@@ -43,6 +48,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 		const currentCompanies = this.stringParameter(context, 'currentCompanies');
 		const previousCompanies = this.stringParameter(context, 'previousCompanies');
 		const schools = this.stringParameter(context, 'schools');
+		const yearsOfExperiences = context.getNodeParameter('yearsOfExperiences', 0, []) as string[];
 
 		if (firstName) filter.firstName = firstName;
 		if (lastName) filter.lastName = lastName;
@@ -76,6 +82,9 @@ export class SearchPeople extends StandardLinkedApiOperation {
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
+		}
+		if (yearsOfExperiences && yearsOfExperiences.length > 0) {
+			filter.yearsOfExperiences = yearsOfExperiences;
 		}
 
 		return {

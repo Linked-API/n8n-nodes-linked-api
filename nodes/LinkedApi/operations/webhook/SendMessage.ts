@@ -3,9 +3,9 @@ import {
 	createParameterWithDisplayOptions,
 	personUrlParameter,
 	messageTextParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class SendMessage extends StandardLinkedApiOperation {
 		operationName = AVAILABLE_ACTION.sendMessage;

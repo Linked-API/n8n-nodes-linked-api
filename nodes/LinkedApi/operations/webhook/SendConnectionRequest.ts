@@ -4,9 +4,9 @@ import {
 	personUrlParameter,
 	connectionNoteParameter,
 	emailParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class SendConnectionRequest extends StandardLinkedApiOperation {
 		operationName = AVAILABLE_ACTION.sendConnectionRequest;

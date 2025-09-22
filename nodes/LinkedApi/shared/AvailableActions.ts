@@ -27,6 +27,9 @@ export const AVAILABLE_ACTION = {
 	nvSyncConversation: 'nvSyncConversation',
 	customWorkflow: 'customWorkflow',
 	getWorkflowResult: 'getWorkflowResult',
+	cancelWorkflow: 'cancelWorkflow',
+	pollConversations: 'pollConversations',
+	apiUsageStatistics: 'apiUsageStatistics',
 } as const;
 export type TAvailableAction = (typeof AVAILABLE_ACTION)[keyof typeof AVAILABLE_ACTION];
 
@@ -225,6 +228,24 @@ export const availableOtherOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.getWorkflowResult,
 			description: 'Get the result of workflow execution',
 			action: 'Get workflow result',
+		},
+		{
+			name: 'Cancel Workflow',
+			value: AVAILABLE_ACTION.cancelWorkflow,
+			description: 'Cancel a running workflow execution',
+			action: 'Cancel workflow',
+		},
+		{
+			name: 'Poll Conversations',
+			value: AVAILABLE_ACTION.pollConversations,
+			description: 'Poll multiple conversations for new messages',
+			action: 'Poll conversations',
+		},
+		{
+			name: 'API Usage Statistics',
+			value: AVAILABLE_ACTION.apiUsageStatistics,
+			description: 'Retrieve API usage statistics for a date range',
+			action: 'Get API usage statistics',
 		},
 	],
 };

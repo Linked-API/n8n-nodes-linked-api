@@ -2,11 +2,12 @@ import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	personUrlParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
-export class SyncConversation extends StandardLinkedApiOperation {
-	operationName = AVAILABLE_ACTION.syncConversation;
+} from '../../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
+
+export class NvSyncConversation extends SalesNavigatorLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.nvSyncConversation;
 
 	fields = [createParameterWithDisplayOptions(personUrlParameter, this.show)];
 

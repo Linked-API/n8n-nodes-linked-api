@@ -2,9 +2,9 @@ import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	postUrlParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class FetchPost extends StandardLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.fetchPost;

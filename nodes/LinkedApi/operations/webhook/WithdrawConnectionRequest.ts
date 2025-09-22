@@ -3,9 +3,9 @@ import {
 	createParameterWithDisplayOptions,
 	personUrlParameter,
 	unfollowParameter,
-} from '../shared/SharedParameters';
-import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
-import { AVAILABLE_ACTION } from '../shared/AvailableActions';
+} from '../../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class WithdrawConnectionRequest extends StandardLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.withdrawConnectionRequest;
