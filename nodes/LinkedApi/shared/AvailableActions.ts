@@ -1,8 +1,40 @@
 /* eslint-disable n8n-nodes-base/node-param-options-type-unsorted-items */
-import type { INodeProperties } from 'n8n-workflow';
+import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
+
+export const AVAILABLE_ACTION = {
+	checkConnectionStatus: 'checkConnectionStatus',
+	commentOnPost: 'commentOnPost',
+	fetchCompany: 'fetchCompany',
+	fetchPerson: 'fetchPerson',
+	fetchPost: 'fetchPost',
+	reactToPost: 'reactToPost',
+	removeConnection: 'removeConnection',
+	retrieveConnections: 'retrieveConnections',
+	retrievePendingRequests: 'retrievePendingRequests',
+	retrievePerformance: 'retrievePerformance',
+	retrieveSSI: 'retrieveSSI',
+	searchCompanies: 'searchCompanies',
+	searchPeople: 'searchPeople',
+	sendConnectionRequest: 'sendConnectionRequest',
+	sendMessage: 'sendMessage',
+	syncConversation: 'syncConversation',
+	withdrawConnectionRequest: 'withdrawConnectionRequest',
+	nvFetchCompany: 'nvFetchCompany',
+	nvFetchPerson: 'nvFetchPerson',
+	nvSearchCompanies: 'nvSearchCompanies',
+	nvSearchPeople: 'nvSearchPeople',
+	nvSendMessage: 'nvSendMessage',
+	nvSyncConversation: 'nvSyncConversation',
+	customWorkflow: 'customWorkflow',
+	getWorkflowResult: 'getWorkflowResult',
+	cancelWorkflow: 'cancelWorkflow',
+	pollConversations: 'pollConversations',
+	apiUsageStatistics: 'apiUsageStatistics',
+} as const;
+export type TAvailableAction = (typeof AVAILABLE_ACTION)[keyof typeof AVAILABLE_ACTION];
 
 export const availableStandardOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -14,113 +46,113 @@ export const availableStandardOperations: INodeProperties = {
 	options: [
 		{
 			name: 'Check Connection Status',
-			value: 'checkConnectionStatus',
+			value: AVAILABLE_ACTION.checkConnectionStatus,
 			description: 'Check the connection status between your account and another person',
 			action: 'Check connection status',
 		},
 		{
 			name: 'Comment on Post',
-			value: 'commentOnPost',
+			value: AVAILABLE_ACTION.commentOnPost,
 			description: 'Leave a comment on a LinkedIn post',
 			action: 'Comment on post',
 		},
 		{
 			name: 'Fetch Company',
-			value: 'fetchCompany',
+			value: AVAILABLE_ACTION.fetchCompany,
 			description: 'Fetch detailed information about a LinkedIn company',
 			action: 'Fetch a company',
 		},
 		{
 			name: 'Fetch Person',
-			value: 'fetchPerson',
+			value: AVAILABLE_ACTION.fetchPerson,
 			description: 'Fetch detailed information about a LinkedIn person',
 			action: 'Fetch a person',
 		},
 		{
 			name: 'Fetch Post',
-			value: 'fetchPost',
+			value: AVAILABLE_ACTION.fetchPost,
 			description: 'Retrieve detailed information about a LinkedIn post',
 			action: 'Fetch a post',
 		},
 		{
 			name: 'React to Post',
-			value: 'reactToPost',
+			value: AVAILABLE_ACTION.reactToPost,
 			description:
 				'React to a LinkedIn post with like, celebrate, support, love, insightful, or funny',
 			action: 'React to post',
 		},
 		{
 			name: 'Remove Connection',
-			value: 'removeConnection',
+			value: AVAILABLE_ACTION.removeConnection,
 			description: 'Remove a person from your connections',
 			action: 'Remove a connection',
 		},
 		{
 			name: 'Retrieve Connections',
-			value: 'retrieveConnections',
+			value: AVAILABLE_ACTION.retrieveConnections,
 			description: 'Retrieve your connections with optional filtering',
 			action: 'Retrieve connections',
 		},
 		{
 			name: 'Retrieve Pending Requests',
-			value: 'retrievePendingRequests',
+			value: AVAILABLE_ACTION.retrievePendingRequests,
 			description: 'Retrieve pending connection requests sent from your account',
 			action: 'Retrieve pending requests',
 		},
 		{
 			name: 'Retrieve Performance',
-			value: 'retrievePerformance',
+			value: AVAILABLE_ACTION.retrievePerformance,
 			description: 'Retrieve performance analytics from your LinkedIn dashboard',
 			action: 'Retrieve performance',
 		},
 		{
 			name: 'Retrieve SSI',
-			value: 'retrieveSSI',
+			value: AVAILABLE_ACTION.retrieveSSI,
 			description: 'Retrieve your current Social Selling Index (SSI) score',
 			action: 'Retrieve SSI',
 		},
 		{
 			name: 'Search Companies',
-			value: 'searchCompanies',
+			value: AVAILABLE_ACTION.searchCompanies,
 			description: 'Search for companies on LinkedIn',
 			action: 'Search companies',
 		},
 		{
 			name: 'Search People',
-			value: 'searchPeople',
+			value: AVAILABLE_ACTION.searchPeople,
 			description: 'Search for people on LinkedIn',
 			action: 'Search people',
 		},
 		{
 			name: 'Send Connection Request',
-			value: 'sendConnectionRequest',
+			value: AVAILABLE_ACTION.sendConnectionRequest,
 			description: 'Send a connection request to a person',
 			action: 'Send connection request',
 		},
 		{
 			name: 'Send Message',
-			value: 'sendMessage',
+			value: AVAILABLE_ACTION.sendMessage,
 			description: 'Send a message to a LinkedIn person',
 			action: 'Send a message',
 		},
 		{
 			name: 'Sync Conversation',
-			value: 'syncConversation',
+			value: AVAILABLE_ACTION.syncConversation,
 			description: 'Sync a conversation so you can start polling it for new messages',
 			action: 'Sync a conversation',
 		},
 		{
 			name: 'Withdraw Connection Request',
-			value: 'withdrawConnectionRequest',
+			value: AVAILABLE_ACTION.withdrawConnectionRequest,
 			description: 'Withdraw a connection request sent to a person',
 			action: 'Withdraw connection request',
 		},
 	],
-	default: 'searchCompanies',
+	default: AVAILABLE_ACTION.searchCompanies,
 };
 
 export const availableSalesNavigatorOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -132,67 +164,88 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 	options: [
 		{
 			name: 'Fetch Company in Sales Navigator',
-			value: 'nvFetchCompany',
+			value: AVAILABLE_ACTION.nvFetchCompany,
 			description: 'Fetch detailed information about a company in Sales Navigator',
 			action: 'Fetch company in sales navigator',
 		},
 		{
 			name: 'Fetch Person in Sales Navigator',
-			value: 'nvFetchPerson',
+			value: AVAILABLE_ACTION.nvFetchPerson,
 			description: 'Fetch detailed information about a person in Sales Navigator',
 			action: 'Fetch person in sales navigator',
 		},
 		{
 			name: 'Search Companies in Sales Navigator',
-			value: 'nvSearchCompanies',
+			value: AVAILABLE_ACTION.nvSearchCompanies,
 			description: 'Search for companies in Sales Navigator',
 			action: 'Search companies in sales navigator',
 		},
 		{
 			name: 'Search People in Sales Navigator',
-			value: 'nvSearchPeople',
+			value: AVAILABLE_ACTION.nvSearchPeople,
 			description: 'Search for people in Sales Navigator',
 			action: 'Search people in sales navigator',
 		},
 		{
 			name: 'Send Message in Sales Navigator',
-			value: 'nvSendMessage',
+			value: AVAILABLE_ACTION.nvSendMessage,
 			description: 'Send a message to a person in Sales Navigator',
 			action: 'Send message in sales navigator',
 		},
 		{
 			name: 'Sync Conversation in Sales Navigator',
-			value: 'nvSyncConversation',
+			value: AVAILABLE_ACTION.nvSyncConversation,
 			description: 'Sync a conversation in Sales Navigator so you can start polling it',
 			action: 'Sync conversation in sales navigator',
 		},
 	],
-	default: 'nvSearchCompanies',
+	default: AVAILABLE_ACTION.nvSearchCompanies,
+};
+
+export const customWorkflowOption: INodePropertyOptions =
+{
+	name: 'Custom Workflow',
+	value: AVAILABLE_ACTION.customWorkflow,
+	description: 'Execute a custom multi-step workflow using raw workflow definition',
+	action: 'Execute custom workflow',
 };
 
 export const availableOtherOperations: INodeProperties = {
-	displayName: 'Operation',
+	displayName: 'Action',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
-	default: 'customWorkflow',
+	default: AVAILABLE_ACTION.customWorkflow,
 	displayOptions: {
 		show: {
 			resource: ['other'],
 		},
 	},
 	options: [
-		{
-			name: 'Custom Workflow',
-			value: 'customWorkflow',
-			description: 'Execute a custom multi-step workflow using raw workflow definition',
-			action: 'Execute custom workflow',
-		},
+		customWorkflowOption,
 		{
 			name: 'Get Workflow Result',
-			value: 'getWorkflowResult',
+			value: AVAILABLE_ACTION.getWorkflowResult,
 			description: 'Get the result of workflow execution',
 			action: 'Get workflow result',
+		},
+		{
+			name: 'Cancel Workflow',
+			value: AVAILABLE_ACTION.cancelWorkflow,
+			description: 'Cancel a running workflow execution',
+			action: 'Cancel workflow',
+		},
+		{
+			name: 'Poll Conversations',
+			value: AVAILABLE_ACTION.pollConversations,
+			description: 'Poll multiple conversations for new messages',
+			action: 'Poll conversations',
+		},
+		{
+			name: 'API Usage Statistics',
+			value: AVAILABLE_ACTION.apiUsageStatistics,
+			description: 'Retrieve API usage statistics for a date range',
+			action: 'Get API usage statistics',
 		},
 	],
 };

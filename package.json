@@ -1,11 +1,12 @@
 {
   "name": "n8n-nodes-linked-api",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "n8n nodes for Linked API - LinkedIn automation and data retrieval",
   "keywords": [
     "n8n-community-node-package",
     "n8n-nodes",
     "n8n",
+    "n8n-linkedin",
     "linkedin",
     "automation",
     "linked-api",
@@ -14,7 +15,6 @@
     "linkedin-data",
     "linkedin-automation",
     "linkedin-messaging",
-    "social-selling",
     "lead-generation"
   ],
   "bugs": {

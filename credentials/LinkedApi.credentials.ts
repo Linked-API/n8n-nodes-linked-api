@@ -50,7 +50,7 @@ export class LinkedApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://api.linkedapi.io/automation',
-			url: '/validate',
+			url: 'credentials/validate',
 			method: 'POST',
 		},
 	};
