@@ -1,22 +1,19 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 } from '../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['removeConnection'],
-};
+export class RemoveConnection extends StandardLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.removeConnection;
 
-export const removeConnectionFields: INodeProperties[] = [
-	createRequestOperation(
-		'removeConnection',
-		{
-			personUrl: '={{$parameter["personUrl"]}}',
-		},
-		show,
-	),
-	createParameterWithDisplayOptions(personUrlParameter, show),
-];
+	fields = [createParameterWithDisplayOptions(personUrlParameter, this.show)];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			personUrl: this.stringParameter(context, 'personUrl'),
+		};
+	}
+}

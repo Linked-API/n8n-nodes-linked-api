@@ -1,7 +1,6 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 	postsLimitParameter,
 	postsSinceParameter,
@@ -10,129 +9,155 @@ import {
 	reactionsLimitParameter,
 	reactionsSinceParameter,
 } from '../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['fetchPerson'],
-};
+export class FetchPerson extends StandardLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.fetchPerson;
 
-export const fetchPersonFields: INodeProperties[] = [
-	createRequestOperation(
-		'fetchPerson',
+	fields: INodeProperties[] = [
+		createParameterWithDisplayOptions(personUrlParameter, this.show),
 		{
-			personUrl: '={{$parameter["personUrl"]}}',
-			retrieveExperience: '={{$parameter["retrieveExperience"] || false}}',
-			retrieveEducation: '={{$parameter["retrieveEducation"] || false}}',
-			retrieveSkills: '={{$parameter["retrieveSkills"] || false}}',
-			retrieveLanguages: '={{$parameter["retrieveLanguages"] || false}}',
-			retrievePosts: '={{$parameter["retrievePosts"] || false}}',
-			retrieveComments: '={{$parameter["retrieveComments"] || false}}',
-			retrieveReactions: '={{$parameter["retrieveReactions"] || false}}',
-			postsRetrievalConfig:
-				'={{$parameter["retrievePosts"] ? {limit: $parameter["postsLimit"], since: $parameter["postsSince"] || undefined} : undefined}}',
-			commentsRetrievalConfig:
-				'={{$parameter["retrieveComments"] ? {limit: $parameter["commentsLimit"], since: $parameter["commentsSince"] || undefined} : undefined}}',
-			reactionsRetrievalConfig:
-				'={{$parameter["retrieveReactions"] ? {limit: $parameter["reactionsLimit"], since: $parameter["reactionsSince"] || undefined} : undefined}}',
+			displayName: 'Retrieve Experience',
+			name: 'retrieveExperience',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's experience information",
 		},
-		show,
-	),
-	createParameterWithDisplayOptions(personUrlParameter, show),
-	{
-		displayName: 'Retrieve Experience',
-		name: 'retrieveExperience',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		{
+			displayName: 'Retrieve Education',
+			name: 'retrieveEducation',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's education information",
 		},
-		description: "Whether to retrieve the person's experience information",
-	},
-	{
-		displayName: 'Retrieve Education',
-		name: 'retrieveEducation',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		{
+			displayName: 'Retrieve Skills',
+			name: 'retrieveSkills',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's skills information",
 		},
-		description: "Whether to retrieve the person's education information",
-	},
-	{
-		displayName: 'Retrieve Skills',
-		name: 'retrieveSkills',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		{
+			displayName: 'Retrieve Languages',
+			name: 'retrieveLanguages',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's languages information",
 		},
-		description: "Whether to retrieve the person's skills information",
-	},
-	{
-		displayName: 'Retrieve Languages',
-		name: 'retrieveLanguages',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
-		},	
-		description: "Whether to retrieve the person's languages information",
-	},
-	// Posts
-	{
-		displayName: 'Retrieve Posts',
-		name: 'retrievePosts',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		// Posts
+		{
+			displayName: 'Retrieve Posts',
+			name: 'retrievePosts',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's posts information",
 		},
-		description: "Whether to retrieve the person's posts information",
-	},
-	createParameterWithDisplayOptions(postsSinceParameter, {
-		...show,
-		retrievePosts: [true],
-	}),
-	createParameterWithDisplayOptions(postsLimitParameter, {
-		...show,
-		retrievePosts: [true],
-	}),
-	// Comments
-	{
-		displayName: 'Retrieve Comments',
-		name: 'retrieveComments',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		createParameterWithDisplayOptions(postsSinceParameter, {
+			...this.show,
+			retrievePosts: [true],
+		}),
+		createParameterWithDisplayOptions(postsLimitParameter, {
+			...this.show,
+			retrievePosts: [true],
+		}),
+		// Comments
+		{
+			displayName: 'Retrieve Comments',
+			name: 'retrieveComments',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's comments information",
 		},
-		description: "Whether to retrieve the person's comments information",
-	},
-	createParameterWithDisplayOptions(commentsSinceParameter, {
-		...show,
-		retrieveComments: [true],
-	}),
-	createParameterWithDisplayOptions(commentsLimitParameter, {
-		...show,
-		retrieveComments: [true],
-	}),
-	// Reations
-	{
-		displayName: 'Retrieve Reactions',
-		name: 'retrieveReactions',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show,
+		createParameterWithDisplayOptions(commentsSinceParameter, {
+			...this.show,
+			retrieveComments: [true],
+		}),
+		createParameterWithDisplayOptions(commentsLimitParameter, {
+			...this.show,
+			retrieveComments: [true],
+		}),
+		// Reations
+		{
+			displayName: 'Retrieve Reactions',
+			name: 'retrieveReactions',
+			type: 'boolean',
+			default: false,
+			displayOptions: {
+				show: this.show,
+			},
+			description: "Whether to retrieve the person's reactions information",
 		},
-		description: "Whether to retrieve the person's reactions information",
-	},
-	createParameterWithDisplayOptions(reactionsSinceParameter, {
-		...show,
-		retrieveReactions: [true],
-	}),
-	createParameterWithDisplayOptions(reactionsLimitParameter, {
-		...show,
-		retrieveReactions: [true],
-	}),
-];
+		createParameterWithDisplayOptions(reactionsSinceParameter, {
+			...this.show,
+			retrieveReactions: [true],
+		}),
+		createParameterWithDisplayOptions(reactionsLimitParameter, {
+			...this.show,
+			retrieveReactions: [true],
+		}),
+	];
+	public body(context: IExecuteFunctions): Record<string, any> {
+		const retrievePosts = this.booleanParameter(context, 'retrievePosts');
+		const retrieveComments = this.booleanParameter(context, 'retrieveComments');
+		const retrieveReactions = this.booleanParameter(context, 'retrieveReactions');
+
+		const body = {
+			personUrl: this.stringParameter(context, 'personUrl'),
+			retrieveExperience: this.booleanParameter(context, 'retrieveExperience'),
+			retrieveEducation: this.booleanParameter(context, 'retrieveEducation'),
+			retrieveSkills: this.booleanParameter(context, 'retrieveSkills'),
+			retrieveLanguages: this.booleanParameter(context, 'retrieveLanguages'),
+			retrievePosts,
+			retrieveComments,
+			retrieveReactions,
+		};
+
+		if (retrievePosts) {
+			Object.assign(body, {
+				postsRetrievalConfig: {
+					limit: this.numberParameter(context, 'postsLimit'),
+					since: this.stringParameter(context, 'postsSince') || undefined,
+				},
+			});
+		}
+
+		if (retrieveComments) {
+			Object.assign(body, {
+				commentsRetrievalConfig: {
+					limit: this.numberParameter(context, 'commentsLimit'),
+					since: this.stringParameter(context, 'commentsSince') || undefined,
+				},
+			});
+		}
+
+		if (retrieveReactions) {
+			Object.assign(body, {
+				reactionsRetrievalConfig: {
+					limit: this.numberParameter(context, 'reactionsLimit'),
+					since: this.stringParameter(context, 'reactionsSince') || undefined,
+				},
+			});
+		}
+
+		return body;
+	}
+}

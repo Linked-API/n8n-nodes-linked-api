@@ -1,137 +1,196 @@
 /* eslint-disable n8n-nodes-base/node-param-multi-options-type-unsorted-items */
 /* eslint-disable n8n-nodes-base/node-param-display-name-miscased */
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	companyHashedUrlParameter,
 	employeeLimitParameter,
 	dmsLimitParameter,
 } from '../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['salesNavigator'],
-	operation: ['nvFetchCompany'],
-};
+export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.nvFetchCompany;
 
-export const nvFetchCompanyFields: INodeProperties[] = [
-	createRequestOperation(
-		'nvFetchCompany',
+	fields: INodeProperties[] = [
+		createParameterWithDisplayOptions(companyHashedUrlParameter, this.show),
+		// Employees
 		{
-			companyHashedUrl: '={{$parameter["companyHashedUrl"]}}',
-			retrieveEmployees: '={{$parameter["retrieveEmployees"] || false}}',
-			retrieveDMs: '={{$parameter["retrieveDMs"] || false}}',
-			employeesRetrievalConfig:
-				'={{$parameter["retrieveEmployees"] ? {limit: $parameter["employeeLimit"], filter: $parameter["additionalEmployeeFields"] ? {firstName: $parameter["additionalEmployeeFields"].firstName || undefined, lastName: $parameter["additionalEmployeeFields"].lastName || undefined, positions: $parameter["additionalEmployeeFields"].positions ? $parameter["additionalEmployeeFields"].positions.split(";").map(s => s.trim()).filter(s => s) : undefined, locations: $parameter["additionalEmployeeFields"].locations ? $parameter["additionalEmployeeFields"].locations.split(";").map(s => s.trim()).filter(s => s) : undefined, industries: $parameter["additionalEmployeeFields"].industries ? $parameter["additionalEmployeeFields"].industries.split(";").map(s => s.trim()).filter(s => s) : undefined, schools: $parameter["additionalEmployeeFields"].schools ? $parameter["additionalEmployeeFields"].schools.split(";").map(s => s.trim()).filter(s => s) : undefined, yearsOfExperiences: $parameter["additionalEmployeeFields"].yearsOfExperiences || undefined} : undefined} : undefined}}',
-			dmsRetrievalConfig:
-				'={{$parameter["retrieveDMs"] ? {limit: $parameter["dmsLimit"]} : undefined}}',
-		},
-		show,
-	),
-	createParameterWithDisplayOptions(companyHashedUrlParameter, show),
-	// Employees
-	{
-		displayName: 'Retrieve Employees',
-		name: 'retrieveEmployees',
-		type: 'boolean',
-		default: false,
-		description: 'Whether to retrieve company employees',
-		displayOptions: {
-			show,
-		},
-	},
-	createParameterWithDisplayOptions(employeeLimitParameter, {
-		...show,
-		retrieveEmployees: [true],
-	}),
-	{
-		displayName: 'Additional Employee Fields',
-		name: 'additionalEmployeeFields',
-		type: 'collection',
-		default: {},
-		placeholder: 'Add Field',
-		displayOptions: {
-			show: {
-				...show,
-				retrieveEmployees: [true],
+			displayName: 'Retrieve Employees',
+			name: 'retrieveEmployees',
+			type: 'boolean',
+			default: false,
+			description: 'Whether to retrieve company employees',
+			displayOptions: {
+				show: this.show,
 			},
 		},
-		options: [
-			{
-				displayName: 'First Name',
-				name: 'firstName',
-				type: 'string',
-				default: '',
-				description: 'First name of employee',
+		createParameterWithDisplayOptions(employeeLimitParameter, {
+			...this.show,
+			retrieveEmployees: [true],
+		}),
+		{
+			displayName: 'Additional Employee Fields',
+			name: 'additionalEmployeeFields',
+			type: 'collection',
+			default: {},
+			placeholder: 'Add Field',
+			displayOptions: {
+				show: {
+					...this.show,
+					retrieveEmployees: [true],
+				},
 			},
-			{
-				displayName: 'Last Name',
-				name: 'lastName',
-				type: 'string',
-				default: '',
-				description: 'Last name of employee',
-			},
-			{
-				displayName: 'Positions',
-				name: 'positions',
-				type: 'string',
-				default: '',
-				placeholder: 'engineer; manager',
-				description: 'Job position names (separate with semicolons)',
-			},
-			{
-				displayName: 'Locations',
-				name: 'locations',
-				type: 'string',
-				default: '',
-				placeholder: 'United States; Canada',
-				description: 'Employee locations (separate with semicolons)',
-			},
-			{
-				displayName: 'Industries',
-				name: 'industries',
-				type: 'string',
-				default: '',
-				placeholder: 'Software Development; Marketing',
-				description: 'Employee industries (separate with semicolons)',
-			},
-			{
-				displayName: 'Schools',
-				name: 'schools',
-				type: 'string',
-				default: '',
-				placeholder: 'Stanford University; MIT',
-				description: 'Schools attended (separate with semicolons)',
-			},
-			{
-				displayName: 'Years of Experience',
-				name: 'yearsOfExperiences',
-				type: 'multiOptions',
-				default: [],
-				options: [
-					{ name: 'Less than 1 year', value: 'lessThanOne' },
-					{ name: '1 to 2 years', value: 'oneToTwo' },
-					{ name: '3 to 5 years', value: 'threeToFive' },
-					{ name: '6 to 10 years', value: 'sixToTen' },
-					{ name: 'More than 10 years', value: 'moreThanTen' },
-				],
-				description: 'Years of professional experience ranges',
-			},
-		],
-	},
-	// Decision Makers
-	{
-		displayName: 'Retrieve Decision Makers',
-		name: 'retrieveDMs',
-		type: 'boolean',
-		default: false,
-		description: 'Whether to retrieve company decision makers',
-		displayOptions: {
-			show,
+			options: [
+				{
+					displayName: 'First Name',
+					name: 'firstName',
+					type: 'string',
+					default: '',
+					description: 'First name of employee',
+				},
+				{
+					displayName: 'Last Name',
+					name: 'lastName',
+					type: 'string',
+					default: '',
+					description: 'Last name of employee',
+				},
+				{
+					displayName: 'Positions',
+					name: 'positions',
+					type: 'string',
+					default: '',
+					placeholder: 'engineer; manager',
+					description: 'Job position names (separate with semicolons)',
+				},
+				{
+					displayName: 'Locations',
+					name: 'locations',
+					type: 'string',
+					default: '',
+					placeholder: 'United States; Canada',
+					description: 'Employee locations (separate with semicolons)',
+				},
+				{
+					displayName: 'Industries',
+					name: 'industries',
+					type: 'string',
+					default: '',
+					placeholder: 'Software Development; Marketing',
+					description: 'Employee industries (separate with semicolons)',
+				},
+				{
+					displayName: 'Schools',
+					name: 'schools',
+					type: 'string',
+					default: '',
+					placeholder: 'Stanford University; MIT',
+					description: 'Schools attended (separate with semicolons)',
+				},
+				{
+					displayName: 'Years of Experience',
+					name: 'yearsOfExperiences',
+					type: 'multiOptions',
+					default: [],
+					options: [
+						{ name: 'Less than 1 year', value: 'lessThanOne' },
+						{ name: '1 to 2 years', value: 'oneToTwo' },
+						{ name: '3 to 5 years', value: 'threeToFive' },
+						{ name: '6 to 10 years', value: 'sixToTen' },
+						{ name: 'More than 10 years', value: 'moreThanTen' },
+					],
+					description: 'Years of professional experience ranges',
+				},
+			],
 		},
-	},
-	createParameterWithDisplayOptions(dmsLimitParameter, {
-		...show,
-		retrieveDMs: [true],
-	}),
-];
+		// Decision Makers
+		{
+			displayName: 'Retrieve Decision Makers',
+			name: 'retrieveDMs',
+			type: 'boolean',
+			default: false,
+			description: 'Whether to retrieve company decision makers',
+			displayOptions: {
+				show: this.show,
+			},
+		},
+		createParameterWithDisplayOptions(dmsLimitParameter, {
+			...this.show,
+			retrieveDMs: [true],
+		}),
+	];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		const retrieveEmployees = this.booleanParameter(context, 'retrieveEmployees');
+		const retrieveDMs = this.booleanParameter(context, 'retrieveDMs');
+
+		const body = {
+			companyHashedUrl: this.stringParameter(context, 'companyHashedUrl'),
+			retrieveEmployees,
+			retrieveDMs,
+		};
+
+		if (retrieveEmployees) {
+			const additionalFields = context.getNodeParameter('additionalEmployeeFields', 0, {}) as {
+				firstName?: string;
+				lastName?: string;
+				positions?: string;
+				locations?: string;
+				industries?: string;
+				schools?: string;
+				yearsOfExperiences?: string[];
+			};
+
+			const filter: Record<string, any> = {};
+			if (additionalFields.firstName) filter.firstName = additionalFields.firstName;
+			if (additionalFields.lastName) filter.lastName = additionalFields.lastName;
+			if (additionalFields.positions) {
+				filter.positions = additionalFields.positions
+					.split(';')
+					.map((s) => s.trim())
+					.filter((s) => s);
+			}
+			if (additionalFields.locations) {
+				filter.locations = additionalFields.locations
+					.split(';')
+					.map((s) => s.trim())
+					.filter((s) => s);
+			}
+			if (additionalFields.industries) {
+				filter.industries = additionalFields.industries
+					.split(';')
+					.map((s) => s.trim())
+					.filter((s) => s);
+			}
+			if (additionalFields.schools) {
+				filter.schools = additionalFields.schools
+					.split(';')
+					.map((s) => s.trim())
+					.filter((s) => s);
+			}
+			if (additionalFields.yearsOfExperiences) {
+				filter.yearsOfExperiences = additionalFields.yearsOfExperiences;
+			}
+
+
+			Object.assign(body, {
+				employeesRetrievalConfig: {
+					limit: this.numberParameter(context, 'employeeLimit'),
+					filter,
+				},
+			});
+		}
+
+		if (retrieveDMs) {
+			Object.assign(body, {
+				dmsRetrievalConfig: {
+					limit: this.numberParameter(context, 'dmsLimit'),
+				},
+			});
+		}
+
+		return body;
+	}
+}

@@ -1,15 +1,11 @@
-import type { INodeProperties } from 'n8n-workflow';
-import { createRequestOperation } from '../shared/SharedParameters';
+import type { IExecuteFunctions } from 'n8n-workflow';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['retrieveSSI'],
-};
-
-export const retrieveSSIFields: INodeProperties[] = [
-	createRequestOperation(
-		'retrieveSSI',
-		{},
-		show,
-	),
-];
+export class RetrieveSSI extends StandardLinkedApiOperation {
+  operationName = AVAILABLE_ACTION.retrieveSSI;
+  fields = [];
+  public body(_: IExecuteFunctions): Record<string, any> {
+    return {};
+  };
+}

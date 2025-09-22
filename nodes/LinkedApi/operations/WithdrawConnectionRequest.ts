@@ -1,26 +1,24 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 	unfollowParameter,
 } from '../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['withdrawConnectionRequest'],
-};
+export class WithdrawConnectionRequest extends StandardLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.withdrawConnectionRequest;
 
-export const withdrawConnectionRequestFields: INodeProperties[] = [
-	createRequestOperation(
-		'withdrawConnectionRequest',
-		{
-			personUrl: '={{$parameter["personUrl"]}}',
-			unfollow: '={{$parameter["unfollow"]}}',
-		},
-		show,
-	),
-	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, show),
-	createParameterWithDisplayOptions(unfollowParameter, show),
-];
+	fields = [
+		createParameterWithDisplayOptions(personUrlParameter, this.show),
+		createParameterWithDisplayOptions(unfollowParameter, this.show),
+	];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			personUrl: this.stringParameter(context, 'personUrl'),
+			unfollow: this.booleanParameter(context, 'unfollow'),
+		};
+	}
+}

@@ -1,23 +1,19 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 } from '../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['checkConnectionStatus'],
-};
-
-export const checkConnectionStatusFields: INodeProperties[] = [
-	createRequestOperation(
-		'checkConnectionStatus',
-		{
-			personUrl: '={{$parameter["personUrl"]}}',
-		},
-		show,
-	),
-	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, show),
-];
+export class CheckConnectionStatus extends StandardLinkedApiOperation {
+  operationName = AVAILABLE_ACTION.checkConnectionStatus;
+  fields = [
+		createParameterWithDisplayOptions(personUrlParameter, this.show),
+	];
+  public body(context: IExecuteFunctions): Record<string, any> {
+    return {
+      personUrl: this.stringParameter(context, 'personUrl'),
+    };
+  };
+}

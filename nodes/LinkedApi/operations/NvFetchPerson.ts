@@ -1,22 +1,19 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personHashedUrlParameter,
 } from '../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['salesNavigator'],
-	operation: ['nvFetchPerson'],
-};
+export class NvFetchPerson extends SalesNavigatorLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.nvFetchPerson;
 
-export const nvFetchPersonFields: INodeProperties[] = [
-	createRequestOperation(
-		'nvFetchPerson',
-		{
-			personHashedUrl: '={{$parameter["personHashedUrl"]}}',
-		},
-		show,
-	),
-	createParameterWithDisplayOptions(personHashedUrlParameter, show),
-];
+	fields = [createParameterWithDisplayOptions(personHashedUrlParameter, this.show)];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			personHashedUrl: this.stringParameter(context, 'personHashedUrl'),
+		};
+	}
+}

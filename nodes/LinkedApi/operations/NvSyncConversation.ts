@@ -1,23 +1,19 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 } from '../shared/SharedParameters';
+import { SalesNavigatorLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['salesNavigator'],
-	operation: ['nvSyncConversation'],
-};
+export class NvSyncConversation extends SalesNavigatorLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.nvSyncConversation;
 
-export const nvSyncConversationFields: INodeProperties[] = [
-	createRequestOperation(
-		'nvSyncConversation',
-		{
-			personUrl: '={{$parameter["personUrl"]}}',
-		},
-		show,
-	),
-	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, show),
-];
+	fields = [createParameterWithDisplayOptions(personUrlParameter, this.show)];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			personUrl: this.stringParameter(context, 'personUrl'),
+		};
+	}
+}

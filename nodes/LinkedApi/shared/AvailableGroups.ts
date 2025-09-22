@@ -21,3 +21,5 @@ export const availableGroups: INodeProperties = {
 	],
 	default: 'standard',
 };
+
+export type TGroup = 'standard' | 'salesNavigator' | 'other';

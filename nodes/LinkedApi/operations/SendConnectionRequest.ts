@@ -1,29 +1,27 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
-	createRequestOperation,
 	personUrlParameter,
 	connectionNoteParameter,
 	emailParameter,
 } from '../shared/SharedParameters';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['sendConnectionRequest'],
-};
+export class SendConnectionRequest extends StandardLinkedApiOperation {
+		operationName = AVAILABLE_ACTION.sendConnectionRequest;
 
-export const sendConnectionRequestFields: INodeProperties[] = [
-	createRequestOperation(
-		'sendConnectionRequest',
-		{
-			personUrl: '={{$parameter["personUrl"]}}',
-			note: '={{$parameter["connectionNote"] || undefined}}',
-			email: '={{$parameter["email"] || undefined}}',
-		},
-		show,
-	),
-	// Parameter fields (no routing, just UI)
-	createParameterWithDisplayOptions(personUrlParameter, show),
-	createParameterWithDisplayOptions(connectionNoteParameter, show),
-	createParameterWithDisplayOptions(emailParameter, show),
-];
+	fields = [
+		createParameterWithDisplayOptions(personUrlParameter, this.show),
+		createParameterWithDisplayOptions(connectionNoteParameter, this.show),
+		createParameterWithDisplayOptions(emailParameter, this.show),
+	];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			personUrl: this.stringParameter(context, 'personUrl'),
+			note: this.stringParameter(context, 'connectionNote') || undefined,
+			email: this.stringParameter(context, 'email') || undefined,
+		};
+	}
+}

@@ -1,32 +1,19 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { IExecuteFunctions } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	workflowDefinitionParameter,
 } from '../shared/SharedParameters';
+import { OtherLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['other'],
-	operation: ['customWorkflow'],
-};
+export class CustomWorkflow extends OtherLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.customWorkflow;
 
-export const customWorkflowFields: INodeProperties[] = [
-	{
-		displayName: '',
-		name: `customWorkflowOperation`,
-		type: 'hidden',
-		displayOptions: {
-			show,
-		},
-		default: '',
-		routing: {
-			request: {
-				body: {
-					operationName: 'customWorkflow',
-					webhookUrl: '={{$parameter["webhookUrl"]}}',
-					data: '={{JSON.parse($parameter["workflowDefinition"])}}',
-				},
-			},
-		},
-	},
-	createParameterWithDisplayOptions(workflowDefinitionParameter, show),
-];
+	fields = [createParameterWithDisplayOptions(workflowDefinitionParameter, this.show)];
+
+	public body(context: IExecuteFunctions): Record<string, any> {
+		return {
+			workflowDefinition: JSON.parse(this.stringParameter(context, 'workflowDefinition')),
+		};
+	}
+}

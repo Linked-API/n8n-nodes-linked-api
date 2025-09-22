@@ -1,15 +1,13 @@
-import type { INodeProperties } from 'n8n-workflow';
-import { createRequestOperation } from '../shared/SharedParameters';
+import type { IExecuteFunctions } from 'n8n-workflow';
+import { StandardLinkedApiOperation } from '../shared/LinkedApiOperation';
+import { AVAILABLE_ACTION } from '../shared/AvailableActions';
 
-const show = {
-	resource: ['standard'],
-	operation: ['retrievePendingRequests'],
-};
+export class RetrievePendingRequests extends StandardLinkedApiOperation {
+	operationName = AVAILABLE_ACTION.retrievePendingRequests;
 
-export const retrievePendingRequestsFields: INodeProperties[] = [
-	createRequestOperation(
-		'retrievePendingRequests',
-		{},
-		show,
-	),
-];
+	fields = [];
+
+	public body(_: IExecuteFunctions): Record<string, any> {
+		return {};
+	}
+}
