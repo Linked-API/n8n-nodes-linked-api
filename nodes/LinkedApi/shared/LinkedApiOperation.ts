@@ -115,6 +115,10 @@ export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
   }
 
   override requestBody(context: IExecuteFunctions): Record<string, any> {
+    const webhookUrl = this.stringParameter(context, 'webhookUrl');
+    if (webhookUrl && webhookUrl.includes('//localhost')) {
+      throw new Error('Localhost is not allowed in webhook URL. Please use a public URL.');
+    }
     return {
       data: this.body(context),
       webhookUrl: this.stringParameter(context, 'webhookUrl'),

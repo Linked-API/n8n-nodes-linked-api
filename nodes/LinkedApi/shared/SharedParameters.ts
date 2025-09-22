@@ -62,6 +62,173 @@ export const searchTermParameter: INodeProperties = {
 	description: 'Search term/keywords for company name or description',
 };
 
+// Common Filter Parameters
+export const firstNameParameter: INodeProperties = {
+	displayName: 'First Name',
+	name: 'firstName',
+	type: 'string',
+	default: '',
+	placeholder: 'John',
+	description: 'First name of person',
+};
+
+export const lastNameParameter: INodeProperties = {
+	displayName: 'Last Name',
+	name: 'lastName',
+	type: 'string',
+	default: '',
+	placeholder: 'Doe',
+	description: 'Last name of person',
+};
+
+export const positionParameter: INodeProperties = {
+	displayName: 'Position',
+	name: 'position',
+	type: 'string',
+	default: '',
+	placeholder: 'Manager',
+	description: 'Job position of person',
+};
+
+export const locationsParameter: INodeProperties = {
+	displayName: 'Locations',
+	name: 'locations',
+	type: 'string',
+	default: '',
+	placeholder: 'New York; San Francisco; London',
+	description: 'Locations separated by semicolons',
+};
+
+export const industriesParameter: INodeProperties = {
+	displayName: 'Industries',
+	name: 'industries',
+	type: 'string',
+	default: '',
+	placeholder: 'Software Development; Technology',
+	description: 'Industries separated by semicolons',
+};
+
+export const currentCompaniesParameter: INodeProperties = {
+	displayName: 'Current Companies',
+	name: 'currentCompanies',
+	type: 'string',
+	default: '',
+	placeholder: 'Google; Microsoft',
+	description: 'Current companies separated by semicolons',
+};
+
+export const previousCompaniesParameter: INodeProperties = {
+	displayName: 'Previous Companies',
+	name: 'previousCompanies',
+	type: 'string',
+	default: '',
+	placeholder: 'Apple; Facebook',
+	description: 'Previous companies separated by semicolons',
+};
+
+export const schoolsParameter: INodeProperties = {
+	displayName: 'Schools',
+	name: 'schools',
+	type: 'string',
+	default: '',
+	placeholder: 'Stanford University; MIT',
+	description: 'Schools separated by semicolons',
+};
+
+export const companySizesParameter: INodeProperties = {
+	displayName: 'Company Sizes',
+	name: 'sizes',
+	type: 'multiOptions',
+	default: [],
+	// eslint-disable-next-line n8n-nodes-base/node-param-multi-options-type-unsorted-items
+	options: [
+		{ name: '1-10', value: '1-10' },
+		{ name: '11-50', value: '11-50' },
+		{ name: '51-200', value: '51-200' },
+		{ name: '201-500', value: '201-500' },
+		{ name: '501-1000', value: '501-1000' },
+		{ name: '1001-5000', value: '1001-5000' },
+		{ name: '5001-10000', value: '5001-10000' },
+		{ name: '10001+', value: '10001+' },
+	],
+	description: 'Filter by company size (employee count)',
+};
+
+export const yearsOfExperienceParameter: INodeProperties = {
+	displayName: 'Years of Experience',
+	name: 'yearsOfExperiences',
+	type: 'multiOptions',
+	default: [],
+	description: 'Professional experience ranges',
+	// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+	options: [
+		{
+			name: '1 To 2 Years',
+			value: 'oneToTwo',
+		},
+		{
+			name: '3 To 5 Years',
+			value: 'threeToFive',
+		},
+		{
+			name: '6 To 10 Years',
+			value: 'sixToTen',
+		},
+		{
+			name: 'Less Than 1 Year',
+			value: 'lessThanOne',
+		},
+		{
+			name: 'More Than 10 Years',
+			value: 'moreThanTen',
+		},
+	],
+};
+
+export const annualRevenueMinParameter: INodeProperties = {
+	displayName: 'Annual Revenue Min',
+	name: 'annualRevenueMin',
+	type: 'options',
+	default: '',
+	options: [
+		{ name: 'Not Set', value: '' },
+		{ name: '0', value: '0' },
+		{ name: '0.5', value: '0.5' },
+		{ name: '1', value: '1' },
+		{ name: '2.5', value: '2.5' },
+		{ name: '5', value: '5' },
+		{ name: '10', value: '10' },
+		{ name: '20', value: '20' },
+		{ name: '50', value: '50' },
+		{ name: '100', value: '100' },
+		{ name: '500', value: '500' },
+		{ name: '1000', value: '1000' },
+	],
+	description: 'Minimum annual revenue in million USD',
+};
+
+export const annualRevenueMaxParameter: INodeProperties = {
+	displayName: 'Annual Revenue Max',
+	name: 'annualRevenueMax',
+	type: 'options',
+	default: '',
+	options: [
+		{ name: 'Not Set', value: '' },
+		{ name: '0.5', value: '0.5' },
+		{ name: '1', value: '1' },
+		{ name: '2.5', value: '2.5' },
+		{ name: '5', value: '5' },
+		{ name: '10', value: '10' },
+		{ name: '20', value: '20' },
+		{ name: '50', value: '50' },
+		{ name: '100', value: '100' },
+		{ name: '500', value: '500' },
+		{ name: '1000', value: '1000' },
+		{ name: '1000+', value: '1000+' },
+	],
+	description: 'Maximum annual revenue in million USD',
+};
+
 // Limit Parameters
 export const limitParameter: INodeProperties = {
 	displayName: 'Limit',

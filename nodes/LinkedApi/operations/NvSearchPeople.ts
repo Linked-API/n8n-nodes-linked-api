@@ -6,6 +6,15 @@ import {
 	createParameterWithDisplayOptions,
 	searchTermParameter,
 	limitParameter,
+	firstNameParameter,
+	lastNameParameter,
+	positionParameter,
+	locationsParameter,
+	industriesParameter,
+	currentCompaniesParameter,
+	previousCompaniesParameter,
+	schoolsParameter,
+	yearsOfExperienceParameter,
 } from '../shared/SharedParameters';
 import { SalesNavigatorLinkedApiOperation } from '../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../shared/AvailableActions';
@@ -16,157 +25,66 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
-		// Additional Sales Navigator search fields
-		{
-			displayName: 'Additional Search Fields',
-			name: 'additionalSalesNavFields',
-			type: 'collection',
-			placeholder: 'Add Field',
-			default: {},
-			displayOptions: {
-				show: this.show,
-			},
-			options: [
-				{
-					displayName: 'First Name',
-					name: 'firstName',
-					type: 'string',
-					default: '',
-					description: 'First name of person',
-				},
-				{
-					displayName: 'Last Name',
-					name: 'lastName',
-					type: 'string',
-					default: '',
-					description: 'Last name of person',
-				},
-				{
-					displayName: 'Position',
-					name: 'position',
-					type: 'string',
-					default: '',
-					description: 'Job position of person',
-				},
-				{
-					displayName: 'Locations',
-					name: 'locations',
-					type: 'string',
-					default: '',
-					description:
-						'Locations separated by semicolons (e.g., "New York; San Francisco; London")',
-				},
-				{
-					displayName: 'Industries',
-					name: 'industries',
-					type: 'string',
-					default: '',
-					description:
-						'Industries separated by semicolons (e.g., "Software Development; Technology")',
-				},
-				{
-					displayName: 'Current Companies',
-					name: 'currentCompanies',
-					type: 'string',
-					default: '',
-					description: 'Current companies separated by semicolons (e.g., "Google; Microsoft")',
-				},
-				{
-					displayName: 'Previous Companies',
-					name: 'previousCompanies',
-					type: 'string',
-					default: '',
-					description: 'Previous companies separated by semicolons (e.g., "Apple; Facebook")',
-				},
-				{
-					displayName: 'Schools',
-					name: 'schools',
-					type: 'string',
-					default: '',
-					description: 'Schools separated by semicolons (e.g., "Stanford University; MIT")',
-				},
-				{
-					displayName: 'Years of Experience',
-					name: 'yearsOfExperiences',
-					type: 'multiOptions',
-					default: [],
-					description: 'Professional experience ranges',
-					options: [
-						{
-							name: 'Less than 1 year',
-							value: 'lessThanOne',
-						},
-						{
-							name: '1 to 2 years',
-							value: 'oneToTwo',
-						},
-						{
-							name: '3 to 5 years',
-							value: 'threeToFive',
-						},
-						{
-							name: '6 to 10 years',
-							value: 'sixToTen',
-						},
-						{
-							name: 'More than 10 years',
-							value: 'moreThanTen',
-						},
-					],
-				},
-			],
-		},
+		// Search filter fields
+		createParameterWithDisplayOptions(firstNameParameter, this.show),
+		createParameterWithDisplayOptions(lastNameParameter, this.show),
+		createParameterWithDisplayOptions(positionParameter, this.show),
+		createParameterWithDisplayOptions(locationsParameter, this.show),
+		createParameterWithDisplayOptions(industriesParameter, this.show),
+		createParameterWithDisplayOptions(currentCompaniesParameter, this.show),
+		createParameterWithDisplayOptions(previousCompaniesParameter, this.show),
+		createParameterWithDisplayOptions(schoolsParameter, this.show),
+		createParameterWithDisplayOptions(yearsOfExperienceParameter, this.show),
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const additionalFields = context.getNodeParameter('additionalSalesNavFields', 0, {}) as {
-			firstName?: string;
-			lastName?: string;
-			position?: string;
-			locations?: string;
-			industries?: string;
-			currentCompanies?: string;
-			previousCompanies?: string;
-			schools?: string;
-			yearsOfExperiences?: string[];
-		};
-
 		const filter: Record<string, any> = {};
-		if (additionalFields.firstName) filter.firstName = additionalFields.firstName;
-		if (additionalFields.lastName) filter.lastName = additionalFields.lastName;
-		if (additionalFields.position) filter.position = additionalFields.position;
-		if (additionalFields.locations) {
-			filter.locations = additionalFields.locations
+		
+		const firstName = this.stringParameter(context, 'firstName');
+		const lastName = this.stringParameter(context, 'lastName');
+		const position = this.stringParameter(context, 'position');
+		const locations = this.stringParameter(context, 'locations');
+		const industries = this.stringParameter(context, 'industries');
+		const currentCompanies = this.stringParameter(context, 'currentCompanies');
+		const previousCompanies = this.stringParameter(context, 'previousCompanies');
+		const schools = this.stringParameter(context, 'schools');
+		const yearsOfExperiences = context.getNodeParameter('yearsOfExperiences', 0, []) as string[];
+
+		if (firstName) filter.firstName = firstName;
+		if (lastName) filter.lastName = lastName;
+		if (position) filter.position = position;
+		if (locations) {
+			filter.locations = locations
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
-		if (additionalFields.industries) {
-			filter.industries = additionalFields.industries
+		if (industries) {
+			filter.industries = industries
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
-		if (additionalFields.currentCompanies) {
-			filter.currentCompanies = additionalFields.currentCompanies
+		if (currentCompanies) {
+			filter.currentCompanies = currentCompanies
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
-		if (additionalFields.previousCompanies) {
-			filter.previousCompanies = additionalFields.previousCompanies
+		if (previousCompanies) {
+			filter.previousCompanies = previousCompanies
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
-		if (additionalFields.schools) {
-			filter.schools = additionalFields.schools
+		if (schools) {
+			filter.schools = schools
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
-		if (additionalFields.yearsOfExperiences) {
-			filter.yearsOfExperiences = additionalFields.yearsOfExperiences;
+		if (yearsOfExperiences && yearsOfExperiences.length > 0) {
+			filter.yearsOfExperiences = yearsOfExperiences;
 		}
 
 		return {
