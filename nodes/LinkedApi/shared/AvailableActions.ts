@@ -38,6 +38,7 @@ export const availableStandardOperations: INodeProperties = {
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
+	default: AVAILABLE_ACTION.searchCompanies.toString(),
 	displayOptions: {
 		show: {
 			resource: ['standard'],
@@ -148,7 +149,6 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Withdraw connection request',
 		},
 	],
-	default: AVAILABLE_ACTION.searchCompanies,
 };
 
 export const availableSalesNavigatorOperations: INodeProperties = {
@@ -156,6 +156,7 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
+	default: AVAILABLE_ACTION.nvSearchCompanies.toString(),
 	displayOptions: {
 		show: {
 			resource: ['salesNavigator'],
@@ -199,7 +200,6 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			action: 'Sync conversation in sales navigator',
 		},
 	],
-	default: AVAILABLE_ACTION.nvSearchCompanies,
 };
 
 export const customWorkflowOption: INodePropertyOptions =
@@ -215,14 +215,19 @@ export const availableOtherOperations: INodeProperties = {
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
-	default: AVAILABLE_ACTION.customWorkflow,
+	default: AVAILABLE_ACTION.customWorkflow.toString(),
 	displayOptions: {
 		show: {
 			resource: ['other'],
 		},
 	},
 	options: [
-		customWorkflowOption,
+		{
+			name: 'Custom Workflow',
+			value: AVAILABLE_ACTION.customWorkflow,
+			description: 'Execute a custom multi-step workflow using raw workflow definition',
+			action: 'Execute custom workflow',
+		},
 		{
 			name: 'Get Workflow Result',
 			value: AVAILABLE_ACTION.getWorkflowResult,
@@ -245,7 +250,7 @@ export const availableOtherOperations: INodeProperties = {
 			name: 'API Usage Statistics',
 			value: AVAILABLE_ACTION.apiUsageStatistics,
 			description: 'Retrieve API usage statistics for a date range',
-			action: 'Get API usage statistics',
+			action: 'Retrieve API usage statistics',
 		},
 	],
 };
