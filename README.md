@@ -1,75 +1,22 @@
-# n8n-nodes-linked-api
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Linked API for n8n connects your LinkedIn account to n8n's automation platform, so you can build visual workflows that search for prospects, send messages, manage connections, extract data, and more – all with [industry-leading safety](https://linkedapi.io/safety/).
 
-Official n8n community node for [Linked API](https://linkedapi.io) - LinkedIn automation and data extraction in your n8n automations.
+> [!IMPORTANT]
+> Our n8n node is currently private, so install it as a community node: go to **Settings** → **Community Nodes**, enter **`n8n-nodes-linked-api`**, and click **Install**.
 
-## Installation
-
-### n8n Cloud / Self-hosted
-1. Go to **Settings** → **Community Nodes**
-2. Enter: `n8n-nodes-linked-api`
-3. Click **Install**
-
-### Manual
-```bash
-npm install n8n-nodes-linked-api
-```
-
-## Credentials Setup
-
-1. Get your tokens from [Linked API Platform](https://linkedapi.io):
-   - **Linked API Token**: Platform access token
-   - **Identification Token**: Account-specific token
-![Get your tokens](https://linkedapi.io/content/images/2025/08/tokens.webp)
+## Use cases
+- **Lead generation pipeline**. Search for prospects matching your criteria, automatically send connection requests, wait for acceptance, then send personalized follow-up messages. Connect the results to your CRM to track everything in one place.
+- **CRM synchronization**. When a new lead enters your CRM, automatically find their LinkedIn profile, send a connection request, and update the CRM with their LinkedIn data. Keep your sales pipeline enriched with real-time LinkedIn information.
+- **Content engagement**. Monitor when your target accounts post on LinkedIn, automatically react or comment on their posts, then log the engagement in your tracking spreadsheet. Build relationships at scale without losing the personal touch.
+- **Recruitment workflows**. Search for candidates with specific skills, send personalized InMails through Sales Navigator, track responses in your ATS, and automatically follow up with interested candidates. Streamline your entire recruitment funnel.
+- **Multi-channel outreach**. Combine LinkedIn with email, Slack, and other channels. When someone accepts your connection request, trigger an email sequence, notify your team in Slack, and create a task in your project management tool.
 
 
-2. In n8n: **Credentials** → **Create New** → **Linked API**
+## Get started
+To build LinkedIn automations with n8n, read these essential guides:
 
-## Available Operations
+1. [Creating credential](https://linkedapi.io/integrations/n8n/creating-credential/) – get your API tokens and connect to n8n.
+2. [Building workflows](https://linkedapi.io/integrations/n8n/building-workflows-0/) – learn how to use Linked API actions in your workflows.
+3. [Available actions](https://linkedapi.io/integrations/n8n/available-actions/) – explore all LinkedIn actions you can automate.
 
-### Standard LinkedIn Operations
-
-| Operation | Description | Key Parameters |
-|-----------|-------------|----------------|
-| **Check Connection Status** | Check connection status with another person | `personUrl` |
-| **Comment on Post** | Leave a comment on a LinkedIn post | `postUrl`, `text` |
-| **Fetch Company** | Get detailed company information | `companyUrl`, optional: employees, posts, decision makers |
-| **Fetch Person** | Extract comprehensive LinkedIn profile data | `personUrl`, optional: experience, education, skills, posts, comments, reactions |
-| **Fetch Post** | Retrieve detailed information about a LinkedIn post | `postUrl` |
-| **React to Post** | React to a LinkedIn post | `postUrl`, `type` (like, celebrate, support, love, insightful, funny) |
-| **Remove Connection** | Remove a person from your connections | `personUrl` |
-| **Retrieve Connections** | Get your connections with filtering options | Optional filters: companies, industries, locations, position |
-| **Retrieve Pending Requests** | Get pending connection requests you've sent | No parameters required |
-| **Retrieve Performance** | Get LinkedIn dashboard analytics | No parameters required |
-| **Retrieve SSI** | Get your Social Selling Index score | No parameters required |
-| **Search Companies** | Search for companies on LinkedIn | Optional: `keywords`, filters for location, industry, size |
-| **Search People** | Search for people on LinkedIn | Optional: `keywords`, filters for companies, industries, locations, schools |
-| **Send Connection Request** | Send a connection request | `personUrl`, optional: `note`, `email` |
-| **Send Message** | Send a message to a LinkedIn person | `personUrl`, `text` |
-| **Sync Conversation** | Start polling a conversation for new messages | `personUrl` |
-| **Withdraw Connection Request** | Withdraw a sent connection request | `personUrl`, optional: `unfollow` |
-
-### Sales Navigator Operations
-
-| Operation | Description | Key Parameters |
-|-----------|-------------|----------------|
-| **Fetch Company (Sales Navigator)** | Get company info in Sales Navigator | `companyHashedUrl`, optional: employees, decision makers |
-| **Fetch Person (Sales Navigator)** | Get person info in Sales Navigator | `personHashedUrl` |
-| **Search Companies (Sales Navigator)** | Advanced company search in Sales Navigator | Optional: `keywords`, filters for revenue, location, industry, size |
-| **Search People (Sales Navigator)** | Advanced people search in Sales Navigator | Optional: `keywords`, filters for companies, experience, locations |
-| **Send Message (Sales Navigator)** | Send message via Sales Navigator | `personUrl`, `text`, `subject` |
-| **Sync Conversation (Sales Navigator)** | Start polling Sales Navigator conversation | `personUrl` |
-
-### Other Operations
-
-| Operation | Description | Key Parameters |
-|-----------|-------------|----------------|
-| **Custom Workflow** | Execute multi-step custom workflows | `definition` (workflow JSON) |
-| **Get Workflow Result** | Get results from workflow execution | `workflowId`, `operationName` |
-
-## License & Support
-
-- **License**: MIT
-- **Issues**: [GitHub](https://github.com/Linked-API/n8n-nodes-linked-api/issues)
-- **Docs**: [linkedapi.io](https://linkedapi.io/integrations/n8n/)
-- **Email**: support@linkedapi.io
+## License
+This project is licensed under the MIT – see the [LICENSE](https://github.com/Linked-API/n8n-nodes-linked-api/blob/main/LICENSE.md) file for details.
