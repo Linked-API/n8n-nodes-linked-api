@@ -87,7 +87,6 @@ export abstract class LinkedApiOperation {
   protected abstract requestBody(context: IExecuteFunctions): Record<string, any> | undefined;
   protected qs = (_: IExecuteFunctions): Record<string, any> | undefined => undefined;
   protected headers: Record<string, any> = {};
-
 }
 
 export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
@@ -97,31 +96,18 @@ export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
   headers = {
     'result-retrieval': 'webhook',
   };
-  override get defaultFields(): INodeProperties[] {
-    return [
-      {
-        displayName: 'Webhook URL',
-        name: 'webhookUrl',
-        type: 'string',
-        required: true,
-        default: '',
-        displayOptions: {
-          show: this.show,
-        },
-        placeholder: '{{$execution.resumeUrl}}',
-        description: 'URL where the response will be sent via webhook',
-      },
-    ];
-  }
 
   override requestBody(context: IExecuteFunctions): Record<string, any> {
-    const webhookUrl = this.stringParameter(context, 'webhookUrl');
-    if (webhookUrl && webhookUrl.includes('//localhost')) {
-      throw new Error('Localhost is not allowed in webhook URL. Please use a public URL.');
+    const resumeUrl = context.evaluateExpression('{{$execution.resumeUrl}}', 0) as string;
+    if (!resumeUrl) {
+      throw new Error('Wait node wasn\'t found. Please check your workflow.');
+    }
+    if (resumeUrl && resumeUrl.includes('//localhost')) {
+      throw new Error('Localhost running is not allowed. Please use a public n8n instance.');
     }
     return {
       data: this.body(context),
-      webhookUrl: this.stringParameter(context, 'webhookUrl'),
+      webhookUrl: resumeUrl,
       operationName: this.operationName,
     };
   }

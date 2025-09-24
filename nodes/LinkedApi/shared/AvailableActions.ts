@@ -1,3 +1,4 @@
+/* eslint-disable n8n-nodes-base/node-param-operation-option-action-miscased */
 /* eslint-disable n8n-nodes-base/node-param-options-type-unsorted-items */
 import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 
@@ -29,7 +30,7 @@ export const AVAILABLE_ACTION = {
 	getWorkflowResult: 'getWorkflowResult',
 	cancelWorkflow: 'cancelWorkflow',
 	pollConversations: 'pollConversations',
-	apiUsageStatistics: 'apiUsageStatistics',
+	actionsUsageStatistics: 'actionsUsageStatistics',
 } as const;
 export type TAvailableAction = (typeof AVAILABLE_ACTION)[keyof typeof AVAILABLE_ACTION];
 
@@ -61,19 +62,19 @@ export const availableStandardOperations: INodeProperties = {
 			name: 'Fetch Company',
 			value: AVAILABLE_ACTION.fetchCompany,
 			description: 'Fetch detailed information about a LinkedIn company',
-			action: 'Fetch a company',
+			action: 'Fetch company',
 		},
 		{
 			name: 'Fetch Person',
 			value: AVAILABLE_ACTION.fetchPerson,
 			description: 'Fetch detailed information about a LinkedIn person',
-			action: 'Fetch a person',
+			action: 'Fetch person',
 		},
 		{
 			name: 'Fetch Post',
 			value: AVAILABLE_ACTION.fetchPost,
 			description: 'Retrieve detailed information about a LinkedIn post',
-			action: 'Fetch a post',
+			action: 'Fetch post',
 		},
 		{
 			name: 'React to Post',
@@ -86,7 +87,7 @@ export const availableStandardOperations: INodeProperties = {
 			name: 'Remove Connection',
 			value: AVAILABLE_ACTION.removeConnection,
 			description: 'Remove a person from your connections',
-			action: 'Remove a connection',
+			action: 'Remove connection',
 		},
 		{
 			name: 'Retrieve Connections',
@@ -134,13 +135,13 @@ export const availableStandardOperations: INodeProperties = {
 			name: 'Send Message',
 			value: AVAILABLE_ACTION.sendMessage,
 			description: 'Send a message to a LinkedIn person',
-			action: 'Send a message',
+			action: 'Send message',
 		},
 		{
 			name: 'Sync Conversation',
 			value: AVAILABLE_ACTION.syncConversation,
 			description: 'Sync a conversation so you can start polling it for new messages',
-			action: 'Sync a conversation',
+			action: 'Sync conversation',
 		},
 		{
 			name: 'Withdraw Connection Request',
@@ -167,37 +168,37 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			name: 'Fetch Company in Sales Navigator',
 			value: AVAILABLE_ACTION.nvFetchCompany,
 			description: 'Fetch detailed information about a company in Sales Navigator',
-			action: 'Fetch company in sales navigator',
+			action: 'Fetch company in Sales Navigator',
 		},
 		{
 			name: 'Fetch Person in Sales Navigator',
 			value: AVAILABLE_ACTION.nvFetchPerson,
 			description: 'Fetch detailed information about a person in Sales Navigator',
-			action: 'Fetch person in sales navigator',
+			action: 'Fetch person in Sales Navigator',
 		},
 		{
 			name: 'Search Companies in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSearchCompanies,
 			description: 'Search for companies in Sales Navigator',
-			action: 'Search companies in sales navigator',
+			action: 'Search companies in Sales Navigator',
 		},
 		{
 			name: 'Search People in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSearchPeople,
 			description: 'Search for people in Sales Navigator',
-			action: 'Search people in sales navigator',
+			action: 'Search people in Sales Navigator',
 		},
 		{
 			name: 'Send Message in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSendMessage,
 			description: 'Send a message to a person in Sales Navigator',
-			action: 'Send message in sales navigator',
+			action: 'Send message in Sales Navigator',
 		},
 		{
 			name: 'Sync Conversation in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSyncConversation,
 			description: 'Sync a conversation in Sales Navigator so you can start polling it',
-			action: 'Sync conversation in sales navigator',
+			action: 'Sync conversation in Sales Navigator',
 		},
 	],
 };
@@ -247,10 +248,10 @@ export const availableOtherOperations: INodeProperties = {
 			action: 'Poll conversations',
 		},
 		{
-			name: 'API Usage Statistics',
-			value: AVAILABLE_ACTION.apiUsageStatistics,
-			description: 'Retrieve API usage statistics for a date range',
-			action: 'Retrieve API usage statistics',
+			name: 'Actions Usage Statistics',
+			value: AVAILABLE_ACTION.actionsUsageStatistics,
+			description: 'Get actions usage statistics for a date range',
+			action: 'Get actions statistics',
 		},
 	],
 };

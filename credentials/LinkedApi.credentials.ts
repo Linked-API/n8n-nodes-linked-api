@@ -8,7 +8,7 @@ import {
 export class LinkedApi implements ICredentialType {
 	name = 'linkedApi';
 	displayName = 'Linked API';
-	documentationUrl = 'https://linkedapi.io/docs/';
+	documentationUrl = 'https://linkedapi.io/integrations/n8n/creating-credential/';
 
 	properties: INodeProperties[] = [
 		{

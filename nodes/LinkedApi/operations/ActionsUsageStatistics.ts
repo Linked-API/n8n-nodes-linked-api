@@ -23,8 +23,8 @@ const endDateParameter: INodeProperties = {
 	placeholder: '2024-01-01T11:00:00Z',
 };
 
-export class ApiUsageStatistics extends LinkedApiOperation {
-	operationName = AVAILABLE_ACTION.apiUsageStatistics;
+export class ActionsUsageStatistics extends LinkedApiOperation {
+	operationName = AVAILABLE_ACTION.actionsUsageStatistics;
 	resource = 'other' as const;
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(startDateParameter, this.show),

@@ -6,12 +6,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://linkedapi.io/docs/making-requests/"
+				"url": "https://linkedapi.io/integrations/n8n/creating-credential/"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://linkedapi.io/docs/"
+				"url": "https://linkedapi.io/integrations/n8n/"
 			}
 		]
 	}

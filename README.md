@@ -67,11 +67,9 @@ npm install n8n-nodes-linked-api
 | **Custom Workflow** | Execute multi-step custom workflows | `definition` (workflow JSON) |
 | **Get Workflow Result** | Get results from workflow execution | `workflowId`, `operationName` |
 
-> **📖 Full Documentation**: [linkedapi.io/docs](https://linkedapi.io/docs/)
-
 ## License & Support
 
 - **License**: MIT
 - **Issues**: [GitHub](https://github.com/Linked-API/n8n-nodes-linked-api/issues)
-- **Docs**: [linkedapi.io/docs](https://linkedapi.io/docs/)
+- **Docs**: [linkedapi.io](https://linkedapi.io/integrations/n8n/)
 - **Email**: support@linkedapi.io

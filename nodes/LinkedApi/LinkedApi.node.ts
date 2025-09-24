@@ -39,7 +39,7 @@ import {
 	GetWorkflowResult,
 	CancelWorkflow,
 	PollConversations,
-	ApiUsageStatistics,
+	ActionsUsageStatistics,
 } from './operations';
 import { LinkedApiOperation } from './shared/LinkedApiOperation';
 
@@ -71,11 +71,12 @@ const operations: Record<string, LinkedApiOperation> = {
 	getWorkflowResult: new GetWorkflowResult(),
 	cancelWorkflow: new CancelWorkflow(),
 	pollConversations: new PollConversations(),
-	apiUsageStatistics: new ApiUsageStatistics(),
+	actionsUsageStatistics: new ActionsUsageStatistics(),
 };
 
 export class LinkedApi implements INodeType {
 	description: INodeTypeDescription = {
+		documentationUrl: 'https://linkedapi.io/integrations/n8n/',
 		displayName: 'Linked API',
 		name: 'linkedApi',
 		icon: {
@@ -133,7 +134,7 @@ export class LinkedApi implements INodeType {
 			...operations.getWorkflowResult.operationFields,
 			...operations.cancelWorkflow.operationFields,
 			...operations.pollConversations.operationFields,
-			...operations.apiUsageStatistics.operationFields,
+			...operations.actionsUsageStatistics.operationFields,
 		],
 	};
 
