@@ -12,8 +12,6 @@ export class CustomWorkflow extends OtherLinkedApiOperation {
 	fields = [createParameterWithDisplayOptions(workflowDefinitionParameter, this.show)];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		return {
-			workflowDefinition: JSON.parse(this.stringParameter(context, 'workflowDefinition')),
-		};
+		return JSON.parse(this.stringParameter(context, 'workflowDefinition'));
 	}
 }
