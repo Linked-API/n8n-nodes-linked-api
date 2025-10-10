@@ -62,6 +62,16 @@ export const searchTermParameter: INodeProperties = {
 	description: 'Search term/keywords for company name or description',
 };
 
+export const customSearchUrlParameter: INodeProperties = {
+	displayName: 'Custom Search URL',
+	name: 'customSearchUrl',
+	type: 'string',
+	default: '',
+	placeholder: 'https://www.linkedin.com/sales/search/people?...',
+	description:
+		'URL copied from the search results page (LinkedIn or Sales Navigator). When specified, overrides term and filter parameters.',
+};
+
 // Common Filter Parameters
 export const firstNameParameter: INodeProperties = {
 	displayName: 'First Name',

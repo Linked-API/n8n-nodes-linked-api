@@ -5,6 +5,7 @@ import {
 	createParameterWithDisplayOptions,
 	searchTermParameter,
 	limitParameter,
+	customSearchUrlParameter,
 	locationsParameter,
 	industriesParameter,
 	companySizesParameter,
@@ -20,6 +21,7 @@ export class NvSearchCompanies extends SalesNavigatorLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
+		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/sales/search/companies?...' }, this.show),
 		createParameterWithDisplayOptions(locationsParameter, this.show),
 		createParameterWithDisplayOptions(industriesParameter, this.show),
 		createParameterWithDisplayOptions(companySizesParameter, this.show),
@@ -29,7 +31,7 @@ export class NvSearchCompanies extends SalesNavigatorLinkedApiOperation {
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		
+
 		const locations = this.stringParameter(context, 'locations');
 		const industries = this.stringParameter(context, 'industries');
 		const sizes = context.getNodeParameter('sizes', 0, []) as string[];
@@ -61,6 +63,7 @@ export class NvSearchCompanies extends SalesNavigatorLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
+			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
 			filter,
 		};
 	}

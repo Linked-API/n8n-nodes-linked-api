@@ -6,6 +6,7 @@ import {
 	createParameterWithDisplayOptions,
 	searchTermParameter,
 	limitParameter,
+	customSearchUrlParameter,
 	firstNameParameter,
 	lastNameParameter,
 	positionParameter,
@@ -25,6 +26,8 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
+		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/sales/search/people?...' }, this.show),
+
 		// Search filter fields
 		createParameterWithDisplayOptions(firstNameParameter, this.show),
 		createParameterWithDisplayOptions(lastNameParameter, this.show),
@@ -39,7 +42,7 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		
+
 		const firstName = this.stringParameter(context, 'firstName');
 		const lastName = this.stringParameter(context, 'lastName');
 		const position = this.stringParameter(context, 'position');
@@ -90,6 +93,7 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
+			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
 			filter,
 		};
 	}

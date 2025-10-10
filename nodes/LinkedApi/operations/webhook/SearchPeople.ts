@@ -5,6 +5,7 @@ import {
 	createParameterWithDisplayOptions,
 	searchTermParameter,
 	limitParameter,
+	customSearchUrlParameter,
 	firstNameParameter,
 	lastNameParameter,
 	positionParameter,
@@ -23,6 +24,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
+		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/search/results/people?...' }, this.show),
 		createParameterWithDisplayOptions(firstNameParameter, this.show),
 		createParameterWithDisplayOptions(lastNameParameter, this.show),
 		createParameterWithDisplayOptions(positionParameter, this.show),
@@ -34,7 +36,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 	];
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		
+
 		const firstName = this.stringParameter(context, 'firstName');
 		const lastName = this.stringParameter(context, 'lastName');
 		const position = this.stringParameter(context, 'position');
@@ -81,6 +83,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
+			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
 			filter,
 		};
 	}
