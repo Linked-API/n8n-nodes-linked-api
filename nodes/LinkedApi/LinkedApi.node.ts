@@ -146,12 +146,28 @@ export class LinkedApi implements INodeType {
 			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
 		}
 
-		try {
-			const responseData = await operations[operation].execute(this);
-			return this.prepareOutputData(this.helpers.returnJsonArray(responseData));
-		} catch (error) {
-			console.error('Error during httpRequest:', error);
-			throw error; // Re-throw the error to make it visible in the n8n UI
+		const items = this.getInputData();
+		const returnData: INodeExecutionData[] = [];
+
+		for (let i = 0; i < items.length; i++) {
+			try {
+				const responseData = await operations[operation].execute(this);
+				if (Array.isArray(responseData)) {
+					for (const entry of responseData) {
+						returnData.push({ json: entry, pairedItem: { item: i } });
+					}
+				} else {
+					returnData.push({ json: responseData, pairedItem: { item: i } });
+				}
+			} catch (error) {
+				if (this.continueOnFail()) {
+					returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
+				} else {
+					throw error;
+				}
+			}
 		}
+
+		return [returnData];
 	}
 }
