@@ -13,18 +13,22 @@ export class FetchPost extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(postUrlParameter, this.show),
-		// Comments
 		{
-			displayName: 'Retrieve Comments',
-			name: 'retrieveComments',
-			type: 'boolean',
-			default: false,
-			description: 'Whether to include post comments in the result',
+			displayName: 'Additional Data to Retrieve',
+			name: 'dataToRetrieve',
+			type: 'multiOptions',
+			default: [],
 			displayOptions: { show: this.show },
+			description: 'Select the additional data to include with the post details',
+			options: [
+				{ name: 'Comments', value: 'comments' },
+				{ name: 'Reactions', value: 'reactions' },
+			],
 		},
+		// Comments
 		createParameterWithDisplayOptions(commentsLimitParameter, {
 			...this.show,
-			retrieveComments: [true],
+			dataToRetrieve: ['comments'],
 		}),
 		{
 			displayName: 'Include Replies',
@@ -35,7 +39,7 @@ export class FetchPost extends StandardLinkedApiOperation {
 			displayOptions: {
 				show: {
 					...this.show,
-					retrieveComments: [true],
+					dataToRetrieve: ['comments'],
 				},
 			},
 		},
@@ -52,28 +56,21 @@ export class FetchPost extends StandardLinkedApiOperation {
 			displayOptions: {
 				show: {
 					...this.show,
-					retrieveComments: [true],
+					dataToRetrieve: ['comments'],
 				},
 			},
 		},
 		// Reactions
-		{
-			displayName: 'Retrieve Reactions',
-			name: 'retrieveReactions',
-			type: 'boolean',
-			default: false,
-			description: 'Whether to include post reactions/likes in the result',
-			displayOptions: { show: this.show },
-		},
 		createParameterWithDisplayOptions(reactionsLimitParameter, {
 			...this.show,
-			retrieveReactions: [true],
+			dataToRetrieve: ['reactions'],
 		}),
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const retrieveComments = this.booleanParameter(context, 'retrieveComments');
-		const retrieveReactions = this.booleanParameter(context, 'retrieveReactions');
+		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', 0, []) as string[];
+		const retrieveComments = dataToRetrieve.includes('comments');
+		const retrieveReactions = dataToRetrieve.includes('reactions');
 
 		const body: Record<string, any> = {
 			postUrl: this.stringParameter(context, 'postUrl'),

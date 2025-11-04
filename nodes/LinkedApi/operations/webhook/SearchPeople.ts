@@ -22,29 +22,60 @@ export class SearchPeople extends StandardLinkedApiOperation {
 	operationName = AVAILABLE_ACTION.searchPeople;
 
 	fields: INodeProperties[] = [
-		createParameterWithDisplayOptions(searchTermParameter, this.show),
+		createParameterWithDisplayOptions(
+			{ ...searchTermParameter, placeholder: 'John Doe' },
+			this.show,
+		),
 		createParameterWithDisplayOptions(limitParameter, this.show),
-		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/search/results/people?...' }, this.show),
-		createParameterWithDisplayOptions(firstNameParameter, this.show),
-		createParameterWithDisplayOptions(lastNameParameter, this.show),
-		createParameterWithDisplayOptions(positionParameter, this.show),
-		createParameterWithDisplayOptions(locationsParameter, this.show),
-		createParameterWithDisplayOptions(industriesParameter, this.show),
-		createParameterWithDisplayOptions(currentCompaniesParameter, this.show),
-		createParameterWithDisplayOptions(previousCompaniesParameter, this.show),
-		createParameterWithDisplayOptions(schoolsParameter, this.show),
+		{
+			displayName: 'Advanced Filter',
+			name: 'advancedFilter',
+			type: 'collection',
+			placeholder: 'Add Field',
+			default: {},
+			displayOptions: {
+				show: this.show,
+			},
+			options: [
+				{
+					...customSearchUrlParameter,
+					placeholder: 'https://www.linkedin.com/search/results/people?...',
+				},
+				firstNameParameter,
+				lastNameParameter,
+				positionParameter,
+				locationsParameter,
+				industriesParameter,
+				currentCompaniesParameter,
+				previousCompaniesParameter,
+				schoolsParameter,
+			],
+		},
 	];
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
+		const advancedFilter = context.getNodeParameter('advancedFilter', 0, {}) as {
+			customSearchUrl?: string;
+			firstName?: string;
+			lastName?: string;
+			position?: string;
+			locations?: string;
+			industries?: string;
+			currentCompanies?: string;
+			previousCompanies?: string;
+			schools?: string;
+		};
 
-		const firstName = this.stringParameter(context, 'firstName');
-		const lastName = this.stringParameter(context, 'lastName');
-		const position = this.stringParameter(context, 'position');
-		const locations = this.stringParameter(context, 'locations');
-		const industries = this.stringParameter(context, 'industries');
-		const currentCompanies = this.stringParameter(context, 'currentCompanies');
-		const previousCompanies = this.stringParameter(context, 'previousCompanies');
-		const schools = this.stringParameter(context, 'schools');
+		const {
+			firstName,
+			lastName,
+			position,
+			locations,
+			industries,
+			currentCompanies,
+			previousCompanies,
+			schools,
+		} = advancedFilter;
 
 		if (firstName) filter.firstName = firstName;
 		if (lastName) filter.lastName = lastName;
@@ -83,7 +114,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
-			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
+			customSearchUrl: advancedFilter.customSearchUrl || undefined,
 			filter,
 		};
 	}

@@ -15,61 +15,44 @@ export class FetchCompany extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(companyUrlParameter, this.show),
-		// Employees
 		{
-			displayName: 'Retrieve Employees',
-			name: 'retrieveEmployees',
-			type: 'boolean',
-			default: false,
-			description: 'Whether to retrieve company employees',
+			displayName: 'Additional Data to Retrieve',
+			name: 'dataToRetrieve',
+			type: 'multiOptions',
+			default: [],
 			displayOptions: {
 				show: this.show,
 			},
+			description: 'Select the additional data to include with the company details',
+			options: [
+				{ name: 'Decision Makers', value: 'decisionMakers' },
+				{ name: 'Employees', value: 'employees' },
+				{ name: 'Posts', value: 'posts' },
+			],
 		},
 		createParameterWithDisplayOptions(employeeLimitParameter, {
 			...this.show,
-			retrieveEmployees: [true],
+			dataToRetrieve: ['employees'],
 		}),
-		// Decision Makers
-		{
-			displayName: 'Retrieve Decision Makers',
-			name: 'retrieveDMs',
-			type: 'boolean',
-			default: false,
-			description: 'Whether to retrieve company decision makers',
-			displayOptions: {
-				show: this.show,
-			},
-		},
 		createParameterWithDisplayOptions(dmsLimitParameter, {
 			...this.show,
-			retrieveDMs: [true],
+			dataToRetrieve: ['decisionMakers'],
 		}),
-		// Posts
-		{
-			displayName: 'Retrieve Posts',
-			name: 'retrievePosts',
-			type: 'boolean',
-			default: false,
-			description: 'Whether to retrieve company posts',
-			displayOptions: {
-				show: this.show,
-			},
-		},
 		createParameterWithDisplayOptions(postsLimitParameter, {
 			...this.show,
-			retrievePosts: [true],
+			dataToRetrieve: ['posts'],
 		}),
 		createParameterWithDisplayOptions(postsSinceParameter, {
 			...this.show,
-			retrievePosts: [true],
+			dataToRetrieve: ['posts'],
 		}),
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const retrieveEmployees = this.booleanParameter(context, 'retrieveEmployees');
-		const retrieveDMs = this.booleanParameter(context, 'retrieveDMs');
-		const retrievePosts = this.booleanParameter(context, 'retrievePosts');
+		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', 0, []) as string[];
+		const retrieveEmployees = dataToRetrieve.includes('employees');
+		const retrieveDMs = dataToRetrieve.includes('decisionMakers');
+		const retrievePosts = dataToRetrieve.includes('posts');
 
 		let body: Record<string, any> = {
 			companyUrl: this.stringParameter(context, 'companyUrl'),
@@ -94,7 +77,7 @@ export class FetchCompany extends StandardLinkedApiOperation {
 			body.postsRetrievalConfig = {
 				limit: this.numberParameter(context, 'postsLimit'),
 				since: this.stringParameter(context, 'postsSince') || undefined,
-			};	
+			};
 		}
 
 		return body;

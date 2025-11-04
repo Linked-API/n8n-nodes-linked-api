@@ -17,18 +17,39 @@ export class SearchCompanies extends StandardLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
-		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/search/results/companies?...' }, this.show),
-		createParameterWithDisplayOptions(locationsParameter, this.show),
-		createParameterWithDisplayOptions(industriesParameter, this.show),
-		createParameterWithDisplayOptions(companySizesParameter, this.show),
+		{
+			displayName: 'Advanced Filter',
+			name: 'additionalFields',
+			type: 'collection',
+			placeholder: 'Add Field',
+			default: {},
+			displayOptions: {
+				show: this.show,
+			},
+			options: [
+				{
+					...customSearchUrlParameter,
+					placeholder: 'https://www.linkedin.com/search/results/companies?...',
+				},
+				locationsParameter,
+				industriesParameter,
+				companySizesParameter,
+			],
+		},
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
+		const additionalFields = context.getNodeParameter('additionalFields', 0, {}) as {
+			customSearchUrl?: string;
+			locations?: string;
+			industries?: string;
+			sizes?: string[];
+		};
 
-		const locations = this.stringParameter(context, 'locations');
-		const industries = this.stringParameter(context, 'industries');
-		const sizes = context.getNodeParameter('sizes', 0, []) as string[];
+		const locations = additionalFields.locations;
+		const industries = additionalFields.industries;
+		const sizes = additionalFields.sizes;
 
 		if (locations) {
 			filter.locations = locations
@@ -36,12 +57,14 @@ export class SearchCompanies extends StandardLinkedApiOperation {
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
+
 		if (industries) {
 			filter.industries = industries
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
 		}
+
 		if (sizes && sizes.length > 0) {
 			filter.sizes = sizes;
 		}
@@ -49,7 +72,7 @@ export class SearchCompanies extends StandardLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
-			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
+			customSearchUrl: additionalFields.customSearchUrl || undefined,
 			filter,
 		};
 	}

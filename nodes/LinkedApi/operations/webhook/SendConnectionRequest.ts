@@ -9,7 +9,7 @@ import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class SendConnectionRequest extends StandardLinkedApiOperation {
-		operationName = AVAILABLE_ACTION.sendConnectionRequest;
+	operationName = AVAILABLE_ACTION.sendConnectionRequest;
 
 	fields = [
 		createParameterWithDisplayOptions(personUrlParameter, this.show),

@@ -21,22 +21,41 @@ export class NvSearchCompanies extends SalesNavigatorLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(searchTermParameter, this.show),
 		createParameterWithDisplayOptions(limitParameter, this.show),
-		createParameterWithDisplayOptions({ ...customSearchUrlParameter, placeholder: 'https://www.linkedin.com/sales/search/companies?...' }, this.show),
-		createParameterWithDisplayOptions(locationsParameter, this.show),
-		createParameterWithDisplayOptions(industriesParameter, this.show),
-		createParameterWithDisplayOptions(companySizesParameter, this.show),
-		createParameterWithDisplayOptions(annualRevenueMinParameter, this.show),
-		createParameterWithDisplayOptions(annualRevenueMaxParameter, this.show),
+		{
+			displayName: 'Advanced Filter',
+			name: 'advancedFilter',
+			type: 'collection',
+			placeholder: 'Add Field',
+			default: {},
+			displayOptions: {
+				show: this.show,
+			},
+			options: [
+				{
+					...customSearchUrlParameter,
+					placeholder: 'https://www.linkedin.com/sales/search/companies?...',
+				},
+				locationsParameter,
+				industriesParameter,
+				companySizesParameter,
+				annualRevenueMinParameter,
+				annualRevenueMaxParameter,
+			],
+		},
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
+		const advancedFilter = context.getNodeParameter('advancedFilter', 0, {}) as {
+			customSearchUrl?: string;
+			locations?: string;
+			industries?: string;
+			sizes?: string[];
+			annualRevenueMin?: string;
+			annualRevenueMax?: string;
+		};
 
-		const locations = this.stringParameter(context, 'locations');
-		const industries = this.stringParameter(context, 'industries');
-		const sizes = context.getNodeParameter('sizes', 0, []) as string[];
-		const annualRevenueMin = context.getNodeParameter('annualRevenueMin', 0, '') as string;
-		const annualRevenueMax = context.getNodeParameter('annualRevenueMax', 0, '') as string;
+		const { locations, industries, sizes, annualRevenueMin, annualRevenueMax } = advancedFilter;
 
 		if (locations) {
 			filter.locations = locations
@@ -63,7 +82,7 @@ export class NvSearchCompanies extends SalesNavigatorLinkedApiOperation {
 		return {
 			term: this.stringParameter(context, 'searchTerm') || undefined,
 			limit: this.numberParameter(context, 'limit'),
-			customSearchUrl: this.stringParameter(context, 'customSearchUrl') || undefined,
+			customSearchUrl: advancedFilter.customSearchUrl || undefined,
 			filter,
 		};
 	}

@@ -174,7 +174,6 @@ export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 				filter.yearsOfExperiences = additionalFields.yearsOfExperiences;
 			}
 
-
 			Object.assign(body, {
 				employeesRetrievalConfig: {
 					limit: this.numberParameter(context, 'employeeLimit'),

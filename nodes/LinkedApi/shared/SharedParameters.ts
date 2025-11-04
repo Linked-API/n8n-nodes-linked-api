@@ -54,7 +54,7 @@ export const companyHashedUrlParameter: INodeProperties = {
 
 // Search Parameters
 export const searchTermParameter: INodeProperties = {
-	displayName: 'Search Term',
+	displayName: 'Search Term (Optional)',
 	name: 'searchTerm',
 	type: 'string',
 	default: '',
@@ -450,7 +450,11 @@ export const workflowOperationParameter: INodeProperties = {
 	name: 'workflowOperation',
 	type: 'options',
 	default: '',
-	options: [customWorkflowOption, ...availableStandardOperations.options!, ...availableSalesNavigatorOperations.options!],
+	options: [
+		customWorkflowOption,
+		...availableStandardOperations.options!,
+		...availableSalesNavigatorOperations.options!,
+	],
 	description: 'Worfklow operation used during the execution of the workflow',
 };
 

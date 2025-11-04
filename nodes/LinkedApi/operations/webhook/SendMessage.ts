@@ -8,7 +8,7 @@ import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class SendMessage extends StandardLinkedApiOperation {
-		operationName = AVAILABLE_ACTION.sendMessage;
+	operationName = AVAILABLE_ACTION.sendMessage;
 
 	fields = [
 		createParameterWithDisplayOptions(personUrlParameter, this.show),

@@ -8,7 +8,8 @@ const conversationsParameter: INodeProperties = {
 	name: 'conversations',
 	type: 'json',
 	required: true,
-	default: '[\n  {\n    "personUrl": "https://www.linkedin.com/in/john-doe",\n    "type": "st",\n    "since": "2024-01-01T00:00:00Z"\n  }\n]',
+	default:
+		'[\n  {\n    "personUrl": "https://www.linkedin.com/in/john-doe",\n    "type": "st",\n    "since": "2024-01-01T00:00:00Z"\n  }\n]',
 	description: 'Array of conversation objects to poll',
 	hint: 'Enter an array of conversation objects with personUrl, type (st/nv), and optional since timestamp',
 };

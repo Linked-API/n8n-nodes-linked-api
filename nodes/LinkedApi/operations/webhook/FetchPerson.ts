@@ -18,114 +18,68 @@ export class FetchPerson extends StandardLinkedApiOperation {
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(personUrlParameter, this.show),
 		{
-			displayName: 'Retrieve Experience',
-			name: 'retrieveExperience',
-			type: 'boolean',
-			default: false,
+			displayName: 'Additional Data to Retrieve',
+			name: 'dataToRetrieve',
+			type: 'multiOptions',
+			default: [],
 			displayOptions: {
 				show: this.show,
 			},
-			description: "Whether to retrieve the person's experience information",
-		},
-		{
-			displayName: 'Retrieve Education',
-			name: 'retrieveEducation',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's education information",
-		},
-		{
-			displayName: 'Retrieve Skills',
-			name: 'retrieveSkills',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's skills information",
-		},
-		{
-			displayName: 'Retrieve Languages',
-			name: 'retrieveLanguages',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's languages information",
+			description: "Select the additional data to include with the person's profile",
+			options: [
+				{ name: 'Comments', value: 'comments' },
+				{ name: 'Education', value: 'education' },
+				{ name: 'Experience', value: 'experience' },
+				{ name: 'Languages', value: 'languages' },
+				{ name: 'Posts', value: 'posts' },
+				{ name: 'Reactions', value: 'reactions' },
+				{ name: 'Skills', value: 'skills' },
+			],
 		},
 		// Posts
-		{
-			displayName: 'Retrieve Posts',
-			name: 'retrievePosts',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's posts information",
-		},
 		createParameterWithDisplayOptions(postsSinceParameter, {
 			...this.show,
-			retrievePosts: [true],
+			dataToRetrieve: ['posts'],
 		}),
 		createParameterWithDisplayOptions(postsLimitParameter, {
 			...this.show,
-			retrievePosts: [true],
+			dataToRetrieve: ['posts'],
 		}),
 		// Comments
-		{
-			displayName: 'Retrieve Comments',
-			name: 'retrieveComments',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's comments information",
-		},
 		createParameterWithDisplayOptions(commentsSinceParameter, {
 			...this.show,
-			retrieveComments: [true],
+			dataToRetrieve: ['comments'],
 		}),
 		createParameterWithDisplayOptions(commentsLimitParameter, {
 			...this.show,
-			retrieveComments: [true],
+			dataToRetrieve: ['comments'],
 		}),
-		// Reations
-		{
-			displayName: 'Retrieve Reactions',
-			name: 'retrieveReactions',
-			type: 'boolean',
-			default: false,
-			displayOptions: {
-				show: this.show,
-			},
-			description: "Whether to retrieve the person's reactions information",
-		},
+		// Reactions
 		createParameterWithDisplayOptions(reactionsSinceParameter, {
 			...this.show,
-			retrieveReactions: [true],
+			dataToRetrieve: ['reactions'],
 		}),
 		createParameterWithDisplayOptions(reactionsLimitParameter, {
 			...this.show,
-			retrieveReactions: [true],
+			dataToRetrieve: ['reactions'],
 		}),
 	];
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const retrievePosts = this.booleanParameter(context, 'retrievePosts');
-		const retrieveComments = this.booleanParameter(context, 'retrieveComments');
-		const retrieveReactions = this.booleanParameter(context, 'retrieveReactions');
+		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', 0, []) as string[];
+		const retrieveExperience = dataToRetrieve.includes('experience');
+		const retrieveEducation = dataToRetrieve.includes('education');
+		const retrieveSkills = dataToRetrieve.includes('skills');
+		const retrieveLanguages = dataToRetrieve.includes('languages');
+		const retrievePosts = dataToRetrieve.includes('posts');
+		const retrieveComments = dataToRetrieve.includes('comments');
+		const retrieveReactions = dataToRetrieve.includes('reactions');
 
 		const body = {
 			personUrl: this.stringParameter(context, 'personUrl'),
-			retrieveExperience: this.booleanParameter(context, 'retrieveExperience'),
-			retrieveEducation: this.booleanParameter(context, 'retrieveEducation'),
-			retrieveSkills: this.booleanParameter(context, 'retrieveSkills'),
-			retrieveLanguages: this.booleanParameter(context, 'retrieveLanguages'),
+			retrieveExperience,
+			retrieveEducation,
+			retrieveSkills,
+			retrieveLanguages,
 			retrievePosts,
 			retrieveComments,
 			retrieveReactions,

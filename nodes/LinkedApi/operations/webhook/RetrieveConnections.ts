@@ -33,7 +33,7 @@ export class RetrieveConnections extends StandardLinkedApiOperation {
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		
+
 		const firstName = this.stringParameter(context, 'firstName');
 		const lastName = this.stringParameter(context, 'lastName');
 		const position = this.stringParameter(context, 'position');

@@ -14,7 +14,8 @@ export class GetWorkflowResult extends LinkedApiOperation {
 		createParameterWithDisplayOptions(workflowIdParameter, this.show),
 		createParameterWithDisplayOptions(workflowOperationParameter, this.show),
 	];
-	url = (context: IExecuteFunctions): string => `/workflows/${this.stringParameter(context, 'workflowId')}`;
+	url = (context: IExecuteFunctions): string =>
+		`/workflows/${this.stringParameter(context, 'workflowId')}`;
 	method = 'GET' as const;
 	qs = (context: IExecuteFunctions): Record<string, any> => {
 		return {

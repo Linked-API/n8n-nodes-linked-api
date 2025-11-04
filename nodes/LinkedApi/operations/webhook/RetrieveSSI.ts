@@ -3,9 +3,9 @@ import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
 
 export class RetrieveSSI extends StandardLinkedApiOperation {
-  operationName = AVAILABLE_ACTION.retrieveSSI;
-  fields = [];
-  public body(_: IExecuteFunctions): Record<string, any> {
-    return {};
-  };
+	operationName = AVAILABLE_ACTION.retrieveSSI;
+	fields = [];
+	public body(_: IExecuteFunctions): Record<string, any> {
+		return {};
+	}
 }

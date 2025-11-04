@@ -4,11 +4,11 @@ export const LINKED_API_GROUP = {
 	standard: 'standard',
 	salesNavigator: 'salesNavigator',
 	other: 'other',
-}
+};
 export type TGroup = (typeof LINKED_API_GROUP)[keyof typeof LINKED_API_GROUP];
 
 export const availableGroups: INodeProperties = {
-	displayName: 'Group',
+	displayName: 'Resource',
 	name: 'resource',
 	type: 'options',
 	noDataExpression: true,

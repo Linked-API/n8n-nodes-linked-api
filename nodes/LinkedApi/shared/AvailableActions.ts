@@ -35,7 +35,7 @@ export const AVAILABLE_ACTION = {
 export type TAvailableAction = (typeof AVAILABLE_ACTION)[keyof typeof AVAILABLE_ACTION];
 
 export const availableStandardOperations: INodeProperties = {
-	displayName: 'Action',
+	displayName: 'Operation',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -153,7 +153,7 @@ export const availableStandardOperations: INodeProperties = {
 };
 
 export const availableSalesNavigatorOperations: INodeProperties = {
-	displayName: 'Action',
+	displayName: 'Operations',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
@@ -203,8 +203,7 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 	],
 };
 
-export const customWorkflowOption: INodePropertyOptions =
-{
+export const customWorkflowOption: INodePropertyOptions = {
 	name: 'Custom Workflow',
 	value: AVAILABLE_ACTION.customWorkflow,
 	description: 'Execute a custom multi-step workflow using raw workflow definition',
@@ -212,7 +211,7 @@ export const customWorkflowOption: INodePropertyOptions =
 };
 
 export const availableOtherOperations: INodeProperties = {
-	displayName: 'Action',
+	displayName: 'Operations',
 	name: 'operation',
 	type: 'options',
 	noDataExpression: true,
