@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-linked-api",
-  "version": "0.0.13",
-  "description": "n8n nodes for Linked API - LinkedIn automation and data retrieval",
+  "version": "1.0.0",
+  "description": "Connect your LinkedIn accounts to n8n's automation platform.",
   "keywords": [
     "n8n-community-node-package",
     "n8n-nodes",
