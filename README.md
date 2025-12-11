@@ -1,7 +1,9 @@
 Linked API for n8n connects your LinkedIn account to n8n's automation platform, so you can build visual workflows that search for prospects, send messages, manage connections, extract data, and more – all with [industry-leading safety](https://linkedapi.io/safety/).
 
 > [!IMPORTANT]
-> Our n8n node is currently private, so install it as a community node: go to **Settings** → **Community Nodes**, enter **`n8n-nodes-linked-api`**, and click **Install**.
+> Our n8n node is a verified community node – just open the nodes panel, search for "Linked API", and install it with a click.
+> 
+> Alternatively, install it manually: go to Settings → Community Nodes, enter n8n-nodes-linked-api, and click Install.
 
 ## Use cases
 - **Lead generation pipeline**. Search for prospects matching your criteria, automatically send connection requests, wait for acceptance, then send personalized follow-up messages. Connect the results to your CRM to track everything in one place.
