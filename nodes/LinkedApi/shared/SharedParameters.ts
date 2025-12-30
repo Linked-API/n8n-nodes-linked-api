@@ -426,6 +426,29 @@ export const reactionTypeParameter: INodeProperties = {
 	],
 };
 
+// Create Post Parameters
+export const postTextParameter: INodeProperties = {
+	displayName: 'Post Text',
+	name: 'postText',
+	type: 'string',
+	typeOptions: {
+		rows: 4,
+	},
+	required: true,
+	default: '',
+	placeholder: 'Share your thoughts...',
+	description: 'Post content, must be up to 3000 characters',
+};
+
+export const postCompanyUrlParameter: INodeProperties = {
+	displayName: 'Company URL',
+	name: 'postCompanyUrl',
+	type: 'string',
+	default: '',
+	placeholder: 'https://www.linkedin.com/company/acme-corp',
+	description: 'LinkedIn company page URL. If specified, the post will be created on the company page.',
+};
+
 // Custom Workflow Parameters
 export const workflowDefinitionParameter: INodeProperties = {
 	displayName: 'Workflow Definition',

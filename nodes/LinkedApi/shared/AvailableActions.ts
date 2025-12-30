@@ -5,6 +5,7 @@ import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 export const AVAILABLE_ACTION = {
 	checkConnectionStatus: 'checkConnectionStatus',
 	commentOnPost: 'commentOnPost',
+	createPost: 'createPost',
 	fetchCompany: 'fetchCompany',
 	fetchPerson: 'fetchPerson',
 	fetchPost: 'fetchPost',
@@ -57,6 +58,12 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.commentOnPost,
 			description: 'Leave a comment on a LinkedIn post',
 			action: 'Comment on post',
+		},
+		{
+			name: 'Create Post',
+			value: AVAILABLE_ACTION.createPost,
+			description: 'Create a new LinkedIn post',
+			action: 'Create post',
 		},
 		{
 			name: 'Fetch Company',

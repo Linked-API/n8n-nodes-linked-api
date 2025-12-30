@@ -1,5 +1,6 @@
 export * from './CheckConnectionStatus';
 export * from './CommentOnPost';
+export * from './CreatePost';
 export * from './CustomWorkflow';
 export * from './FetchCompany';
 export * from './FetchPerson';

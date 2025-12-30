@@ -22,6 +22,7 @@ import {
 	CustomWorkflow,
 	CheckConnectionStatus,
 	CommentOnPost,
+	CreatePost,
 	FetchCompany,
 	FetchPerson,
 	FetchPost,
@@ -46,6 +47,7 @@ import { LinkedApiOperation } from './shared/LinkedApiOperation';
 const operations: Record<string, LinkedApiOperation> = {
 	checkConnectionStatus: new CheckConnectionStatus(),
 	commentOnPost: new CommentOnPost(),
+	createPost: new CreatePost(),
 	fetchPerson: new FetchPerson(),
 	fetchCompany: new FetchCompany(),
 	fetchPost: new FetchPost(),
@@ -107,6 +109,7 @@ export class LinkedApi implements INodeType {
 			// Standard actions
 			...operations.checkConnectionStatus.operationFields,
 			...operations.commentOnPost.operationFields,
+			...operations.createPost.operationFields,
 			...operations.fetchPerson.operationFields,
 			...operations.fetchCompany.operationFields,
 			...operations.fetchPost.operationFields,
