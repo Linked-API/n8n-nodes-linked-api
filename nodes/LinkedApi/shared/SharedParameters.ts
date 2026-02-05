@@ -316,6 +316,14 @@ export const reactionsSinceParameter: INodeProperties = {
 	description: 'The date since the reactions were created',
 };
 
+export const sinceParameter: INodeProperties = {
+	displayName: 'Since',
+	name: 'since',
+	type: 'dateTime',
+	default: '',
+	description: 'Only return connections made on or after this date. Only works when no filter fields are provided.',
+};
+
 // Message Parameters
 export const messageTextParameter: INodeProperties = {
 	displayName: 'Message Text',

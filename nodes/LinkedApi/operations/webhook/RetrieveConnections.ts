@@ -3,6 +3,7 @@ import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	limitParameter,
+	sinceParameter,
 	firstNameParameter,
 	lastNameParameter,
 	positionParameter,
@@ -20,6 +21,7 @@ export class RetrieveConnections extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(limitParameter, this.show),
+		createParameterWithDisplayOptions(sinceParameter, this.show),
 		// Connection filter fields
 		createParameterWithDisplayOptions(firstNameParameter, this.show),
 		createParameterWithDisplayOptions(lastNameParameter, this.show),
@@ -77,9 +79,12 @@ export class RetrieveConnections extends StandardLinkedApiOperation {
 				.filter((s) => s);
 		}
 
+		const hasFilter = Object.keys(filter).length > 0;
+
 		return {
 			limit: this.numberParameter(context, 'limit'),
-			filter,
+			since: this.stringParameter(context, 'since') || undefined,
+			...(hasFilter ? { filter } : {}),
 		};
 	}
 }
