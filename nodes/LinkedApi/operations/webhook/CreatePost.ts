@@ -12,7 +12,6 @@ export class CreatePost extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(postTextParameter, this.show),
-		createParameterWithDisplayOptions(postCompanyUrlParameter, this.show),
 		{
 			displayName: 'Attachments',
 			name: 'attachments',
@@ -80,19 +79,32 @@ export class CreatePost extends StandardLinkedApiOperation {
 				},
 			],
 		},
+		{
+			displayName: 'Additional Parameters',
+			name: 'additionalParameters',
+			type: 'collection',
+			placeholder: 'Add Field',
+			default: {},
+			displayOptions: {
+				show: this.show,
+			},
+			options: [postCompanyUrlParameter],
+		},
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const text = this.stringParameter(context, 'postText');
-		const companyUrl = this.stringParameter(context, 'postCompanyUrl');
+		const additionalParameters = context.getNodeParameter('additionalParameters', 0, {}) as {
+			postCompanyUrl?: string;
+		};
 		const attachmentsData = context.getNodeParameter('attachments', 0, {}) as {
 			attachment?: Array<{ type: string; url: string; name?: string }>;
 		};
 
 		const body: Record<string, any> = { text };
 
-		if (companyUrl) {
-			body.companyUrl = companyUrl;
+		if (additionalParameters.postCompanyUrl) {
+			body.companyUrl = additionalParameters.postCompanyUrl;
 		}
 
 		if (attachmentsData.attachment && attachmentsData.attachment.length > 0) {

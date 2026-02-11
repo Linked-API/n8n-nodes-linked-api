@@ -454,7 +454,7 @@ export const postCompanyUrlParameter: INodeProperties = {
 	type: 'string',
 	default: '',
 	placeholder: 'https://www.linkedin.com/company/acme-corp',
-	description: 'LinkedIn company page URL. If specified, the post will be created on the company page.',
+	description: 'LinkedIn company page URL. If specified, the action will be performed on behalf of the company page.',
 };
 
 // Custom Workflow Parameters
