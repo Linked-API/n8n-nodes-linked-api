@@ -95,6 +95,18 @@ export class LinkedApi implements INodeType {
 		inputs: [NodeConnectionType.Main],
 		outputs: [NodeConnectionType.Main],
 		usableAsTool: true,
+		hints: [
+			{
+				message:
+					'This action delivers results asynchronously. Add a <b>Wait</b> node ' +
+					'(set to "On Webhook Call") right after this node to receive the results.',
+				type: 'warning',
+				location: 'outputPane',
+				whenToDisplay: 'beforeExecution',
+				displayCondition:
+					'={{ !["getWorkflowResult", "cancelWorkflow", "pollConversations", "actionsUsageStatistics"].includes($parameter["operation"]) }}',
+			},
+		],
 		credentials: [
 			{
 				name: 'linkedApi',

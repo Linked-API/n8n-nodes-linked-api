@@ -88,11 +88,27 @@ export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
 		'result-retrieval': 'webhook',
 	};
 
+	protected override get defaultFields(): INodeProperties[] {
+		return [
+			{
+				displayName:
+					'<b>Important:</b> This action delivers results asynchronously. ' +
+					'You must add a <b>Wait</b> node right after this node and set its ' +
+					'"Resume" field to <b>"On Webhook Call"</b>. Without the Wait node, ' +
+					'your workflow will not receive results. ' +
+					'<a href="https://linkedapi.io/integrations/n8n/building-workflows-0" target="_blank">See setup guide</a>',
+				name: 'waitNodeRequiredNotice',
+				type: 'notice',
+				default: '',
+				displayOptions: {
+					show: this.show,
+				},
+			},
+		];
+	}
+
 	override requestBody(context: IExecuteFunctions): Record<string, any> {
 		const resumeUrl = context.evaluateExpression('{{$execution.resumeUrl}}', 0) as string;
-		if (!resumeUrl) {
-			throw new Error("Wait node wasn't found. Please check your workflow.");
-		}
 		if (resumeUrl && resumeUrl.includes('//localhost')) {
 			throw new Error('Localhost running is not allowed. Please use a public n8n instance.');
 		}
