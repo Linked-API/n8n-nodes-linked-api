@@ -32,6 +32,16 @@ export const AVAILABLE_ACTION = {
 	cancelWorkflow: 'cancelWorkflow',
 	pollConversations: 'pollConversations',
 	actionsUsageStatistics: 'actionsUsageStatistics',
+	adminGetSubscriptionStatus: 'adminGetSubscriptionStatus',
+	adminGetSeats: 'adminGetSeats',
+	adminSetSeats: 'adminSetSeats',
+	adminGetAccounts: 'adminGetAccounts',
+	adminConnectAccount: 'adminConnectAccount',
+	adminDisconnectAccount: 'adminDisconnectAccount',
+	adminRegenerateToken: 'adminRegenerateToken',
+	adminGetLimitsUsage: 'adminGetLimitsUsage',
+	adminSetLimits: 'adminSetLimits',
+	adminResetLimits: 'adminResetLimits',
 } as const;
 export type TAvailableAction = (typeof AVAILABLE_ACTION)[keyof typeof AVAILABLE_ACTION];
 
@@ -258,6 +268,81 @@ export const availableOtherOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.actionsUsageStatistics,
 			description: 'Get actions usage statistics for a date range',
 			action: 'Get actions statistics',
+		},
+	],
+};
+
+export const availableAdminOperations: INodeProperties = {
+	displayName: 'Operations',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	default: AVAILABLE_ACTION.adminGetAccounts.toString(),
+	displayOptions: {
+		show: {
+			resource: ['admin'],
+		},
+	},
+	options: [
+		{
+			name: 'Get Subscription Status',
+			value: AVAILABLE_ACTION.adminGetSubscriptionStatus,
+			description: 'Get current subscription status and trial eligibility',
+			action: 'Get subscription status',
+		},
+		{
+			name: 'Get Seats',
+			value: AVAILABLE_ACTION.adminGetSeats,
+			description: 'Get active subscription seats',
+			action: 'Get seats',
+		},
+		{
+			name: 'Set Seats',
+			value: AVAILABLE_ACTION.adminSetSeats,
+			description: 'Set number of subscription seats',
+			action: 'Set seats',
+		},
+		{
+			name: 'Get Accounts',
+			value: AVAILABLE_ACTION.adminGetAccounts,
+			description: 'Get all connected LinkedIn accounts and pending sessions',
+			action: 'Get accounts',
+		},
+		{
+			name: 'Connect Account',
+			value: AVAILABLE_ACTION.adminConnectAccount,
+			description: 'Create connection session for a new LinkedIn account',
+			action: 'Connect account',
+		},
+		{
+			name: 'Disconnect Account',
+			value: AVAILABLE_ACTION.adminDisconnectAccount,
+			description: 'Disconnect a LinkedIn account (irreversible)',
+			action: 'Disconnect account',
+		},
+		{
+			name: 'Regenerate Token',
+			value: AVAILABLE_ACTION.adminRegenerateToken,
+			description: 'Regenerate identification token for an account',
+			action: 'Regenerate token',
+		},
+		{
+			name: 'Get Limits Usage',
+			value: AVAILABLE_ACTION.adminGetLimitsUsage,
+			description: 'Get current usage against configured limits',
+			action: 'Get limits usage',
+		},
+		{
+			name: 'Set Limits',
+			value: AVAILABLE_ACTION.adminSetLimits,
+			description: 'Set rate limits for an account',
+			action: 'Set limits',
+		},
+		{
+			name: 'Reset Limits',
+			value: AVAILABLE_ACTION.adminResetLimits,
+			description: 'Reset all limits to system defaults',
+			action: 'Reset limits',
 		},
 	],
 };

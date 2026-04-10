@@ -3,3 +3,4 @@ export * from './GetWorkflowResult';
 export * from './CancelWorkflow';
 export * from './PollConversations';
 export * from './ActionsUsageStatistics';
+export * from './admin';

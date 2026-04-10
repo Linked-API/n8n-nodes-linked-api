@@ -6,6 +6,7 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
 import {
+	availableAdminOperations,
 	availableOtherOperations,
 	availableSalesNavigatorOperations,
 	availableStandardOperations,
@@ -41,6 +42,16 @@ import {
 	CancelWorkflow,
 	PollConversations,
 	ActionsUsageStatistics,
+	AdminGetSubscriptionStatus,
+	AdminGetSeats,
+	AdminSetSeats,
+	AdminGetAccounts,
+	AdminConnectAccount,
+	AdminDisconnectAccount,
+	AdminRegenerateToken,
+	AdminGetLimitsUsage,
+	AdminSetLimits,
+	AdminResetLimits,
 } from './operations';
 import { LinkedApiOperation } from './shared/LinkedApiOperation';
 
@@ -74,6 +85,16 @@ const operations: Record<string, LinkedApiOperation> = {
 	cancelWorkflow: new CancelWorkflow(),
 	pollConversations: new PollConversations(),
 	actionsUsageStatistics: new ActionsUsageStatistics(),
+	adminGetSubscriptionStatus: new AdminGetSubscriptionStatus(),
+	adminGetSeats: new AdminGetSeats(),
+	adminSetSeats: new AdminSetSeats(),
+	adminGetAccounts: new AdminGetAccounts(),
+	adminConnectAccount: new AdminConnectAccount(),
+	adminDisconnectAccount: new AdminDisconnectAccount(),
+	adminRegenerateToken: new AdminRegenerateToken(),
+	adminGetLimitsUsage: new AdminGetLimitsUsage(),
+	adminSetLimits: new AdminSetLimits(),
+	adminResetLimits: new AdminResetLimits(),
 };
 
 export class LinkedApi implements INodeType {
@@ -104,7 +125,7 @@ export class LinkedApi implements INodeType {
 				location: 'outputPane',
 				whenToDisplay: 'beforeExecution',
 				displayCondition:
-					'={{ !["getWorkflowResult", "cancelWorkflow", "pollConversations", "actionsUsageStatistics"].includes($parameter["operation"]) }}',
+					'={{ !["getWorkflowResult", "cancelWorkflow", "pollConversations", "actionsUsageStatistics", "adminGetSubscriptionStatus", "adminGetSeats", "adminSetSeats", "adminGetAccounts", "adminConnectAccount", "adminDisconnectAccount", "adminRegenerateToken", "adminGetLimitsUsage", "adminSetLimits", "adminResetLimits"].includes($parameter["operation"]) }}',
 			},
 		],
 		credentials: [
@@ -118,6 +139,7 @@ export class LinkedApi implements INodeType {
 			availableStandardOperations,
 			availableSalesNavigatorOperations,
 			availableOtherOperations,
+			availableAdminOperations,
 			// Standard actions
 			...operations.checkConnectionStatus.operationFields,
 			...operations.commentOnPost.operationFields,
@@ -150,6 +172,17 @@ export class LinkedApi implements INodeType {
 			...operations.cancelWorkflow.operationFields,
 			...operations.pollConversations.operationFields,
 			...operations.actionsUsageStatistics.operationFields,
+			// Admin actions
+			...operations.adminGetSubscriptionStatus.operationFields,
+			...operations.adminGetSeats.operationFields,
+			...operations.adminSetSeats.operationFields,
+			...operations.adminGetAccounts.operationFields,
+			...operations.adminConnectAccount.operationFields,
+			...operations.adminDisconnectAccount.operationFields,
+			...operations.adminRegenerateToken.operationFields,
+			...operations.adminGetLimitsUsage.operationFields,
+			...operations.adminSetLimits.operationFields,
+			...operations.adminResetLimits.operationFields,
 		],
 	};
 
