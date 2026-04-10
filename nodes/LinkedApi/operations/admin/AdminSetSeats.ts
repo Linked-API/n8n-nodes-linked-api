@@ -45,7 +45,7 @@ export class AdminSetSeats extends AdminLinkedApiOperation {
 					{ name: 'Month', value: 'month' },
 					{ name: 'Year', value: 'year' },
 				],
-				description: 'Billing period',
+				description: 'Monthly or yearly billing cycle',
 			},
 			this.show,
 		),
