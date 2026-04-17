@@ -28,7 +28,7 @@ export class ReactToPost extends StandardLinkedApiOperation {
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const additionalParameters = context.getNodeParameter('additionalParameters', 0, {}) as {
+		const additionalParameters = context.getNodeParameter('additionalParameters', this.itemIndex, {}) as {
 			postCompanyUrl?: string;
 		};
 

@@ -40,7 +40,7 @@ export class SearchCompanies extends StandardLinkedApiOperation {
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		const additionalFields = context.getNodeParameter('additionalFields', 0, {}) as {
+		const additionalFields = context.getNodeParameter('additionalFields', this.itemIndex, {}) as {
 			customSearchUrl?: string;
 			locations?: string;
 			industries?: string;

@@ -65,7 +65,7 @@ export class FetchPerson extends StandardLinkedApiOperation {
 		}),
 	];
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', 0, []) as string[];
+		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', this.itemIndex, []) as string[];
 		const retrieveExperience = dataToRetrieve.includes('experience');
 		const retrieveEducation = dataToRetrieve.includes('education');
 		const retrieveSkills = dataToRetrieve.includes('skills');

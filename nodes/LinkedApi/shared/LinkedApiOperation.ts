@@ -1,4 +1,4 @@
-import { IExecuteFunctions, IHttpRequestMethods, NodeOperationError } from 'n8n-workflow';
+import { IExecuteFunctions, IHttpRequestMethods, NodeApiError } from 'n8n-workflow';
 
 import { INodeProperties, IDisplayOptions } from 'n8n-workflow';
 import { TGroup } from './AvailableGroups';
@@ -11,18 +11,16 @@ export abstract class LinkedApiOperation {
 	}
 	public abstract operationName: TAvailableAction;
 	public abstract resource: TGroup;
+	protected itemIndex = 0;
 
 	public get operationFields(): INodeProperties[] {
 		return [...this.defaultFields, ...this.fields];
 	}
 
-	public async execute(context: IExecuteFunctions): Promise<any> {
-		const credentials = await context.getCredentials('linkedApi');
-		if (!credentials) {
-			throw new Error('No credentials found');
-		}
+	public async execute(context: IExecuteFunctions, itemIndex: number): Promise<any> {
+		this.itemIndex = itemIndex;
 		try {
-			return await context.helpers.httpRequest({
+			return await context.helpers.httpRequestWithAuthentication.call(context, 'linkedApi', {
 				method: this.method,
 				baseURL: 'https://api.linkedapi.io/automation',
 				url: this.url(context),
@@ -31,26 +29,20 @@ export abstract class LinkedApiOperation {
 				headers: {
 					...this.headers,
 					client: 'n8n',
-					'identification-token': credentials.identificationToken as string,
-					'linked-api-token': credentials.linkedApiToken as string,
 				},
 				json: true,
 			});
-		} catch (error) {
-			if (error.response?.data) {
-				const errorType = error.response.data.criticalError?.type || 'LinkedApiError';
-				const criticalError = error.response.data.criticalError;
-				if (criticalError) {
-					const type = criticalError.type || 'LinkedApiError';
-					const message = criticalError.message || JSON.stringify(criticalError);
-					throw new NodeOperationError(context.getNode(), `${type}: ${message}`);
-				}
-				throw new NodeOperationError(context.getNode(), JSON.stringify(error.response.data), {
-					type: errorType,
-					description: JSON.stringify(error.response.data),
+		} catch (error: any) {
+			const criticalError = error.response?.data?.criticalError;
+			if (criticalError) {
+				const type = criticalError.type || 'LinkedApiError';
+				const message = criticalError.message || JSON.stringify(criticalError);
+				throw new NodeApiError(context.getNode(), error, {
+					message: `${type}: ${message}`,
+					itemIndex: this.itemIndex,
 				});
 			}
-			throw error;
+			throw new NodeApiError(context.getNode(), error, { itemIndex: this.itemIndex });
 		}
 	}
 
@@ -62,15 +54,15 @@ export abstract class LinkedApiOperation {
 	}
 
 	protected stringParameter(context: IExecuteFunctions, parameterName: string): string {
-		return context.getNodeParameter(parameterName, 0) as string;
+		return context.getNodeParameter(parameterName, this.itemIndex) as string;
 	}
 
 	protected booleanParameter(context: IExecuteFunctions, parameterName: string): boolean {
-		return context.getNodeParameter(parameterName, 0) as boolean;
+		return context.getNodeParameter(parameterName, this.itemIndex) as boolean;
 	}
 
 	protected numberParameter(context: IExecuteFunctions, parameterName: string): number {
-		return context.getNodeParameter(parameterName, 0) as number;
+		return context.getNodeParameter(parameterName, this.itemIndex) as number;
 	}
 
 	protected abstract url(context: IExecuteFunctions): string;
@@ -108,7 +100,7 @@ export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
 	}
 
 	override requestBody(context: IExecuteFunctions): Record<string, any> {
-		const resumeUrl = context.evaluateExpression('{{$execution.resumeUrl}}', 0) as string;
+		const resumeUrl = context.evaluateExpression('{{$execution.resumeUrl}}', this.itemIndex) as string;
 		if (resumeUrl && resumeUrl.includes('//localhost')) {
 			throw new Error('Localhost running is not allowed. Please use a public n8n instance.');
 		}

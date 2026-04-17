@@ -41,10 +41,13 @@ export class AdminSetLimits extends AdminLinkedApiOperation {
 			throw new NodeOperationError(
 				context.getNode(),
 				`Invalid JSON format for limits: ${limitsString}`,
+				{ itemIndex: this.itemIndex },
 			);
 		}
 		if (!Array.isArray(limits)) {
-			throw new NodeOperationError(context.getNode(), 'Limits must be a JSON array');
+			throw new NodeOperationError(context.getNode(), 'Limits must be a JSON array', {
+				itemIndex: this.itemIndex,
+			});
 		}
 		return {
 			accountId: this.stringParameter(context, 'accountId'),

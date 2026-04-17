@@ -94,10 +94,10 @@ export class CreatePost extends StandardLinkedApiOperation {
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const text = this.stringParameter(context, 'postText');
-		const additionalParameters = context.getNodeParameter('additionalParameters', 0, {}) as {
+		const additionalParameters = context.getNodeParameter('additionalParameters', this.itemIndex, {}) as {
 			postCompanyUrl?: string;
 		};
-		const attachmentsData = context.getNodeParameter('attachments', 0, {}) as {
+		const attachmentsData = context.getNodeParameter('attachments', this.itemIndex, {}) as {
 			attachment?: Array<{ type: string; url: string; name?: string }>;
 		};
 

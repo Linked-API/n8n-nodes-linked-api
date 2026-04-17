@@ -133,7 +133,7 @@ export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 		};
 
 		if (retrieveEmployees) {
-			const additionalFields = context.getNodeParameter('additionalEmployeeFields', 0, {}) as {
+			const additionalFields = context.getNodeParameter('additionalEmployeeFields', this.itemIndex, {}) as {
 				firstName?: string;
 				lastName?: string;
 				positions?: string;

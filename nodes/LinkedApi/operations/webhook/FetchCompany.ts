@@ -49,7 +49,7 @@ export class FetchCompany extends StandardLinkedApiOperation {
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
-		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', 0, []) as string[];
+		const dataToRetrieve = context.getNodeParameter('dataToRetrieve', this.itemIndex, []) as string[];
 		const retrieveEmployees = dataToRetrieve.includes('employees');
 		const retrieveDMs = dataToRetrieve.includes('decisionMakers');
 		const retrievePosts = dataToRetrieve.includes('posts');

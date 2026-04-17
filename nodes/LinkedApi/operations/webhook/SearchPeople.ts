@@ -54,7 +54,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 	];
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const filter: Record<string, any> = {};
-		const advancedFilter = context.getNodeParameter('advancedFilter', 0, {}) as {
+		const advancedFilter = context.getNodeParameter('advancedFilter', this.itemIndex, {}) as {
 			customSearchUrl?: string;
 			firstName?: string;
 			lastName?: string;

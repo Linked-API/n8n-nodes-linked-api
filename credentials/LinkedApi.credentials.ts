@@ -8,6 +8,7 @@ import {
 export class LinkedApi implements ICredentialType {
 	name = 'linkedApi';
 	displayName = 'Linked API';
+	icon = 'file:linked-api-light.svg' as const;
 	documentationUrl = 'https://linkedapi.io/integrations/n8n/creating-credential/';
 
 	properties: INodeProperties[] = [

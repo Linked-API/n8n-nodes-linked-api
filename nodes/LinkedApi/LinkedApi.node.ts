@@ -4,7 +4,6 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
 import {
 	availableAdminOperations,
 	availableOtherOperations,
@@ -113,8 +112,8 @@ export class LinkedApi implements INodeType {
 		defaults: {
 			name: 'Linked API',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		usableAsTool: true,
 		hints: [
 			{
@@ -188,18 +187,13 @@ export class LinkedApi implements INodeType {
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const operation = this.getNodeParameter('operation', 0) as string;
-		const credentials = await this.getCredentials('linkedApi');
-
-		if (credentials === undefined) {
-			throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
-		}
 
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
 		for (let i = 0; i < items.length; i++) {
 			try {
-				const responseData = await operations[operation].execute(this);
+				const responseData = await operations[operation].execute(this, i);
 				if (Array.isArray(responseData)) {
 					for (const entry of responseData) {
 						returnData.push({ json: entry, pairedItem: { item: i } });
