@@ -31,7 +31,7 @@
     "url": "https://github.com/Linked-API/n8n-nodes-linked-api.git"
   },
   "engines": {
-    "node": ">=18.0"
+    "node": ">=22.0"
   },
   "scripts": {
     "build": "npx rimraf dist && tsc && gulp build:icons",
