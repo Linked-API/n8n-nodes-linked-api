@@ -9,6 +9,7 @@ export const AVAILABLE_ACTION = {
 	fetchCompany: 'fetchCompany',
 	fetchPerson: 'fetchPerson',
 	fetchPost: 'fetchPost',
+	fetchJob: 'fetchJob',
 	reactToPost: 'reactToPost',
 	removeConnection: 'removeConnection',
 	retrieveConnections: 'retrieveConnections',
@@ -17,6 +18,7 @@ export const AVAILABLE_ACTION = {
 	retrieveSSI: 'retrieveSSI',
 	searchCompanies: 'searchCompanies',
 	searchPeople: 'searchPeople',
+	searchJobs: 'searchJobs',
 	sendConnectionRequest: 'sendConnectionRequest',
 	sendMessage: 'sendMessage',
 	syncConversation: 'syncConversation',
@@ -94,6 +96,12 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Fetch post',
 		},
 		{
+			name: 'Fetch Job',
+			value: AVAILABLE_ACTION.fetchJob,
+			description: 'Fetch detailed information about a LinkedIn job',
+			action: 'Fetch job',
+		},
+		{
 			name: 'React to Post',
 			value: AVAILABLE_ACTION.reactToPost,
 			description:
@@ -141,6 +149,12 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.searchPeople,
 			description: 'Search for people on LinkedIn',
 			action: 'Search people',
+		},
+		{
+			name: 'Search Jobs',
+			value: AVAILABLE_ACTION.searchJobs,
+			description: 'Search for jobs on LinkedIn',
+			action: 'Search jobs',
 		},
 		{
 			name: 'Send Connection Request',
