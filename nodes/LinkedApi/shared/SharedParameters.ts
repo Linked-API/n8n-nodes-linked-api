@@ -385,6 +385,16 @@ export const postUrlParameter: INodeProperties = {
 	description: 'LinkedIn URL of the post',
 };
 
+export const jobUrlParameter: INodeProperties = {
+	displayName: 'Job URL',
+	name: 'jobUrl',
+	type: 'string',
+	required: true,
+	default: '',
+	placeholder: 'https://www.linkedin.com/jobs/view/4416248954/',
+	description: 'LinkedIn URL of the job',
+};
+
 export const commentTextParameter: INodeProperties = {
 	displayName: 'Comment Text',
 	name: 'commentText',
