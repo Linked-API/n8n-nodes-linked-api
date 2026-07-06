@@ -342,10 +342,28 @@ export const messageSubjectParameter: INodeProperties = {
 	displayName: 'Subject',
 	name: 'messageSubject',
 	type: 'string',
-	required: true,
 	default: '',
 	placeholder: "Let's Connect!",
-	description: 'Subject line, must be up to 80 characters',
+	description:
+		'Subject line, must be up to 80 characters. Required when starting a new conversation; ignored when replying via Thread ID.',
+};
+
+export const optionalPersonUrlParameter: INodeProperties = {
+	displayName: 'Person URL',
+	name: 'personUrl',
+	type: 'string',
+	default: '',
+	placeholder: 'https://www.linkedin.com/in/john-doe',
+	description: 'Public or hashed LinkedIn URL of the person. Optional if a Thread ID is provided.',
+};
+
+export const threadIdParameter: INodeProperties = {
+	displayName: 'Thread ID',
+	name: 'threadId',
+	type: 'string',
+	default: '',
+	description:
+		'Identifier of an existing conversation thread to reply into, as returned by Poll Inbox. Provide this instead of Person URL to reply directly into a known thread.',
 };
 
 // Connection Management Parameters

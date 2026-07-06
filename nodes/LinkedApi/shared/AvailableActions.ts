@@ -22,6 +22,7 @@ export const AVAILABLE_ACTION = {
 	sendConnectionRequest: 'sendConnectionRequest',
 	sendMessage: 'sendMessage',
 	syncConversation: 'syncConversation',
+	syncInbox: 'syncInbox',
 	withdrawConnectionRequest: 'withdrawConnectionRequest',
 	nvFetchCompany: 'nvFetchCompany',
 	nvFetchPerson: 'nvFetchPerson',
@@ -29,10 +30,12 @@ export const AVAILABLE_ACTION = {
 	nvSearchPeople: 'nvSearchPeople',
 	nvSendMessage: 'nvSendMessage',
 	nvSyncConversation: 'nvSyncConversation',
+	nvSyncInbox: 'nvSyncInbox',
 	customWorkflow: 'customWorkflow',
 	getWorkflowResult: 'getWorkflowResult',
 	cancelWorkflow: 'cancelWorkflow',
 	pollConversations: 'pollConversations',
+	pollInbox: 'pollInbox',
 	actionsUsageStatistics: 'actionsUsageStatistics',
 	adminGetSubscriptionStatus: 'adminGetSubscriptionStatus',
 	adminGetSeats: 'adminGetSeats',
@@ -182,6 +185,12 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Sync conversation',
 		},
 		{
+			name: 'Sync Inbox',
+			value: AVAILABLE_ACTION.syncInbox,
+			description: 'Enable whole-inbox monitoring so every incoming conversation can be polled',
+			action: 'Sync inbox',
+		},
+		{
 			name: 'Withdraw Connection Request',
 			value: AVAILABLE_ACTION.withdrawConnectionRequest,
 			description: 'Withdraw a connection request sent to a person',
@@ -238,6 +247,13 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			description: 'Sync a conversation in Sales Navigator so you can start polling it',
 			action: 'Sync conversation in Sales Navigator',
 		},
+		{
+			name: 'Sync Inbox in Sales Navigator',
+			value: AVAILABLE_ACTION.nvSyncInbox,
+			description:
+				'Enable whole-inbox monitoring in Sales Navigator so every incoming conversation can be polled',
+			action: 'Sync inbox in Sales Navigator',
+		},
 	],
 };
 
@@ -283,6 +299,12 @@ export const availableOtherOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.pollConversations,
 			description: 'Poll multiple conversations for new messages',
 			action: 'Poll conversations',
+		},
+		{
+			name: 'Poll Inbox',
+			value: AVAILABLE_ACTION.pollInbox,
+			description: 'Poll the monitored inbox for new messages across all conversations',
+			action: 'Poll inbox',
 		},
 		{
 			name: 'Actions Usage Statistics',
