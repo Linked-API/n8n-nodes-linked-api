@@ -23,6 +23,7 @@ export const AVAILABLE_ACTION = {
 	sendMessage: 'sendMessage',
 	syncConversation: 'syncConversation',
 	syncInbox: 'syncInbox',
+	manageConversation: 'manageConversation',
 	withdrawConnectionRequest: 'withdrawConnectionRequest',
 	nvFetchCompany: 'nvFetchCompany',
 	nvFetchPerson: 'nvFetchPerson',
@@ -31,6 +32,7 @@ export const AVAILABLE_ACTION = {
 	nvSendMessage: 'nvSendMessage',
 	nvSyncConversation: 'nvSyncConversation',
 	nvSyncInbox: 'nvSyncInbox',
+	nvManageConversation: 'nvManageConversation',
 	customWorkflow: 'customWorkflow',
 	getWorkflowResult: 'getWorkflowResult',
 	cancelWorkflow: 'cancelWorkflow',
@@ -191,6 +193,12 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Sync inbox',
 		},
 		{
+			name: 'Manage Conversation',
+			value: AVAILABLE_ACTION.manageConversation,
+			description: 'Archive, star, or mute a conversation thread by thread ID',
+			action: 'Manage conversation',
+		},
+		{
 			name: 'Withdraw Connection Request',
 			value: AVAILABLE_ACTION.withdrawConnectionRequest,
 			description: 'Withdraw a connection request sent to a person',
@@ -253,6 +261,12 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			description:
 				'Enable whole-inbox monitoring in Sales Navigator so every incoming conversation can be polled',
 			action: 'Sync inbox in Sales Navigator',
+		},
+		{
+			name: 'Manage Conversation in Sales Navigator',
+			value: AVAILABLE_ACTION.nvManageConversation,
+			description: 'Archive or unarchive a conversation thread by thread ID via Sales Navigator',
+			action: 'Manage conversation in Sales Navigator',
 		},
 	],
 };

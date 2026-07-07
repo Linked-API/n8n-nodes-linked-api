@@ -366,6 +366,75 @@ export const threadIdParameter: INodeProperties = {
 		'Identifier of an existing conversation thread to reply into, as returned by Poll Inbox. Provide this instead of Person URL to reply directly into a known thread.',
 };
 
+export const conversationThreadIdParameter: INodeProperties = {
+	displayName: 'Thread ID',
+	name: 'threadId',
+	type: 'string',
+	required: true,
+	default: '',
+	description: 'Identifier of the conversation thread to manage, as returned by Poll Inbox',
+};
+
+export const manageConversationOperationParameter: INodeProperties = {
+	displayName: 'Operation',
+	name: 'conversationOperation',
+	type: 'options',
+	required: true,
+	default: 'archive',
+	options: [
+		{
+			name: 'Archive',
+			value: 'archive',
+			description: 'Archive the conversation thread',
+		},
+		{
+			name: 'Unarchive',
+			value: 'unarchive',
+			description: 'Unarchive the conversation thread',
+		},
+		{
+			name: 'Star',
+			value: 'star',
+			description: 'Star the conversation thread',
+		},
+		{
+			name: 'Unstar',
+			value: 'unstar',
+			description: 'Remove the star from the conversation thread',
+		},
+		{
+			name: 'Mute',
+			value: 'mute',
+			description: 'Mute the conversation thread',
+		},
+		{
+			name: 'Unmute',
+			value: 'unmute',
+			description: 'Unmute the conversation thread',
+		},
+	],
+};
+
+export const nvManageConversationOperationParameter: INodeProperties = {
+	displayName: 'Operation',
+	name: 'conversationOperation',
+	type: 'options',
+	required: true,
+	default: 'archive',
+	options: [
+		{
+			name: 'Archive',
+			value: 'archive',
+			description: 'Archive the conversation thread',
+		},
+		{
+			name: 'Unarchive',
+			value: 'unarchive',
+			description: 'Unarchive the conversation thread',
+		},
+	],
+};
+
 // Connection Management Parameters
 export const connectionNoteParameter: INodeProperties = {
 	displayName: 'Connection Note',
