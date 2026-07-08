@@ -13,6 +13,7 @@ export const AVAILABLE_ACTION = {
 	reactToPost: 'reactToPost',
 	removeConnection: 'removeConnection',
 	retrieveConnections: 'retrieveConnections',
+	retrieveConnectionRequests: 'retrieveConnectionRequests',
 	retrievePendingRequests: 'retrievePendingRequests',
 	retrievePerformance: 'retrievePerformance',
 	retrieveSSI: 'retrieveSSI',
@@ -20,6 +21,8 @@ export const AVAILABLE_ACTION = {
 	searchPeople: 'searchPeople',
 	searchJobs: 'searchJobs',
 	sendConnectionRequest: 'sendConnectionRequest',
+	acceptConnectionRequest: 'acceptConnectionRequest',
+	ignoreConnectionRequest: 'ignoreConnectionRequest',
 	sendMessage: 'sendMessage',
 	syncConversation: 'syncConversation',
 	syncInbox: 'syncInbox',
@@ -133,6 +136,12 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Retrieve connections',
 		},
 		{
+			name: 'Retrieve Connection Requests',
+			value: AVAILABLE_ACTION.retrieveConnectionRequests,
+			description: 'Retrieve incoming connection requests received by your account',
+			action: 'Retrieve connection requests',
+		},
+		{
 			name: 'Retrieve Pending Requests',
 			value: AVAILABLE_ACTION.retrievePendingRequests,
 			description: 'Retrieve pending connection requests sent from your account',
@@ -173,6 +182,18 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.sendConnectionRequest,
 			description: 'Send a connection request to a person',
 			action: 'Send connection request',
+		},
+		{
+			name: 'Accept Connection Request',
+			value: AVAILABLE_ACTION.acceptConnectionRequest,
+			description: 'Accept an incoming connection request from a person',
+			action: 'Accept connection request',
+		},
+		{
+			name: 'Ignore Connection Request',
+			value: AVAILABLE_ACTION.ignoreConnectionRequest,
+			description: 'Ignore an incoming connection request from a person',
+			action: 'Ignore connection request',
 		},
 		{
 			name: 'Send Message',
