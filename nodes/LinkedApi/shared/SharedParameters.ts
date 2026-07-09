@@ -375,6 +375,24 @@ export const conversationThreadIdParameter: INodeProperties = {
 	description: 'Identifier of the conversation thread to manage, as returned by Poll Inbox',
 };
 
+export const sendMessageManageOperationParameter: INodeProperties = {
+	displayName: 'Manage Conversation After Sending',
+	name: 'manageConversationOperation',
+	type: 'options',
+	default: '',
+	description:
+		'Optionally manage the conversation right after the message is sent. Acts on the same thread, so no thread ID is needed.',
+	options: [
+		{ name: 'None', value: '' },
+		{ name: 'Archive', value: 'archive', description: 'Archive the conversation thread' },
+		{ name: 'Unarchive', value: 'unarchive', description: 'Unarchive the conversation thread' },
+		{ name: 'Star', value: 'star', description: 'Star the conversation thread' },
+		{ name: 'Unstar', value: 'unstar', description: 'Remove the star from the conversation thread' },
+		{ name: 'Mute', value: 'mute', description: 'Mute the conversation thread' },
+		{ name: 'Unmute', value: 'unmute', description: 'Unmute the conversation thread' },
+	],
+};
+
 export const manageConversationOperationParameter: INodeProperties = {
 	displayName: 'Operation',
 	name: 'conversationOperation',
