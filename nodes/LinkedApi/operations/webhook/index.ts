@@ -31,4 +31,5 @@ export * from './IgnoreConnectionRequest';
 export * from './SendMessage';
 export * from './SyncConversation';
 export * from './SyncInbox';
+export * from './SyncNetwork';
 export * from './WithdrawConnectionRequest';

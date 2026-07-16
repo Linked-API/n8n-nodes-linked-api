@@ -26,6 +26,7 @@ export const AVAILABLE_ACTION = {
 	sendMessage: 'sendMessage',
 	syncConversation: 'syncConversation',
 	syncInbox: 'syncInbox',
+	syncNetwork: 'syncNetwork',
 	manageConversation: 'manageConversation',
 	withdrawConnectionRequest: 'withdrawConnectionRequest',
 	nvFetchCompany: 'nvFetchCompany',
@@ -41,6 +42,7 @@ export const AVAILABLE_ACTION = {
 	cancelWorkflow: 'cancelWorkflow',
 	pollConversations: 'pollConversations',
 	pollInbox: 'pollInbox',
+	pollNetwork: 'pollNetwork',
 	actionsUsageStatistics: 'actionsUsageStatistics',
 	adminGetSubscriptionStatus: 'adminGetSubscriptionStatus',
 	adminGetSeats: 'adminGetSeats',
@@ -214,6 +216,12 @@ export const availableStandardOperations: INodeProperties = {
 			action: 'Sync inbox',
 		},
 		{
+			name: 'Sync Network',
+			value: AVAILABLE_ACTION.syncNetwork,
+			description: 'Enable background network monitoring so connection changes can be polled',
+			action: 'Sync network',
+		},
+		{
 			name: 'Manage Conversation',
 			value: AVAILABLE_ACTION.manageConversation,
 			description: 'Archive, star, or mute a conversation thread by thread ID',
@@ -340,6 +348,12 @@ export const availableOtherOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.pollInbox,
 			description: 'Poll the monitored inbox for new messages across all conversations',
 			action: 'Poll inbox',
+		},
+		{
+			name: 'Poll Network',
+			value: AVAILABLE_ACTION.pollNetwork,
+			description: 'Poll the monitored network for new connection events',
+			action: 'Poll network',
 		},
 		{
 			name: 'Actions Usage Statistics',
