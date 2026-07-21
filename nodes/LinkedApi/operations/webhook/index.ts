@@ -18,6 +18,7 @@ export * from './NvManageConversation';
 export * from './ReactToPost';
 export * from './RemoveConnection';
 export * from './RetrieveConnections';
+export * from './RetrieveFeed';
 export * from './RetrieveInvitations';
 export * from './RetrievePendingRequests';
 export * from './RetrievePerformance';
