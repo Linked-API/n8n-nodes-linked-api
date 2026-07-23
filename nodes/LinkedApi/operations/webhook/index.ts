@@ -16,6 +16,8 @@ export * from './NvSyncConversation';
 export * from './NvSyncInbox';
 export * from './NvManageConversation';
 export * from './ReactToPost';
+export * from './ReactToComment';
+export * from './ReplyToComment';
 export * from './RemoveConnection';
 export * from './RetrieveConnections';
 export * from './RetrieveFeed';

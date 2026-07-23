@@ -509,6 +509,26 @@ export const commentTextParameter: INodeProperties = {
 	description: 'Comment text, must be up to 1000 characters',
 };
 
+export const commentUrlParameter: INodeProperties = {
+	displayName: 'Comment URL',
+	name: 'commentUrl',
+	type: 'string',
+	required: true,
+	default: '',
+	placeholder: 'https://www.linkedin.com/feed/update/urn:li:activity:.../?commentUrn=...',
+	description: 'LinkedIn URL of the comment',
+};
+
+export const replyTextParameter: INodeProperties = {
+	displayName: 'Reply Text',
+	name: 'replyText',
+	type: 'string',
+	required: true,
+	default: '',
+	placeholder: 'Thanks for sharing! This is really helpful.',
+	description: 'Reply text, must be up to 1000 characters',
+};
+
 export const reactionTypeParameter: INodeProperties = {
 	displayName: 'Reaction Type',
 	name: 'reactionType',

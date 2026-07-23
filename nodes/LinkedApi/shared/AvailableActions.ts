@@ -5,6 +5,8 @@ import type { INodeProperties, INodePropertyOptions } from 'n8n-workflow';
 export const AVAILABLE_ACTION = {
 	checkConnectionStatus: 'checkConnectionStatus',
 	commentOnPost: 'commentOnPost',
+	reactToComment: 'reactToComment',
+	replyToComment: 'replyToComment',
 	createPost: 'createPost',
 	fetchCompany: 'fetchCompany',
 	fetchPerson: 'fetchPerson',
@@ -125,6 +127,19 @@ export const availableStandardOperations: INodeProperties = {
 			description:
 				'React to a LinkedIn post with like, celebrate, support, love, insightful, or funny',
 			action: 'React to post',
+		},
+		{
+			name: 'React to Comment',
+			value: AVAILABLE_ACTION.reactToComment,
+			description:
+				'React to a comment by comment URL (like, love, support, celebrate, insightful, funny)',
+			action: 'React to comment',
+		},
+		{
+			name: 'Reply to Comment',
+			value: AVAILABLE_ACTION.replyToComment,
+			description: "Reply to a comment by comment URL; returns the reply's URN and URL",
+			action: 'Reply to comment',
 		},
 		{
 			name: 'Remove Connection',
