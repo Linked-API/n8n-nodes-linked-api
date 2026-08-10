@@ -239,6 +239,19 @@ export const annualRevenueMaxParameter: INodeProperties = {
 	description: 'Maximum annual revenue in million USD',
 };
 
+export const syncDaysParameter: INodeProperties = {
+	displayName: 'Sync Days',
+	name: 'days',
+	type: 'number',
+	typeOptions: {
+		minValue: 1,
+		maxValue: 90,
+	},
+	default: 30,
+	description:
+		'How many days the conversation stays synchronized. Counted from the moment the action starts running; a reply does not extend it. Syncing the same person again starts a new period and keeps the history already collected.',
+};
+
 // Limit Parameters
 export const limitParameter: INodeProperties = {
 	displayName: 'Limit',

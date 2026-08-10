@@ -228,7 +228,7 @@ export const availableStandardOperations: INodeProperties = {
 		{
 			name: 'Sync Conversation',
 			value: AVAILABLE_ACTION.syncConversation,
-			description: 'Sync a conversation so you can start polling it for new messages',
+			description: 'Sync a conversation so you can start polling it for new messages, for a limited period',
 			action: 'Sync conversation',
 		},
 		{
