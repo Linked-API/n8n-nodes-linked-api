@@ -21,6 +21,7 @@ export * from './ReplyToComment';
 export * from './RemoveConnection';
 export * from './RetrieveConnections';
 export * from './RetrieveFeed';
+export * from './RetrieveProfileViewers';
 export * from './RetrieveInvitations';
 export * from './RetrievePendingRequests';
 export * from './RetrievePerformance';

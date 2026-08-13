@@ -16,6 +16,7 @@ export const AVAILABLE_ACTION = {
 	removeConnection: 'removeConnection',
 	retrieveConnections: 'retrieveConnections',
 	retrieveFeed: 'retrieveFeed',
+	retrieveProfileViewers: 'retrieveProfileViewers',
 	retrieveInvitations: 'retrieveInvitations',
 	retrievePendingRequests: 'retrievePendingRequests',
 	retrievePerformance: 'retrievePerformance',
@@ -158,6 +159,12 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.retrieveFeed,
 			description: 'Retrieve posts from your personalized LinkedIn home feed',
 			action: 'Retrieve feed',
+		},
+		{
+			name: 'Retrieve Profile Viewers',
+			value: AVAILABLE_ACTION.retrieveProfileViewers,
+			description: 'Retrieve the people who recently viewed your profile',
+			action: 'Retrieve profile viewers',
 		},
 		{
 			name: 'Retrieve Invitations',
