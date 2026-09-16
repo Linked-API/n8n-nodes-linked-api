@@ -29,6 +29,7 @@ export * from './RetrieveSSI';
 export * from './SearchCompanies';
 export * from './SearchPeople';
 export * from './SearchJobs';
+export * from './SearchPosts';
 export * from './SendConnectionRequest';
 export * from './AcceptInvitation';
 export * from './IgnoreInvitation';

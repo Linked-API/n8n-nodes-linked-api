@@ -24,6 +24,7 @@ export const AVAILABLE_ACTION = {
 	searchCompanies: 'searchCompanies',
 	searchPeople: 'searchPeople',
 	searchJobs: 'searchJobs',
+	searchPosts: 'searchPosts',
 	sendConnectionRequest: 'sendConnectionRequest',
 	acceptInvitation: 'acceptInvitation',
 	ignoreInvitation: 'ignoreInvitation',
@@ -207,6 +208,13 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.searchJobs,
 			description: 'Search for jobs on LinkedIn',
 			action: 'Search jobs',
+		},
+		{
+			name: 'Search Posts',
+			value: AVAILABLE_ACTION.searchPosts,
+			description:
+				'Search for posts with advanced filtering by sort, date, content type, author, and mentions',
+			action: 'Search posts',
 		},
 		{
 			name: 'Send Connection Request',
