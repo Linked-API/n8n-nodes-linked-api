@@ -3,6 +3,9 @@ import {
 	createParameterWithDisplayOptions,
 	postTextParameter,
 	postCompanyUrlParameter,
+	postMentionsParameter,
+	buildPostMentions,
+	IPostMentionValue,
 } from '../../shared/SharedParameters';
 import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
@@ -12,6 +15,7 @@ export class CreatePost extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(postTextParameter, this.show),
+		createParameterWithDisplayOptions(postMentionsParameter, this.show),
 		{
 			displayName: 'Attachments',
 			name: 'attachments',
@@ -100,11 +104,20 @@ export class CreatePost extends StandardLinkedApiOperation {
 		const attachmentsData = context.getNodeParameter('attachments', this.itemIndex, {}) as {
 			attachment?: Array<{ type: string; url: string; name?: string }>;
 		};
+		const mentionsData = context.getNodeParameter('mentions', this.itemIndex, {}) as {
+			mention?: IPostMentionValue[];
+		};
 
 		const body: Record<string, any> = { text };
 
 		if (additionalParameters.postCompanyUrl) {
 			body.companyUrl = additionalParameters.postCompanyUrl;
+		}
+
+		const mentions = buildPostMentions(mentionsData);
+
+		if (mentions) {
+			body.mentions = mentions;
 		}
 
 		if (attachmentsData.attachment && attachmentsData.attachment.length > 0) {

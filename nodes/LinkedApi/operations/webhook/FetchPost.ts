@@ -2,6 +2,8 @@ import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	postUrlParameter,
+	postUrnParameter,
+	buildPostTarget,
 	commentsLimitParameter,
 	reactionsLimitParameter,
 } from '../../shared/SharedParameters';
@@ -13,6 +15,7 @@ export class FetchPost extends StandardLinkedApiOperation {
 
 	fields: INodeProperties[] = [
 		createParameterWithDisplayOptions(postUrlParameter, this.show),
+		createParameterWithDisplayOptions(postUrnParameter, this.show),
 		{
 			displayName: 'Additional Data to Retrieve',
 			name: 'dataToRetrieve',
@@ -73,7 +76,10 @@ export class FetchPost extends StandardLinkedApiOperation {
 		const retrieveReactions = dataToRetrieve.includes('reactions');
 
 		const body: Record<string, any> = {
-			postUrl: this.stringParameter(context, 'postUrl'),
+			...buildPostTarget(
+				this.stringParameter(context, 'postUrl'),
+				this.stringParameter(context, 'postUrn'),
+			),
 			retrieveComments,
 			retrieveReactions,
 		};

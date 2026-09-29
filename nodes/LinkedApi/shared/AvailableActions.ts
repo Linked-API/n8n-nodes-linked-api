@@ -8,6 +8,7 @@ export const AVAILABLE_ACTION = {
 	reactToComment: 'reactToComment',
 	replyToComment: 'replyToComment',
 	createPost: 'createPost',
+	createRepost: 'createRepost',
 	fetchCompany: 'fetchCompany',
 	fetchPerson: 'fetchPerson',
 	fetchPost: 'fetchPost',
@@ -98,6 +99,12 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.createPost,
 			description: 'Create a new LinkedIn post',
 			action: 'Create post',
+		},
+		{
+			name: 'Create Repost',
+			value: AVAILABLE_ACTION.createRepost,
+			description: 'Repost a LinkedIn post, as is or with your own commentary',
+			action: 'Create repost',
 		},
 		{
 			name: 'Fetch Company',

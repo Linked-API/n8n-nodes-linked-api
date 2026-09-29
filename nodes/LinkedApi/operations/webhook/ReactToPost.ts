@@ -2,6 +2,8 @@ import type { IExecuteFunctions, INodeProperties } from 'n8n-workflow';
 import {
 	createParameterWithDisplayOptions,
 	postUrlParameter,
+	postUrnParameter,
+	buildPostTarget,
 	reactionTypeParameter,
 	postCompanyUrlParameter,
 } from '../../shared/SharedParameters';
@@ -23,17 +25,18 @@ export class ReactToPost extends StandardLinkedApiOperation {
 			displayOptions: {
 				show: this.show,
 			},
-			options: [postCompanyUrlParameter],
+			options: [postUrnParameter, postCompanyUrlParameter],
 		},
 	];
 
 	public body(context: IExecuteFunctions): Record<string, any> {
 		const additionalParameters = context.getNodeParameter('additionalParameters', this.itemIndex, {}) as {
+			postUrn?: string;
 			postCompanyUrl?: string;
 		};
 
 		const body: Record<string, any> = {
-			postUrl: this.stringParameter(context, 'postUrl'),
+			...buildPostTarget(this.stringParameter(context, 'postUrl'), additionalParameters.postUrn),
 			type: this.stringParameter(context, 'reactionType'),
 		};
 

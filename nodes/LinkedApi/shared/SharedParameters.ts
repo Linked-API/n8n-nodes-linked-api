@@ -500,7 +500,83 @@ export const postUrlParameter: INodeProperties = {
 	type: 'string',
 	default: '',
 	placeholder: 'https://www.linkedin.com/posts/username_activity',
-	description: 'LinkedIn URL of the post',
+	description: 'LinkedIn URL of the post. Provide this or the post URN.',
+};
+
+export const postUrnParameter: INodeProperties = {
+	displayName: 'Post URN',
+	name: 'postUrn',
+	type: 'string',
+	default: '',
+	placeholder: 'urn:li:activity:1234567890123456789',
+	description: 'URN of the post, accepted instead of the post URL',
+};
+
+export const postMentionsParameter: INodeProperties = {
+	displayName: 'Mentions',
+	name: 'mentions',
+	type: 'fixedCollection',
+	typeOptions: {
+		multipleValues: true,
+	},
+	default: {},
+	description:
+		'People and companies to mention in the text. Write "@[key]" where a mention should appear and describe that key here.',
+	placeholder: 'Add Mention',
+	options: [
+		{
+			name: 'mention',
+			displayName: 'Mention',
+			// Key and Name are what every mention needs; alphabetical order would bury them under
+			// the three optional identifiers.
+			// eslint-disable-next-line n8n-nodes-base/node-param-fixed-collection-type-unsorted-items
+			values: [
+				{
+					displayName: 'Key',
+					name: 'key',
+					type: 'string',
+					default: '',
+					placeholder: 'author',
+					description:
+						'Placeholder name used in the text as "@[key]". From 1 to 30 characters: letters, digits, underscore or hyphen.',
+				},
+				{
+					displayName: 'Name',
+					name: 'name',
+					type: 'string',
+					default: '',
+					placeholder: 'Example Person',
+					description:
+						'Name to find the person or company by. Always required, because LinkedIn resolves a mention through its own name suggestions.',
+				},
+				{
+					displayName: 'URN',
+					name: 'urn',
+					type: 'string',
+					default: '',
+					placeholder: 'urn:li:member:123456789',
+					description:
+						'URN of the person or company, deciding which of the offered namesakes is taken. Provide at most one identifier.',
+				},
+				{
+					displayName: 'Person Hashed URL',
+					name: 'personHashedUrl',
+					type: 'string',
+					default: '',
+					placeholder: 'https://www.linkedin.com/in/ACwAAAxxxxxxxxx',
+					description: 'Hashed LinkedIn profile URL, as an alternative to the URN',
+				},
+				{
+					displayName: 'Company Hashed URL',
+					name: 'companyHashedUrl',
+					type: 'string',
+					default: '',
+					placeholder: 'https://www.linkedin.com/company/ACoAAAxxxxxxxxx',
+					description: 'Hashed LinkedIn company page URL, as an alternative to the URN',
+				},
+			],
+		},
+	],
 };
 
 export const jobUrlParameter: INodeProperties = {
@@ -652,4 +728,51 @@ export function createParameterWithDisplayOptions(
 			show,
 		},
 	};
+}
+
+export interface IPostMentionValue {
+	key?: string;
+	name?: string;
+	urn?: string;
+	personHashedUrl?: string;
+	companyHashedUrl?: string;
+}
+
+/**
+ * Turns the Mentions fixedCollection into the request shape, dropping the identifier fields the
+ * user left blank so an empty string is never sent as an identifier.
+ */
+export function buildPostMentions(
+	mentionsData: { mention?: IPostMentionValue[] } | undefined,
+): Array<Record<string, string>> | undefined {
+	const mentions = mentionsData?.mention;
+
+	if (!mentions || mentions.length === 0) {
+		return undefined;
+	}
+
+	return mentions.map((item) => {
+		const mention: Record<string, string> = {
+			key: item.key ?? '',
+			name: item.name ?? '',
+		};
+
+		if (item.urn) mention.urn = item.urn;
+		if (item.personHashedUrl) mention.personHashedUrl = item.personHashedUrl;
+		if (item.companyHashedUrl) mention.companyHashedUrl = item.companyHashedUrl;
+
+		return mention;
+	});
+}
+
+/**
+ * A post is addressed by URL or by URN, so only the one the user filled in is sent.
+ */
+export function buildPostTarget(postUrl: string, postUrn?: string): Record<string, string> {
+	const target: Record<string, string> = {};
+
+	if (postUrl) target.postUrl = postUrl;
+	if (postUrn) target.postUrn = postUrn;
+
+	return target;
 }
