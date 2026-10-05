@@ -6,6 +6,7 @@ import {
 	companyHashedUrlParameter,
 	employeeLimitParameter,
 	dmsLimitParameter,
+	nvConnectionDegreesParameter,
 } from '../../shared/SharedParameters';
 import { SalesNavigatorLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
@@ -103,6 +104,7 @@ export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 					],
 					description: 'Years of professional experience ranges',
 				},
+				nvConnectionDegreesParameter,
 			],
 		},
 		// Decision Makers
@@ -141,6 +143,7 @@ export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 				industries?: string;
 				schools?: string;
 				yearsOfExperiences?: string[];
+				connectionDegrees?: string[];
 			};
 
 			const filter: Record<string, any> = {};
@@ -172,6 +175,9 @@ export class NvFetchCompany extends SalesNavigatorLinkedApiOperation {
 			}
 			if (additionalFields.yearsOfExperiences) {
 				filter.yearsOfExperiences = additionalFields.yearsOfExperiences;
+			}
+			if (additionalFields.connectionDegrees && additionalFields.connectionDegrees.length > 0) {
+				filter.connectionDegrees = additionalFields.connectionDegrees;
 			}
 
 			Object.assign(body, {

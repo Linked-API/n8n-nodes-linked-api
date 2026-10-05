@@ -195,6 +195,30 @@ export const yearsOfExperienceParameter: INodeProperties = {
 	],
 };
 
+export const connectionDegreesParameter: INodeProperties = {
+	displayName: 'Connection Degrees',
+	name: 'connectionDegrees',
+	type: 'multiOptions',
+	default: [],
+	description: 'Your connection degree to the person',
+	options: [
+		{ name: '1st', value: '1st' },
+		{ name: '2nd', value: '2nd' },
+		{ name: '3rd+', value: '3rd+' },
+	],
+};
+
+export const nvConnectionDegreesParameter: INodeProperties = {
+	...connectionDegreesParameter,
+	description: 'Your connection degree to the person, or members of the groups you belong to',
+	options: [
+		{ name: '1st', value: '1st' },
+		{ name: '2nd', value: '2nd' },
+		{ name: '3rd+', value: '3rd+' },
+		{ name: 'Group Members', value: 'groupMembers' },
+	],
+};
+
 export const annualRevenueMinParameter: INodeProperties = {
 	displayName: 'Annual Revenue Min',
 	name: 'annualRevenueMin',

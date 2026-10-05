@@ -6,6 +6,7 @@ import {
 	dmsLimitParameter,
 	postsLimitParameter,
 	postsSinceParameter,
+	connectionDegreesParameter,
 } from '../../shared/SharedParameters';
 import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
@@ -34,6 +35,20 @@ export class FetchCompany extends StandardLinkedApiOperation {
 			...this.show,
 			dataToRetrieve: ['employees'],
 		}),
+		{
+			displayName: 'Employee Filter',
+			name: 'employeeFilter',
+			type: 'collection',
+			placeholder: 'Add Filter',
+			default: {},
+			displayOptions: {
+				show: {
+					...this.show,
+					dataToRetrieve: ['employees'],
+				},
+			},
+			options: [connectionDegreesParameter],
+		},
 		createParameterWithDisplayOptions(dmsLimitParameter, {
 			...this.show,
 			dataToRetrieve: ['decisionMakers'],
@@ -62,8 +77,12 @@ export class FetchCompany extends StandardLinkedApiOperation {
 		};
 
 		if (retrieveEmployees) {
+			const { connectionDegrees } = context.getNodeParameter('employeeFilter', this.itemIndex, {}) as {
+				connectionDegrees?: string[];
+			};
 			body.employeesRetrievalConfig = {
 				limit: this.numberParameter(context, 'employeeLimit'),
+				filter: connectionDegrees && connectionDegrees.length > 0 ? { connectionDegrees } : undefined,
 			};
 		}
 

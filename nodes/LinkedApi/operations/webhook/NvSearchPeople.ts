@@ -16,6 +16,7 @@ import {
 	previousCompaniesParameter,
 	schoolsParameter,
 	yearsOfExperienceParameter,
+	nvConnectionDegreesParameter,
 } from '../../shared/SharedParameters';
 import { SalesNavigatorLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
@@ -49,6 +50,7 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 				previousCompaniesParameter,
 				schoolsParameter,
 				yearsOfExperienceParameter,
+				nvConnectionDegreesParameter,
 			],
 		},
 	];
@@ -66,6 +68,7 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 			previousCompanies?: string;
 			schools?: string;
 			yearsOfExperiences?: string[];
+			connectionDegrees?: string[];
 		};
 
 		const {
@@ -78,6 +81,7 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 			previousCompanies,
 			schools,
 			yearsOfExperiences,
+			connectionDegrees,
 		} = advancedFilter;
 
 		if (firstName) filter.firstName = firstName;
@@ -115,6 +119,9 @@ export class NvSearchPeople extends SalesNavigatorLinkedApiOperation {
 		}
 		if (yearsOfExperiences && yearsOfExperiences.length > 0) {
 			filter.yearsOfExperiences = yearsOfExperiences;
+		}
+		if (connectionDegrees && connectionDegrees.length > 0) {
+			filter.connectionDegrees = connectionDegrees;
 		}
 
 		return {

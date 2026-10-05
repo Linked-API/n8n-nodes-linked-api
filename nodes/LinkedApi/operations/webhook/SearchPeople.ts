@@ -14,6 +14,7 @@ import {
 	currentCompaniesParameter,
 	previousCompaniesParameter,
 	schoolsParameter,
+	connectionDegreesParameter,
 } from '../../shared/SharedParameters';
 import { StandardLinkedApiOperation } from '../../shared/LinkedApiOperation';
 import { AVAILABLE_ACTION } from '../../shared/AvailableActions';
@@ -49,6 +50,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 				currentCompaniesParameter,
 				previousCompaniesParameter,
 				schoolsParameter,
+				connectionDegreesParameter,
 			],
 		},
 	];
@@ -64,6 +66,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 			currentCompanies?: string;
 			previousCompanies?: string;
 			schools?: string;
+			connectionDegrees?: string[];
 		};
 
 		const {
@@ -75,6 +78,7 @@ export class SearchPeople extends StandardLinkedApiOperation {
 			currentCompanies,
 			previousCompanies,
 			schools,
+			connectionDegrees,
 		} = advancedFilter;
 
 		if (firstName) filter.firstName = firstName;
@@ -109,6 +113,9 @@ export class SearchPeople extends StandardLinkedApiOperation {
 				.split(';')
 				.map((s) => s.trim())
 				.filter((s) => s);
+		}
+		if (connectionDegrees && connectionDegrees.length > 0) {
+			filter.connectionDegrees = connectionDegrees;
 		}
 
 		return {
