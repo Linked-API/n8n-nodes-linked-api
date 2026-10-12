@@ -250,13 +250,15 @@ export const availableStandardOperations: INodeProperties = {
 		{
 			name: 'Sync Conversation',
 			value: AVAILABLE_ACTION.syncConversation,
-			description: 'Sync a conversation so you can start polling it for new messages, for a limited period',
+			description:
+				"Load a person's earlier message history. Run once per person – not on every workflow run; to catch new replies use Sync Inbox once and Poll Inbox.",
 			action: 'Sync conversation',
 		},
 		{
 			name: 'Sync Inbox',
 			value: AVAILABLE_ACTION.syncInbox,
-			description: 'Enable whole-inbox monitoring so every incoming conversation can be polled',
+			description:
+				'Recommended way to watch incoming messages: enable whole-inbox monitoring so every incoming conversation can be polled',
 			action: 'Sync inbox',
 		},
 		{
@@ -325,14 +327,15 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 		{
 			name: 'Sync Conversation in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSyncConversation,
-			description: 'Sync a conversation in Sales Navigator so you can start polling it',
+			description:
+				"Load a person's earlier Sales Navigator message history. Run once per person – not on every workflow run; to catch new replies use Sync Inbox in Sales Navigator once and Poll Inbox.",
 			action: 'Sync conversation in Sales Navigator',
 		},
 		{
 			name: 'Sync Inbox in Sales Navigator',
 			value: AVAILABLE_ACTION.nvSyncInbox,
 			description:
-				'Enable whole-inbox monitoring in Sales Navigator so every incoming conversation can be polled',
+				'Recommended way to watch incoming Sales Navigator messages: enable whole-inbox monitoring in Sales Navigator so every incoming conversation can be polled',
 			action: 'Sync inbox in Sales Navigator',
 		},
 		{
@@ -384,13 +387,14 @@ export const availableOtherOperations: INodeProperties = {
 		{
 			name: 'Poll Conversations',
 			value: AVAILABLE_ACTION.pollConversations,
-			description: 'Poll multiple conversations for new messages',
+			description: 'Legacy – use Poll Inbox with Person URL',
 			action: 'Poll conversations',
 		},
 		{
 			name: 'Poll Inbox',
 			value: AVAILABLE_ACTION.pollInbox,
-			description: 'Poll the monitored inbox for new messages across all conversations',
+			description:
+				"Poll the monitored inbox for new messages across all conversations, or set Person URL to get one person's whole known conversation",
 			action: 'Poll inbox',
 		},
 		{

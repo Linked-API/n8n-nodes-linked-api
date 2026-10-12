@@ -273,7 +273,7 @@ export const syncDaysParameter: INodeProperties = {
 	},
 	default: 30,
 	description:
-		'How many days the conversation stays synchronized. Counted from the moment the action starts running; a reply does not extend it. Syncing the same person again starts a new period and keeps the history already collected.',
+		'Syncing period, not the depth of history: how many days new messages keep being added to the loaded history. The whole conversation is read regardless. Counted from the moment the action starts running; a reply does not extend it. Syncing the same person again keeps the history already collected and never shortens the period.',
 };
 
 // Limit Parameters
