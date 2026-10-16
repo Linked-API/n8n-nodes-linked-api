@@ -26,7 +26,7 @@ export class AdminDeleteLimits extends AdminLinkedApiOperation {
 				required: true,
 				default: '[{"category": "stMessages", "period": "daily"}]',
 				description:
-					'JSON array of limit keys to delete. Each entry: { category, period (daily/weekly/monthly) }.',
+					'JSON array of limit keys to delete. Each entry: { category, period (daily/weekly/monthly) }. Categories: stPersonProfileViews, stCompanyPageViews, stConnectionRequests, stMessages, stSearchQueries, stReactions, stEndorsements, stComments, stPosts, nvPersonProfileViews, nvCompanyPageViews, nvMessages.',
 			},
 			this.show,
 		),

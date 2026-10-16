@@ -9,6 +9,8 @@ export const AVAILABLE_ACTION = {
 	replyToComment: 'replyToComment',
 	createPost: 'createPost',
 	createRepost: 'createRepost',
+	endorsePersonSkill: 'endorsePersonSkill',
+	endorsePersonSkills: 'endorsePersonSkills',
 	fetchCompany: 'fetchCompany',
 	fetchPerson: 'fetchPerson',
 	fetchPost: 'fetchPost',
@@ -105,6 +107,19 @@ export const availableStandardOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.createRepost,
 			description: 'Repost a LinkedIn post, as is or with your own commentary',
 			action: 'Create repost',
+		},
+		{
+			name: 'Endorse Person Skill',
+			value: AVAILABLE_ACTION.endorsePersonSkill,
+			description: 'Endorse one skill, by its exact name, of a 1st-degree connection',
+			action: 'Endorse person skill',
+		},
+		{
+			name: 'Endorse Person Skills',
+			value: AVAILABLE_ACTION.endorsePersonSkills,
+			description:
+				'Endorse every skill of a 1st-degree connection whose name matches your patterns, or all of their skills',
+			action: 'Endorse person skills',
 		},
 		{
 			name: 'Fetch Company',
