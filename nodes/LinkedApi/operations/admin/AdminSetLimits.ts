@@ -27,7 +27,7 @@ export class AdminSetLimits extends AdminLinkedApiOperation {
 				default:
 					'[{"category": "stMessages", "period": "daily", "maxValue": 25, "isEnabled": true}]',
 				description:
-					'JSON array of limit configurations. Each entry: { category, period (daily/weekly/monthly), maxValue, isEnabled? }. Categories: stPersonProfileViews, stCompanyPageViews, stConnectionRequests, stMessages, stSearchQueries, stReactions, stComments, stPosts, nvPersonProfileViews, nvCompanyPageViews, nvMessages.',
+					'JSON array of limit configurations. Each entry: { category, period (daily/weekly/monthly), maxValue, isEnabled? }. Categories: stPersonProfileViews, stCompanyPageViews, stConnectionRequests, stMessages, stSearchQueries, stReactions, stEndorsements, stComments, stPosts, nvPersonProfileViews, nvCompanyPageViews, nvMessages.',
 			},
 			this.show,
 		),

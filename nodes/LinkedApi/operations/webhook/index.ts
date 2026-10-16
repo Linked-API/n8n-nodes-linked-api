@@ -3,6 +3,8 @@ export * from './CommentOnPost';
 export * from './CreatePost';
 export * from './CreateRepost';
 export * from './CustomWorkflow';
+export * from './EndorsePersonSkill';
+export * from './EndorsePersonSkills';
 export * from './FetchCompany';
 export * from './FetchPerson';
 export * from './FetchPost';
