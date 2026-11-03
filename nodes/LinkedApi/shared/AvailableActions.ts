@@ -41,6 +41,7 @@ export const AVAILABLE_ACTION = {
 	nvFetchPerson: 'nvFetchPerson',
 	nvSearchCompanies: 'nvSearchCompanies',
 	nvSearchPeople: 'nvSearchPeople',
+	nvRetrieveAlerts: 'nvRetrieveAlerts',
 	nvSendMessage: 'nvSendMessage',
 	nvSyncConversation: 'nvSyncConversation',
 	nvSyncInbox: 'nvSyncInbox',
@@ -320,6 +321,12 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			value: AVAILABLE_ACTION.nvFetchPerson,
 			description: 'Fetch detailed information about a person in Sales Navigator',
 			action: 'Fetch person in Sales Navigator',
+		},
+		{
+			name: 'Retrieve Alerts in Sales Navigator',
+			value: AVAILABLE_ACTION.nvRetrieveAlerts,
+			description: 'Retrieve lead and account alerts from Sales Navigator',
+			action: 'Retrieve alerts in Sales Navigator',
 		},
 		{
 			name: 'Search Companies in Sales Navigator',

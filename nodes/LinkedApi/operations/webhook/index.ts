@@ -14,6 +14,7 @@ export * from './NvFetchCompany';
 export * from './NvFetchPerson';
 export * from './NvSearchCompanies';
 export * from './NvSearchPeople';
+export * from './NvRetrieveAlerts';
 export * from './NvSendMessage';
 export * from './NvSyncConversation';
 export * from './NvSyncInbox';
