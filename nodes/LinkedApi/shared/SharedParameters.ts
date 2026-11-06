@@ -39,7 +39,7 @@ export const personHashedUrlParameter: INodeProperties = {
 	required: true,
 	default: '',
 	placeholder: 'https://www.linkedin.com/in/SInQBmjJ015eLr8',
-	description: 'Hashed LinkedIn URL of the person',
+	description: 'Public or hashed LinkedIn person URL (/in/... or /sales/lead/...).',
 };
 
 export const companyHashedUrlParameter: INodeProperties = {
@@ -49,7 +49,7 @@ export const companyHashedUrlParameter: INodeProperties = {
 	required: true,
 	default: '',
 	placeholder: 'https://www.linkedin.com/company/12345678',
-	description: 'Hashed LinkedIn URL of the company',
+	description: 'Public or hashed LinkedIn company URL (/company/... or /sales/company/...).',
 };
 
 // Search Parameters
@@ -358,7 +358,8 @@ export const sinceParameter: INodeProperties = {
 	name: 'since',
 	type: 'dateTime',
 	default: '',
-	description: 'Only return connections made on or after this date. Only works when no filter fields are provided.',
+	description:
+		'Only return connections made on or after this date. Only works when no filter fields are provided.',
 };
 
 // Message Parameters
@@ -424,7 +425,11 @@ export const sendMessageManageOperationParameter: INodeProperties = {
 		{ name: 'Archive', value: 'archive', description: 'Archive the conversation thread' },
 		{ name: 'Unarchive', value: 'unarchive', description: 'Unarchive the conversation thread' },
 		{ name: 'Star', value: 'star', description: 'Star the conversation thread' },
-		{ name: 'Unstar', value: 'unstar', description: 'Remove the star from the conversation thread' },
+		{
+			name: 'Unstar',
+			value: 'unstar',
+			description: 'Remove the star from the conversation thread',
+		},
 		{ name: 'Mute', value: 'mute', description: 'Mute the conversation thread' },
 		{ name: 'Unmute', value: 'unmute', description: 'Unmute the conversation thread' },
 	],
@@ -702,7 +707,8 @@ export const postCompanyUrlParameter: INodeProperties = {
 	type: 'string',
 	default: '',
 	placeholder: 'https://www.linkedin.com/company/acme-corp',
-	description: 'LinkedIn company page URL. If specified, the action will be performed on behalf of the company page.',
+	description:
+		'LinkedIn company page URL. If specified, the action will be performed on behalf of the company page.',
 };
 
 // Custom Workflow Parameters

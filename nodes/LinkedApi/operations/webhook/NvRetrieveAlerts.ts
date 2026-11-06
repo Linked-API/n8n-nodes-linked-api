@@ -28,6 +28,27 @@ export class NvRetrieveAlerts extends SalesNavigatorLinkedApiOperation {
 			displayOptions: { show: this.show },
 		},
 		{
+			displayName: 'List ID',
+			name: 'listId',
+			type: 'string',
+			default: '',
+			description: 'Owned list ID; requires latest sorting',
+			displayOptions: { show: this.show },
+		},
+		{
+			displayName: 'Subjects',
+			name: 'subjects',
+			type: 'string',
+			default: [],
+			typeOptions: {
+				multipleValues: true,
+				multipleValueButtonText: 'Add Subject',
+			},
+			description:
+				'Recognised hashed LinkedIn URLs or Sales Navigator subject URNs; one identity per value, without splitting commas. Any listed subject may match; other filters are ANDed. Leave empty for all subjects.',
+			displayOptions: { show: this.show },
+		},
+		{
 			displayName: 'Category',
 			name: 'category',
 			type: 'options',
@@ -73,6 +94,12 @@ export class NvRetrieveAlerts extends SalesNavigatorLinkedApiOperation {
 		if (!Number.isInteger(limit) || limit < 1 || limit > 1000) {
 			throw new Error('Limit must be an integer between 1 and 1000');
 		}
+		const listId = this.stringParameter(context, 'listId');
+		const subjects = context.getNodeParameter('subjects', this.itemIndex, []) as Array<string>;
+		const sort = this.stringParameter(context, 'sort');
+		if (listId && sort === 'relevance') {
+			throw new Error('List ID requires latest sorting');
+		}
 		const category = this.stringParameter(context, 'category');
 		const types = this.stringParameter(context, 'types')
 			.split(';')
@@ -82,8 +109,10 @@ export class NvRetrieveAlerts extends SalesNavigatorLinkedApiOperation {
 
 		return {
 			limit,
-			sort: this.stringParameter(context, 'sort'),
+			sort,
 			filter: {
+				...(listId ? { listId } : {}),
+				...(subjects.length ? { subjects } : {}),
 				...(category ? { category } : {}),
 				types,
 				...(since ? { since } : {}),
