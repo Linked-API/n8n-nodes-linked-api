@@ -11,7 +11,7 @@ export class NvDeleteList extends SalesNavigatorLinkedApiOperation {
 			type: 'string',
 			default: '',
 			description:
-				'Owned list ID as a string, never a number. Members stay saved and in their other lists. Unknown, shared or deleted IDs return listNotFound; system lists without Delete return listNotDeletable. English interface only; Plus required. Success has no result data.',
+				'Owned list ID as a string, never a number. Members stay saved and in their other lists. Unknown, shared or deleted IDs return listNotFound; system lists without Delete return listNotDeletable. Plus required. Success has no result data.',
 			required: true,
 			displayOptions: { show: this.show },
 		},

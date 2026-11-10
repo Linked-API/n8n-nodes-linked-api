@@ -377,21 +377,21 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			name: 'Remove Lead from List in Sales Navigator',
 			value: AVAILABLE_ACTION.nvRemoveLeadFromList,
 			description:
-				'Remove a lead from exactly one owned custom list, keeping it saved and in its other lists. Repeating an absent membership succeeds. English interface only. Plus required.',
+				'Remove a lead from exactly one owned custom list, keeping it saved and in its other lists. Repeating an absent membership succeeds. Plus required.',
 			action: 'Remove lead from list in Sales Navigator',
 		},
 		{
 			name: 'Remove Account from List in Sales Navigator',
 			value: AVAILABLE_ACTION.nvRemoveAccountFromList,
 			description:
-				'Remove an account from exactly one owned custom list, keeping it saved even after its last list. Repeating an absent membership succeeds. English interface only. Plus required.',
+				'Remove an account from exactly one owned custom list, keeping it saved even after its last list. Repeating an absent membership succeeds. Plus required.',
 			action: 'Remove account from list in Sales Navigator',
 		},
 		{
 			name: 'Rename List in Sales Navigator',
 			value: AVAILABLE_ACTION.nvRenameList,
 			description:
-				'Rename an owned custom list. Trimmed name: 1–75 characters, no line breaks. Same name succeeds; duplicates return listAlreadyExists and system lists return listNotRenamable. English interface only. Plus required.',
+				'Rename an owned custom list. Trimmed name: 1–75 characters, no line breaks. Same name succeeds; duplicates return listAlreadyExists and system lists return listNotRenamable. Plus required.',
 			action: 'Rename list in Sales Navigator',
 		},
 		{
@@ -404,14 +404,14 @@ export const availableSalesNavigatorOperations: INodeProperties = {
 			name: 'Create Saved Search in Sales Navigator',
 			value: AVAILABLE_ACTION.nvCreateSavedSearch,
 			description:
-				'Save a Sales Navigator search URL matching the requested type. Returns its ID, name, type and URL. English interface only. Plus required.',
+				'Save a Sales Navigator search URL matching the requested type, optionally under a name. Returns its ID, name, type and URL. Plus required.',
 			action: 'Create saved search in Sales Navigator',
 		},
 		{
 			name: 'Delete Saved Search in Sales Navigator',
 			value: AVAILABLE_ACTION.nvDeleteSavedSearch,
 			description:
-				'Delete an owned saved search by its string ID. An absent search returns savedSearchNotFound. English interface only. Plus required.',
+				'Delete an owned saved search by its string ID. An absent search returns savedSearchNotFound. Plus required.',
 			action: 'Delete saved search in Sales Navigator',
 		},
 		{

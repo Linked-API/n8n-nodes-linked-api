@@ -40,7 +40,7 @@ export class NvCreateList extends SalesNavigatorLinkedApiOperation {
 			type: 'string',
 			default: '',
 			description:
-				'Optional description; surrounding spaces are trimmed. Up to 350 characters after trimming; blank omitted. Returns ID (string), name, type and URL. English interface only; Plus required.',
+				'Optional description; surrounding spaces are trimmed. Up to 350 characters after trimming; blank omitted. Returns ID (string), name, type and URL. Plus required.',
 			displayOptions: { show: this.show },
 		},
 	];

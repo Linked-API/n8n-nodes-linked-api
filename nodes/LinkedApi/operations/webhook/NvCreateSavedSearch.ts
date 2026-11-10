@@ -34,12 +34,23 @@ export class NvCreateSavedSearch extends SalesNavigatorLinkedApiOperation {
 			required: true,
 			displayOptions: { show: this.show },
 		},
+		{
+			displayName: 'Name',
+			name: 'name',
+			type: 'string',
+			default: '',
+			description:
+				'Optional name for the saved search; trimmed, single line, 1–256 characters. A name already used by a saved search of the same type returns savedSearchAlreadyExists. Blank keeps the name Sales Navigator gives it.',
+			displayOptions: { show: this.show },
+		},
 	];
 
 	public body(context: IExecuteFunctions): Record<string, unknown> {
+		const name = this.stringParameter(context, 'name');
 		return {
 			type: this.stringParameter(context, 'type'),
 			customSearchUrl: this.stringParameter(context, 'customSearchUrl'),
+			...(name.trim() ? { name } : {}),
 		};
 	}
 }
