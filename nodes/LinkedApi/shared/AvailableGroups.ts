@@ -3,6 +3,7 @@ import type { INodeProperties } from 'n8n-workflow';
 export const LINKED_API_GROUP = {
 	standard: 'standard',
 	salesNavigator: 'salesNavigator',
+	recruiterLite: 'recruiterLite',
 	other: 'other',
 	admin: 'admin',
 };
@@ -22,6 +23,7 @@ export const availableGroups: INodeProperties = {
 			name: 'Sales Navigator',
 			value: LINKED_API_GROUP.salesNavigator,
 		},
+		{ name: 'Recruiter Lite', value: LINKED_API_GROUP.recruiterLite },
 		{
 			name: 'Other',
 			value: LINKED_API_GROUP.other,

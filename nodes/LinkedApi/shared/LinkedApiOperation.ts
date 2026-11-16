@@ -100,7 +100,10 @@ export abstract class LinkedApiWebhookOperation extends LinkedApiOperation {
 	}
 
 	override requestBody(context: IExecuteFunctions): Record<string, any> {
-		const resumeUrl = context.evaluateExpression('{{$execution.resumeUrl}}', this.itemIndex) as string;
+		const resumeUrl = context.evaluateExpression(
+			'{{$execution.resumeUrl}}',
+			this.itemIndex,
+		) as string;
 		if (resumeUrl && resumeUrl.includes('//localhost')) {
 			throw new Error('Localhost running is not allowed. Please use a public n8n instance.');
 		}
@@ -118,6 +121,10 @@ export abstract class StandardLinkedApiOperation extends LinkedApiWebhookOperati
 
 export abstract class SalesNavigatorLinkedApiOperation extends LinkedApiWebhookOperation {
 	resource = 'salesNavigator' as const;
+}
+
+export abstract class RecruiterLiteLinkedApiOperation extends LinkedApiWebhookOperation {
+	public readonly resource = 'recruiterLite' as const;
 }
 
 export abstract class OtherLinkedApiOperation extends LinkedApiWebhookOperation {

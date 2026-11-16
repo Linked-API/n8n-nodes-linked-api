@@ -38,6 +38,16 @@ export const AVAILABLE_ACTION = {
 	manageConversation: 'manageConversation',
 	withdrawConnectionRequest: 'withdrawConnectionRequest',
 	nvFetchCompany: 'nvFetchCompany',
+	rcSearchPeople: 'rcSearchPeople',
+	rcFetchPerson: 'rcFetchPerson',
+	rcRetrieveProjects: 'rcRetrieveProjects',
+	rcRetrieveProjectCandidates: 'rcRetrieveProjectCandidates',
+	rcSaveToProject: 'rcSaveToProject',
+	rcCreateProject: 'rcCreateProject',
+	rcRenameProject: 'rcRenameProject',
+	rcArchiveProject: 'rcArchiveProject',
+	rcSendMessage: 'rcSendMessage',
+	rcSyncInbox: 'rcSyncInbox',
 	nvFetchPerson: 'nvFetchPerson',
 	nvSearchCompanies: 'nvSearchCompanies',
 	nvSearchPeople: 'nvSearchPeople',
@@ -659,4 +669,85 @@ export const availableAdminOperations: INodeProperties = {
 			action: 'Reset limits',
 		},
 	],
+};
+
+export const availableRecruiterLiteOperations: INodeProperties = {
+	displayName: 'Operation',
+	name: 'operation',
+	type: 'options',
+	noDataExpression: true,
+	displayOptions: { show: { resource: ['recruiterLite'] } },
+	options: [
+		{
+			name: 'Search People in Recruiter Lite',
+			value: 'rcSearchPeople',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Provide term, a nonempty filter, or customSearchUrl. customSearchUrl cannot be combined with term or filter. Filters alone are accepted. Scope fields and false booleans alone are not search criteria.",
+			action: 'Search people in Recruiter Lite',
+		},
+		{
+			name: 'Fetch Person in Recruiter Lite',
+			value: 'rcFetchPerson',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Fetch Person.",
+			action: 'Fetch person in Recruiter Lite',
+		},
+		{
+			name: 'Retrieve Projects in Recruiter Lite',
+			value: 'rcRetrieveProjects',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Retrieve Projects.",
+			action: 'Retrieve projects in Recruiter Lite',
+		},
+		{
+			name: 'Retrieve Project Candidates in Recruiter Lite',
+			value: 'rcRetrieveProjectCandidates',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Retrieve Project Candidates.",
+			action: 'Retrieve project candidates in Recruiter Lite',
+		},
+		{
+			name: 'Save to Project in Recruiter Lite',
+			value: 'rcSaveToProject',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Save to Project.",
+			action: 'Save to project in Recruiter Lite',
+		},
+		{
+			name: 'Create Project in Recruiter Lite',
+			value: 'rcCreateProject',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Create Project. Creation is not idempotent: after a failure, check your projects before creating again (a duplicate can only be archived).",
+			action: 'Create project in Recruiter Lite',
+		},
+		{
+			name: 'Rename Project in Recruiter Lite',
+			value: 'rcRenameProject',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Rename Project.",
+			action: 'Rename project in Recruiter Lite',
+		},
+		{
+			name: 'Archive Project in Recruiter Lite',
+			value: 'rcArchiveProject',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Archive Project.",
+			action: 'Archive project in Recruiter Lite',
+		},
+		{
+			name: 'Send Message in Recruiter Lite',
+			value: 'rcSendMessage',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. New InMail requires personUrl, subject (1–200 characters, one line) and text (1–1900 characters). Reply with threadId and text only, without personUrl or subject. A paid InMail credit is spent only when allowPaidCredit is true. Turn on Allow Paid Credit only when the user has explicitly approved spending a paid InMail credit on this message; on inMailCreditRequired, ask the user instead of retrying with Allow Paid Credit on. After an unexpectedError, check the conversation before sending again.",
+			action: 'Send message in Recruiter Lite',
+		},
+		{
+			name: 'Sync Inbox in Recruiter Lite',
+			value: 'rcSyncInbox',
+			description:
+				"Requires a LinkedIn Recruiter Lite seat and Linked API's Plus plan. Enable whole-inbox monitoring; poll messages with type rc.",
+			action: 'Sync inbox in Recruiter Lite',
+		},
+	],
+	default: 'rcSearchPeople',
 };

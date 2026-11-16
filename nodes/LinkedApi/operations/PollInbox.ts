@@ -19,9 +19,10 @@ const inboxTypeParameter: INodeProperties = {
 	default: '',
 	// eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
 	options: [
-		{ name: 'Both', value: '' },
+		{ name: 'All', value: '' },
 		{ name: 'Standard', value: 'st' },
 		{ name: 'Sales Navigator', value: 'nv' },
+		{ name: 'Recruiter Lite', value: 'rc' },
 	],
 	description: 'Filter messages by inbox type',
 };
@@ -41,7 +42,7 @@ const inboxPersonUrlParameter: INodeProperties = {
 	default: '',
 	placeholder: 'https://www.linkedin.com/in/john-doe',
 	description:
-		'Return the whole known conversation with this person instead of the whole inbox, including history loaded by Sync Conversation; the output then has messages and threads. A hashed URL always matches; a public URL matches only once Linked API knows it.',
+		'Accepts Recruiter profile URLs (/talent/profile/…). Return the whole known conversation with this person instead of the whole inbox, including history loaded by Sync Conversation; the output then has messages and threads. A hashed URL always matches; a public URL matches only once Linked API knows it.',
 };
 
 export class PollInbox extends LinkedApiOperation {
