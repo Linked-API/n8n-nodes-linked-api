@@ -76,6 +76,16 @@ export class CreateSignal extends LinkedApiOperation {
 			...this.show,
 			type: ['postSearch'],
 		}),
+		{
+			displayName: 'List ID',
+			name: 'listId',
+			type: 'string',
+			default: '',
+			required: true,
+			displayOptions: { show: { ...this.show, type: ['listAlerts'] } },
+			description:
+				'ID of one of your own Sales Navigator lists, as Retrieve Lists in Sales Navigator returns it. Needs an active Sales Navigator subscription; very large lists are not supported yet.',
+		},
 	];
 
 	public url(): string {
@@ -93,6 +103,13 @@ export class CreateSignal extends LinkedApiOperation {
 			case 'companyPosts':
 				body.companyUrl = this.stringParameter(context, 'companyUrl');
 				break;
+			case 'listAlerts': {
+				const listId = this.stringParameter(context, 'listId');
+				if (listId) {
+					body.listId = listId;
+				}
+				break;
+			}
 			case 'postEngagement':
 				if (context.getNodeParameter('myPosts', this.itemIndex) === true) {
 					body.myPosts = true;

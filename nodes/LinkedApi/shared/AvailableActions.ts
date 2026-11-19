@@ -555,7 +555,7 @@ export const availableOtherOperations: INodeProperties = {
 		{
 			name: 'Create Signal',
 			value: AVAILABLE_ACTION.createSignal,
-			description: 'Create a signal to watch LinkedIn activity',
+			description: 'Create a signal to watch LinkedIn activity or a Sales Navigator list',
 			action: 'Create signal',
 		},
 		{

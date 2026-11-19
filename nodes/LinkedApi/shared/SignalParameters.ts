@@ -2,6 +2,7 @@ import type { INodeProperties as TNodeProperties } from 'n8n-workflow';
 
 const SIGNAL_TYPE_OPTIONS = [
 	{ name: 'Company Posts', value: 'companyPosts' },
+	{ name: 'List Alerts', value: 'listAlerts' },
 	{ name: 'Network', value: 'network' },
 	{ name: 'Person Posts', value: 'personPosts' },
 	{ name: 'Post Engagement', value: 'postEngagement' },
@@ -80,6 +81,7 @@ export const SIGNAL_PARAMETERS = {
 		type: 'options',
 		default: '',
 		options: [
+			{ name: 'Alert Published', value: 'alertPublished' },
 			{ name: 'All', value: '' },
 			{ name: 'Comment Added', value: 'commentAdded' },
 			{ name: 'Connection Accepted', value: 'connectionAccepted' },

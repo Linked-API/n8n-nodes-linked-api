@@ -45,7 +45,7 @@ export class NvRetrieveAlerts extends SalesNavigatorLinkedApiOperation {
 				multipleValueButtonText: 'Add Subject',
 			},
 			description:
-				'Recognised hashed LinkedIn URLs or Sales Navigator subject URNs; one identity per value, without splitting commas. Any listed subject may match; other filters are ANDed. Leave empty for all subjects.',
+				'Recognised hashed LinkedIn URLs, Sales Navigator subject URNs, or member and organization URNs (urn:li:member:123456, urn:li:organization:1234567) as Retrieve List Leads and Retrieve List Accounts in Sales Navigator return them; one identity per value, without splitting commas. Any listed subject may match; other filters are ANDed. Leave empty for all subjects.',
 			displayOptions: { show: this.show },
 		},
 		{
